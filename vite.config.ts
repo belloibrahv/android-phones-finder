@@ -9,4 +9,14 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  optimizeDeps: {
+    include: ['@faker-js/faker']
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        assetFileNames: '[name][extname]',
+      }
+    }
+  }
 });
