@@ -187,8 +187,8 @@ export const PhoneListingSection = () => {
                     step={100}
                   />
                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography>£0</Typography>
-                    <Typography>£1,500+</Typography>
+                    <Typography>$0</Typography>
+                    <Typography>$1,500+</Typography>
                   </Box>
                 </Box>
               </AccordionDetails>
@@ -344,7 +344,7 @@ export const PhoneListingSection = () => {
                         {phone.name}
                       </Typography>
                       <Typography color="textSecondary">
-                        From £{phone.price.toLocaleString()}
+                        From ${phone.price.toLocaleString()}
                       </Typography>
                       <Button
                         fullWidth
