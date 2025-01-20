@@ -1,3 +1,19 @@
+import GooglePixel6 from '../assets/images/GooglePixel6.webp';
+import GooglePixel6a from '../assets/images/GooglePixel6a.webp';
+import GooglePixel6Pro from '../assets/images/GooglePixel6Pro.webp';
+import GooglePixel7 from '../assets/images/GooglePixel7.webp';
+import GooglePixel7a from '../assets/images/GooglePixel7a.webp';
+import GooglePixel7Pro from '../assets/images/GooglePixel7Pro.webp';
+import GooglePixel8 from '../assets/images/GooglePixel8.webp';
+import GooglePixel8a from '../assets/images/GooglePixel8a.webp';
+import GooglePixel8Pro from '../assets/images/GooglePixel8Pro.webp';
+import GooglePixel9 from '../assets/images/GooglePixel9.webp';
+import GooglePixel9Pro from '../assets/images/GooglePixel9Pro.webp';
+import GooglePixel9ProXL from '../assets/images/GooglePixel9ProXL.webp';
+import GooglePixel9ProFold from '../assets/images/GooglePixel9ProFold.webp';
+import GooglePixelFold from '../assets/images/GooglePixelFold.webp';
+
+
 import GooglePixel8a from '../assets/images/Google Pixel 8a.jpg';
 import GooglePixel9 from '../assets/images/google-pixel-9-pro.jpg';
 import SamsungUtraS24 from '../assets/images/Samsung Galaxy S24 Ultra.jpg';
