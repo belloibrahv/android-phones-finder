@@ -28,12 +28,60 @@ import MotorolaEdge40 from '../assets/images/Motorola Edge 40 Pro.jpg';
 export const PHONE_IMAGES = {
   Google: [
     {
+      name: 'Google Pixel 6',
+      image: GooglePixel6
+    },
+    {
+      name: 'Google Pixel 6a',
+      image: GooglePixel6a,
+    },
+    {
+      name: 'Google Pixel 6 Pro',
+      image: GooglePixel6Pro
+    },
+    {
+      name: 'Google Pixel 7',
+      image: GooglePixel7,
+    },
+    {
+      name: 'Google Pixel 7a',
+      image: GooglePixel7a
+    },
+    {
+      name: 'Google Pixel 7 Pro',
+      image: GooglePixel7Pro,
+    },
+    {
+      name: 'Google Pixel 8',
+      image: GooglePixel8
+    },
+    {
       name: 'Google Pixel 8a',
-      image: GooglePixel8a
+      image: GooglePixel8a,
+    },
+    {
+      name: 'Google Pixel 8 Pro',
+      image: GooglePixel8Pro
+    },
+    {
+      name: 'Google Pixel 9',
+      image: GooglePixel9,
     },
     {
       name: 'Google Pixel 9 Pro',
-      image: GooglePixel9,
+      image: GooglePixel9Pro
+    },
+    {
+      name: 'Google Pixel 9 Pro XL',
+      image: GooglePixel9ProXL,
+    },
+    {
+      name: 'Google Pixel 9 Pro Fold',
+      image: GooglePixel9ProFold
+    },
+    {
+      name: 'Google Pixel Fold',
+      image: GooglePixelFold,
     }
   ],
   Samsung: [
