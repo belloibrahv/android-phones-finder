@@ -1,4 +1,6 @@
 import { Box, Typography, Button, Container } from '@mui/material';
+import PeopleImg from '../../assets/images/ui/people.webp';
+
 
 export const HeroSection = () => {
   return (
@@ -32,7 +34,7 @@ export const HeroSection = () => {
         </Box>
         <Box>
           <img 
-            src="/api/placeholder/600/400" 
+            src={PeopleImg}
             alt="People using phone"
             style={{ 
               width: '100%',

@@ -1,5 +1,6 @@
 import { AppBar, Toolbar, Box, Button } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
+import AndriodLogo from '../../assets/images/ui/andriod.svg';
 
 export const Header = () => {
   return (
@@ -15,8 +16,7 @@ export const Header = () => {
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <img src="/android-logo.svg" alt="Android" height="24" />
-            <span>Android</span>
+            <img src={AndriodLogo} alt="Android" height="50" />
           </Box>
           
           <Button color="inherit">Discover Android</Button>

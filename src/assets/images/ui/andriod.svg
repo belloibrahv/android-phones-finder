@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100">
+  <!-- Android Text -->
+  <text x="20" y="70" font-family="Arial, sans-serif" font-size="60" font-weight="500" fill="#000000">Android</text>
+  
+  <!-- Bugdroid Head -->
+  <g transform="translate(280, 20)">
+    <!-- Head -->
+    <path d="M50,0 
+             Q70,0 70,20 
+             L70,40 
+             Q70,60 50,60 
+             L20,60 
+             Q0,60 0,40 
+             L0,20 
+             Q0,0 20,0 Z" 
+          fill="#3DDC84"/>
+    
+    <!-- Antennae -->
+    <rect x="22" y="-10" width="6" height="12" rx="3" fill="#3DDC84" transform="rotate(-30, 22, -10)"/>
+    <rect x="48" y="-10" width="6" height="12" rx="3" fill="#3DDC84" transform="rotate(30, 48, -10)"/>
+    
+    <!-- Eyes -->
+    <circle cx="25" cy="25" r="5" fill="white"/>
+    <circle cx="45" cy="25" r="5" fill="white"/>
+  </g>
+</svg>
