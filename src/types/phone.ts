@@ -9,4 +9,9 @@ export interface Phone {
   screenSize: string;
   imageUrl: string;
   isNew: boolean;
+  dimensions: string;
+  storage: string;
+  ram: string;
+  screenResolution: string;
+  releaseYear: number;
 }

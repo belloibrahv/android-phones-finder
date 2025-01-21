@@ -24,6 +24,7 @@ import { FILTER_OPTIONS } from '../../config/constants';
 import { generateMockPhones } from '../../utils/mockData';
 import { useInView } from 'react-intersection-observer';
 import type { Phone } from '../../types/phone';
+import { useFilterInteractions } from '@/hooks/useFilterInteractions';
 
 const ITEMS_PER_PAGE = 9;
 
@@ -110,6 +111,8 @@ export const PhoneListingSection = () => {
     initialPageParam: 0
   });
 
+
+
   // Fetch next page when scroll reaches bottom
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -118,6 +121,8 @@ export const PhoneListingSection = () => {
   }, [inView, hasNextPage, fetchNextPage]);
 
   const phones = data?.pages.flatMap(page => page.phones) ?? [];
+
+  useFilterInteractions(phones);
 
   return (
     <Container maxWidth="lg" sx={{ mt: 8 }}>
