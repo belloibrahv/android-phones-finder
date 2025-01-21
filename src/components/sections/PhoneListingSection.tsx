@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { 
   Box, 
   Container, 
@@ -10,30 +10,92 @@ import {
   AccordionSummary,
   AccordionDetails,
   TextField,
-  Chip,
-  Slider,
   Checkbox,
   FormControlLabel,
   CircularProgress,
-  FormGroup
+  FormGroup,
+  Select,
+  MenuItem,
+  InputAdornment,
+  IconButton,
+  Collapse,
+  styled
 } from '@mui/material';
-import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useFilterStore } from '../../store/useFilterStore';
-import { FILTER_OPTIONS } from '../../config/constants';
+import { 
+  ExpandMore as ExpandMoreIcon,
+  Search as SearchIcon,
+  KeyboardArrowDown as KeyboardArrowDownIcon 
+} from '@mui/icons-material';
+import { useQuery } from '@tanstack/react-query';
+import { FilterState, useFilterStore } from '../../store/useFilterStore';
+import { FILTER_OPTIONS, SORT_OPTIONS } from '../../config/constants';
 import { generateMockPhones } from '../../utils/mockData';
-import { useInView } from 'react-intersection-observer';
 import type { Phone } from '../../types/phone';
 import { useFilterInteractions } from '@/hooks/useFilterInteractions';
 
 const ITEMS_PER_PAGE = 9;
 
+// Styled Components
+const StyledAccordion = styled(Accordion)(() => ({
+  '&.MuiAccordion-root': {
+    boxShadow: 'none',
+    borderBottom: '1px solid #E5E5E5',
+    '&:before': {
+      display: 'none',
+    },
+  },
+  '& .MuiAccordionSummary-content': {
+    margin: '12px 0',
+  },
+  '& .MuiTypography-root': {
+    fontWeight: 600,
+  },
+}));
+
+const StyledButton = styled(Button)(() => ({
+  borderRadius: '24px',
+  textTransform: 'none',
+  padding: '8px 24px',
+  fontSize: '1rem',
+  backgroundColor: '#1C1C1C',
+  '&:hover': {
+    backgroundColor: '#000000',
+  },
+  '& .MuiButton-endIcon': {
+    marginLeft: 8,
+  },
+}));
+
+const SeeAllButton = styled(Button)(() => ({
+  borderRadius: '24px',
+  textTransform: 'none',
+  padding: '12px 32px',
+  fontSize: '1rem',
+  backgroundColor: '#1C1C1C',
+  color: 'white',
+  '&:hover': {
+    backgroundColor: '#000000',
+  },
+}));
+
+const SearchTextField = styled(TextField)({
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '24px',
+    '& fieldset': {
+      borderColor: '#E5E5E5',
+    },
+    '&:hover fieldset': {
+      borderColor: '#1C1C1C',
+    },
+  },
+});
+
 // Mock API call
 const fetchPhones = async (
-  page: number, 
-  filters: ReturnType<typeof useFilterStore.getState>
-): Promise<{ phones: Phone[]; hasMore: boolean }> => {
-  // Simulate API delay
+  page: number,
+  filters: ReturnType<typeof useFilterStore.getState>,
+  sortOption: string
+): Promise<{ phones: Phone[]; totalCount: number }> => {
   await new Promise(resolve => setTimeout(resolve, 800));
 
   let filteredPhones = generateMockPhones(50);
@@ -82,302 +144,234 @@ const fetchPhones = async (
     );
   }
 
+  // Apply sorting
+  switch (sortOption) {
+    case 'price-asc':
+      filteredPhones.sort((a, b) => a.price - b.price);
+      break;
+    case 'price-desc':
+      filteredPhones.sort((a, b) => b.price - a.price);
+      break;
+    case 'release-date':
+      filteredPhones.sort((a, b) => b.releaseYear - a.releaseYear);
+      break;
+  }
+
   const start = page * ITEMS_PER_PAGE;
-  const end = start + ITEMS_PER_PAGE;
-  const paginatedPhones = filteredPhones.slice(start, end);
+  const paginatedPhones = filteredPhones.slice(start, start + ITEMS_PER_PAGE);
   
   return {
     phones: paginatedPhones,
-    hasMore: end < filteredPhones.length
+    totalCount: filteredPhones.length
   };
 };
 
 export const PhoneListingSection = () => {
+  const [page, setPage] = useState(0);
+  const [sortOption, setSortOption] = useState('price-asc');
+  const [showMoreFilters, setShowMoreFilters] = useState(false);
   const filters = useFilterStore();
-  const { ref: infiniteScrollRef, inView } = useInView();
 
-  // Setup infinite query
   const { 
     data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    status
-  } = useInfiniteQuery({
-    queryKey: ['phones', filters],
-    queryFn: ({ pageParam = 0 }) => fetchPhones(pageParam, filters),
-    getNextPageParam: (lastPage, allPages) => 
-      lastPage.hasMore ? allPages.length : undefined,
-    initialPageParam: 0
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['phones', page, filters, sortOption],
+    queryFn: () => fetchPhones(page, filters, sortOption),
   });
 
+  useFilterInteractions(data?.phones || []);
 
+  const handleSeeMore = () => {
+    setPage(prev => prev + 1);
+  };
 
-  // Fetch next page when scroll reaches bottom
-  useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, hasNextPage, fetchNextPage]);
-
-  const phones = data?.pages.flatMap(page => page.phones) ?? [];
-
-  useFilterInteractions(phones);
+  // Updated renderFilter function with type safety
+  const renderFilter = (
+    title: string,
+    options: readonly string[],
+    filterKey: keyof Omit<FilterState, 'setFilter' | 'resetFilters' | 'priceRange' | 'searchQuery'>
+  ) => {
+    // Ensure we have a valid array of values for the filter
+    const currentValues = filters[filterKey] || [];
+    
+    return (
+      <StyledAccordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography>{title}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <FormGroup>
+            {options.map((option) => (
+              <FormControlLabel
+                key={option}
+                control={
+                  <Checkbox
+                    checked={currentValues.includes(option)}
+                    onChange={() => {
+                      const newValues = currentValues.includes(option)
+                        ? currentValues.filter(v => v !== option)
+                        : [...currentValues, option];
+                      filters.setFilter(filterKey, newValues);
+                    }}
+                  />
+                }
+                label={option}
+              />
+            ))}
+          </FormGroup>
+        </AccordionDetails>
+      </StyledAccordion>
+    );
+  };
 
   return (
     <Container maxWidth="lg" sx={{ mt: 8 }}>
-      <Typography variant="h3" align="center" gutterBottom>
-        Every device. Every detail.
-      </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
+        <Typography variant="h4" sx={{ fontWeight: 600 }}>
+          Mobile Phones
+        </Typography>
+        <Select
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          sx={{ minWidth: 200, borderRadius: '24px' }}
+        >
+          {SORT_OPTIONS.map(option => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </Box>
       
       <Grid container spacing={4}>
         {/* Filters Column */}
         <Grid item xs={12} md={3}>
           <Box sx={{ position: 'sticky', top: 80 }}>
-            <TextField
+            <SearchTextField
               fullWidth
               placeholder="Search"
-              variant="outlined"
-              sx={{ mb: 2 }}
               value={filters.searchQuery}
               onChange={(e) => filters.setFilter('searchQuery', e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              sx={{ mb: 3 }}
             />
             
-            {/* Brand Filter */}
-            <Accordion defaultExpanded>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>BRAND</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <FormGroup>
-                  {FILTER_OPTIONS.brands.map((brand) => (
-                    <FormControlLabel
-                      key={brand}
-                      control={
-                        <Checkbox
-                          checked={filters.brand.includes(brand)}
-                          onChange={() => filters.setFilter('brand', 
-                            filters.brand.includes(brand)
-                              ? filters.brand.filter(b => b !== brand)
-                              : [...filters.brand, brand]
-                          )}
-                        />
-                      }
-                      label={brand}
-                    />
-                  ))}
-                </FormGroup>
-              </AccordionDetails>
-            </Accordion>
+            {/* Main Filters - Updated calls */}
+            {renderFilter('BRAND', FILTER_OPTIONS.brands, 'brand')}
+            {renderFilter('PRIMARY CAMERA', FILTER_OPTIONS.primaryCamera, 'primaryCamera')}
+            {renderFilter('FEATURES', FILTER_OPTIONS.features, 'features')}
+            {renderFilter('BATTERY LIFE', FILTER_OPTIONS.batteryLife, 'batteryLife')}
+            {renderFilter('SCREEN SIZE', FILTER_OPTIONS.screenSizes, 'screenSize')}
+              
+            {/* More Filters Button */}
+            <Button
+              fullWidth
+              onClick={() => setShowMoreFilters(!showMoreFilters)}
+              endIcon={<KeyboardArrowDownIcon />}
+              sx={{ mt: 2, textTransform: 'none' }}
+            >
+              + More Filters
+            </Button>
 
-            {/* Price Filter */}
-            <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>PRICE</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Box sx={{ px: 2 }}>
-                  <Slider
-                    value={[
-                      filters.priceRange?.min || 0,
-                      filters.priceRange?.max || 1500
-                    ]}
-                    onChange={(_, newValue) => filters.setFilter('priceRange', {
-                      min: newValue[0],
-                      max: newValue[1]
-                    })}
-                    valueLabelDisplay="auto"
-                    min={0}
-                    max={1500}
-                    step={100}
-                  />
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography>$0</Typography>
-                    <Typography>$1,500+</Typography>
-                  </Box>
-                </Box>
-              </AccordionDetails>
-            </Accordion>
-
-            {/* Camera Filter */}
-            <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>PRIMARY CAMERA</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <FormGroup>
-                  {FILTER_OPTIONS.primaryCamera.map((camera) => (
-                    <FormControlLabel
-                      key={camera}
-                      control={
-                        <Checkbox
-                          checked={filters.primaryCamera.includes(camera)}
-                          onChange={() => filters.setFilter('primaryCamera',
-                            filters.primaryCamera.includes(camera)
-                              ? filters.primaryCamera.filter(c => c !== camera)
-                              : [...filters.primaryCamera, camera]
-                          )}
-                        />
-                      }
-                      label={camera}
-                    />
-                  ))}
-                </FormGroup>
-              </AccordionDetails>
-            </Accordion>
-
-            {/* Features Filter */}
-            <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>FEATURES</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <FormGroup>
-                  {FILTER_OPTIONS.features.map((feature) => (
-                    <FormControlLabel
-                      key={feature}
-                      control={
-                        <Checkbox
-                          checked={filters.features.includes(feature)}
-                          onChange={() => filters.setFilter('features',
-                            filters.features.includes(feature)
-                              ? filters.features.filter(f => f !== feature)
-                              : [...filters.features, feature]
-                          )}
-                        />
-                      }
-                      label={feature}
-                    />
-                  ))}
-                </FormGroup>
-              </AccordionDetails>
-            </Accordion>
-
-            {/* Battery Life Filter */}
-            <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>BATTERY LIFE</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <FormGroup>
-                  {FILTER_OPTIONS.batteryLife.map((battery) => (
-                    <FormControlLabel
-                      key={battery}
-                      control={
-                        <Checkbox
-                          checked={filters.batteryLife.includes(battery)}
-                          onChange={() => filters.setFilter('batteryLife',
-                            filters.batteryLife.includes(battery)
-                              ? filters.batteryLife.filter(b => b !== battery)
-                              : [...filters.batteryLife, battery]
-                          )}
-                        />
-                      }
-                      label={battery}
-                    />
-                  ))}
-                </FormGroup>
-              </AccordionDetails>
-            </Accordion>
-
-            {/* Screen Size Filter */}
-            <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>SCREEN SIZE</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <FormGroup>
-                  {FILTER_OPTIONS.screenSizes.map((size) => (
-                    <FormControlLabel
-                      key={size}
-                      control={
-                        <Checkbox
-                          checked={filters.screenSize.includes(size)}
-                          onChange={() => filters.setFilter('screenSize',
-                            filters.screenSize.includes(size)
-                              ? filters.screenSize.filter(s => s !== size)
-                              : [...filters.screenSize, size]
-                          )}
-                        />
-                      }
-                      label={size}
-                    />
-                  ))}
-                </FormGroup>
-              </AccordionDetails>
-            </Accordion>
+            {/* Additional Filters - Updated calls */}
+            <Collapse in={showMoreFilters}>
+              {renderFilter('STORAGE', FILTER_OPTIONS.storage, 'storage')}
+              {renderFilter('RAM', FILTER_OPTIONS.ram, 'ram')}
+              {renderFilter('SCREEN RESOLUTION', FILTER_OPTIONS.screenResolution, 'screenResolution')}
+              {renderFilter('DIMENSIONS', FILTER_OPTIONS.dimensions, 'dimensions')}
+              {renderFilter('RELEASE YEAR', FILTER_OPTIONS.releaseYears.map(String), 'releaseYear')}
+            </Collapse>
           </Box>
         </Grid>
 
         {/* Phones Grid */}
         <Grid item xs={12} md={9}>
-          {status === 'pending' ? (
+          {isLoading ? (
             <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
               <CircularProgress />
             </Box>
-          ) : status === 'error' ? (
+          ) : isError ? (
             <Typography color="error" align="center">
               Error loading phones. Please try again.
             </Typography>
           ) : (
             <>
               <Grid container spacing={2}>
-                {phones.map((phone) => (
+                {data?.phones.map((phone) => (
                   <Grid item xs={12} sm={6} md={4} key={phone.id}>
-                    <Card sx={{ p: 2, height: '100%' }}>
-                      <Box sx={{ position: 'relative' }}>
-                        {phone.isNew && (
-                          <Chip
-                            label="NEW"
-                            size="small"
-                            sx={{
-                              position: 'absolute',
-                              top: 8,
-                              left: 8,
-                              bgcolor: '#E8F0FE',
-                              color: '#1a73e8'
-                            }}
-                          />
-                        )}
+                    <Card 
+                      sx={{ 
+                        p: 2, 
+                        height: '100%',
+                        boxShadow: 'none',
+                        border: '1px solid #E5E5E5',
+                        borderRadius: '12px'
+                      }}
+                    >
+                      <Box 
+                        sx={{ 
+                          display: 'flex',
+                          justifyContent: 'center',
+                          mb: 2
+                        }}
+                      >
                         <img
                           src={phone.imageUrl}
                           alt={phone.name}
-                          style={{ width: '100%', height: 'auto' }}
+                          style={{ 
+                            width: '80%', 
+                            height: 'auto',
+                            objectFit: 'contain'
+                          }}
                         />
                       </Box>
-                      <Typography variant="h6" gutterBottom>
-                        {phone.name}
-                      </Typography>
-                      <Typography color="textSecondary">
-                        From ${phone.price.toLocaleString()}
-                      </Typography>
-                      <Button
-                        fullWidth
-                        variant="contained"
+                      <Typography 
+                        variant="h6" 
                         sx={{ 
-                          mt: 2,
-                          backgroundColor: '#1a73e8',
-                          '&:hover': { backgroundColor: '#1557b0' }
+                          fontWeight: 600,
+                          mb: 1
                         }}
                       >
+                        {phone.name}
+                      </Typography>
+                      <Typography 
+                        sx={{ 
+                          color: '#666',
+                          mb: 2
+                        }}
+                      >
+                        From ${phone.price.toLocaleString()}
+                      </Typography>
+                      <StyledButton
+                        fullWidth
+                        variant="contained"
+                        endIcon={<KeyboardArrowDownIcon />}
+                      >
                         Buy now
-                      </Button>
+                      </StyledButton>
                     </Card>
                   </Grid>
                 ))}
               </Grid>
 
-              {/* Infinite Scroll Trigger */}
-              <Box 
-                ref={infiniteScrollRef}
-                sx={{ 
-                  display: 'flex', 
-                  justifyContent: 'center',
-                  p: 4 
-                }}
-              >
-                {isFetchingNextPage && <CircularProgress />}
-              </Box>
+              {/* See All Button */}
+              {data && data.totalCount > (page + 1) * ITEMS_PER_PAGE && (
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 9 }}>
+                  <SeeAllButton onClick={handleSeeMore}>
+                    See all
+                  </SeeAllButton>
+                </Box>
+              )}
             </>
           )}
         </Grid>
