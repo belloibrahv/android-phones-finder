@@ -14,8 +14,6 @@ import GooglePixel9ProFold from '../assets/images/GooglePixel9ProFold.webp';
 import GooglePixelFold from '../assets/images/GooglePixelFold.webp';
 
 
-import GooglePixel8a from '../assets/images/Google Pixel 8a.jpg';
-import GooglePixel9 from '../assets/images/google-pixel-9-pro.jpg';
 import SamsungUtraS24 from '../assets/images/Samsung Galaxy S24 Ultra.jpg';
 import SamsungPlusS24 from '../assets/images/Samsung Galaxy S24 Plus.jpg';
 import Xiaomi14Ultra from '../assets/images/Xiaomi 14 Ultra.jpg';
