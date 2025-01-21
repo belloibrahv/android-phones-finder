@@ -71,10 +71,11 @@ const SeeAllButton = styled(Button)(() => ({
   textTransform: 'none',
   padding: '12px 32px',
   fontSize: '1rem',
-  backgroundColor: '#1C1C1C',
-  color: 'white',
+  backgroundColor: 'white',
+  color: 'black',
+  border: '1px solid #1C1C1C',
   '&:hover': {
-    backgroundColor: '#000000',
+    backgroundColor: 'hsl(0, 3.10%, 87.50%)',
   },
 }));
 
@@ -366,7 +367,7 @@ export const PhoneListingSection = () => {
 
               {/* See All Button */}
               {data && data.totalCount > (page + 1) * ITEMS_PER_PAGE && (
-                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 9 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 9, borderTop: '2px solid #E5E5E5', paddingTop: 4 }}>
                   <SeeAllButton onClick={handleSeeMore}>
                     See all
                   </SeeAllButton>
