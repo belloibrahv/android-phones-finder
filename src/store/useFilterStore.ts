@@ -1,12 +1,17 @@
 import { create } from 'zustand';
 
-interface FilterState {
+export interface FilterState {
   brand: string[];
   priceRange: { min: number; max: number } | null;
   primaryCamera: string[];
   features: string[];
   batteryLife: string[];
   screenSize: string[];
+  storage: string[];
+  ram: string[];
+  screenResolution: string[];
+  dimensions: string[];
+  releaseYear: string[];
   searchQuery: string;
   setFilter: <T extends keyof Omit<FilterState, 'setFilter' | 'resetFilters'>>(
     key: T,
@@ -22,6 +27,11 @@ const initialState = {
   features: [],
   batteryLife: [],
   screenSize: [],
+  storage: [],
+  ram: [],
+  screenResolution: [],
+  dimensions: [],
+  releaseYear: [],
   searchQuery: '',
 };
 
