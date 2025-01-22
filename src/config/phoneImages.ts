@@ -13,10 +13,10 @@ import GooglePixel9ProXL from '../assets/images/GooglePixel9ProXL.jpg';
 import GooglePixel9ProFold from '../assets/images/GooglePixel9ProFold.jpg';
 import GooglePixelFold from '../assets/images/GooglePixelFold.jpg';
 
-import Honor50 from '../assets/images/Honor50.webp';
-import HonorMagic4Pro from '../assets/images/HonorMagic4Pro.webp';
+// import Honor50 from '../assets/images/Honor50.webp';
+// import HonorMagic4Pro from '../assets/images/HonorMagic4Pro.webp';
 
-import MotorolaRazr40Ultra from '../assets/images/MotorolaRazr40Ultra.webp';
+// import MotorolaRazr40Ultra from '../assets/images/MotorolaRazr40Ultra.webp';
 
 import NothingPhone1 from '../assets/images/NothingPhone1.jpg';
 import NothingPhone2 from '../assets/images/NothingPhone2.jpg';
@@ -132,22 +132,22 @@ export const PHONE_IMAGES = {
       image: GooglePixelFold,
     }
   ],
-  Honor: [
-    {
-      name: 'Honor 50',
-      image: Honor50
-    },
-    {
-      name: 'Honor Magic 4 Pro',
-      image: HonorMagic4Pro,
-    }
-  ],
-  Motorola : [
-    {
-      name: 'Motorola Razr 40 Ultra',
-      image: MotorolaRazr40Ultra
-    }
-  ],
+  // Honor: [
+  //   {
+  //     name: 'Honor 50',
+  //     image: Honor50
+  //   },
+  //   {
+  //     name: 'Honor Magic 4 Pro',
+  //     image: HonorMagic4Pro,
+  //   }
+  // ],
+  // Motorola : [
+  //   {
+  //     name: 'Motorola Razr 40 Ultra',
+  //     image: MotorolaRazr40Ultra
+  //   }
+  // ],
   Nothing: [
     {
       name: 'Nothin Phone (1)',
@@ -238,15 +238,15 @@ export const PHONE_IMAGES = {
   ],
   Samsung: [
     {
-      name: 'Samsung Galaxy A13'
+      name: 'Samsung Galaxy A13',
       image: SamsungGalaxyA13
     },
     {
-      name: 'Samsung Galaxy A14'
+      name: 'Samsung Galaxy A14',
       image: SamsungGalaxyA14
     },
     {
-      name: 'Samsung Galaxy A34'
+      name: 'Samsung Galaxy A34',
       image: SamsungGalaxyA34
     },
     {
@@ -254,11 +254,11 @@ export const PHONE_IMAGES = {
       image: SamsungGalaxyA54
     },
     {
-      name: 'Samsung Galaxy M35'
+      name: 'Samsung Galaxy M35',
       image: SamsungGalaxyM35
     },
     {
-      name: 'Samsung Galaxy M55'
+      name: 'Samsung Galaxy M55',
       image: SamsungGalaxyM55
     },
     {
@@ -278,7 +278,7 @@ export const PHONE_IMAGES = {
       image: SamsungGalaxyS24
     },
     {
-      name: 'Samsung Galaxy S24 FE'
+      name: 'Samsung Galaxy S24 FE',
       image: SamsungGalaxyS24FE
     },
     {
@@ -286,11 +286,11 @@ export const PHONE_IMAGES = {
       image: SamsungGalaxyS24Ultra
     },
     {
-      name: 'Samsung Galaxy Z Flip 6'
+      name: 'Samsung Galaxy Z Flip 6',
       image: SamsungGalaxyZFlip6
     },
     {
-      name: 'Samsung Galaxy Z Fold 6'
+      name: 'Samsung Galaxy Z Fold 6',
       image: SamsungGalaxyZFold6
     },
     {
