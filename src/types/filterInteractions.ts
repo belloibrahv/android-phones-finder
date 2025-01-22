@@ -21,7 +21,13 @@ export interface FilterInteractions {
   features: string[];
   batteryLife: string[];
   screenSize: string[];
+  storage: string[];
+  ram: string[];
+  screenResolution: string[];
+  dimensions: string[];
+  releaseYear: string[];
   searchQuery: string;
+  sortBy: string;
   results: FilterInteractionResults[];
 }
 

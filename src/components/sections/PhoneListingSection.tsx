@@ -188,6 +188,39 @@ export const PhoneListingSection = () => {
     setPage(prev => prev + 1);
   };
 
+  // Updated renderPriceFilter function with type safety
+  const renderPriceFilter = () => (
+    <StyledAccordion>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <Typography>PRICE</Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <FormGroup>
+          {FILTER_OPTIONS.priceRanges.map((range) => (
+            <FormControlLabel
+              key={`${range.min}-${range.max}`}
+              control={
+                <Checkbox
+                  checked={
+                    filters.priceRange?.min === range.min && 
+                    filters.priceRange?.max === range.max
+                  }
+                  onChange={() => {
+                    filters.setFilter(
+                      'priceRange',
+                      filters.priceRange?.min === range.min ? null : range
+                    );
+                  }}
+                />
+              }
+              label={range.label}
+            />
+          ))}
+        </FormGroup>
+      </AccordionDetails>
+    </StyledAccordion>
+  );
+
   // Updated renderFilter function with type safety
   const renderFilter = (
     title: string,
@@ -268,6 +301,7 @@ export const PhoneListingSection = () => {
             />
             
             {/* Main Filters - Updated calls */}
+            {renderPriceFilter()}
             {renderFilter('BRAND', FILTER_OPTIONS.brands, 'brand')}
             {renderFilter('PRIMARY CAMERA', FILTER_OPTIONS.primaryCamera, 'primaryCamera')}
             {renderFilter('FEATURES', FILTER_OPTIONS.features, 'features')}
