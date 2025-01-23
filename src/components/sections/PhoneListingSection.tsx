@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Box, 
   Container, 
@@ -30,7 +30,8 @@ import { FilterState, useFilterStore } from '../../store/useFilterStore';
 import { FILTER_OPTIONS, SORT_OPTIONS } from '../../config/constants';
 import { generateMockPhones } from '../../utils/mockData';
 import type { Phone } from '../../types/phone';
-import { useFilterInteractions } from '@/hooks/useFilterInteractions';
+import { initializeFilterInteractions, updateFilterInteractions } from '@/utils/filterInteractions';
+import { FilterInteractionResults } from '@/types/filterInteractions';
 
 const ITEMS_PER_PAGE = 9;
 
@@ -194,6 +195,11 @@ export const PhoneListingSection = () => {
   const [showMoreFilters, setShowMoreFilters] = useState(false);
   const filters = useFilterStore();
 
+  useEffect(() => {
+    // Initialize filter interactions
+    initializeFilterInteractions();
+  }, []);
+
   const { 
     data,
     isLoading,
@@ -202,8 +208,6 @@ export const PhoneListingSection = () => {
     queryKey: ['phones', page, filters, sortOption],
     queryFn: () => fetchPhones(page, filters, sortOption),
   });
-
-  useFilterInteractions(data?.phones || []);
 
   const handleSeeMore = () => {
     setPage(prev => prev + 1);
@@ -231,6 +235,7 @@ export const PhoneListingSection = () => {
                       'priceRange',
                       filters.priceRange?.min === range.min ? null : range
                     );
+                    updateFilterInteractions('priceRange', filters.priceRange, data?.phones || []);
                   }}
                 />
               }
@@ -269,6 +274,7 @@ export const PhoneListingSection = () => {
                         ? currentValues.filter(v => v !== option)
                         : [...currentValues, option];
                       filters.setFilter(filterKey, newValues);
+                      updateFilterInteractions(filterKey, newValues, data?.phones || []);
                     }}
                   />
                 }
@@ -289,7 +295,10 @@ export const PhoneListingSection = () => {
         </Typography>
         <Select
           value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
+          onChange={(e) => {
+            setSortOption(e.target.value);
+            updateFilterInteractions('sortBy', e.target.value, data?.phones || []);
+          }}
           sx={{ minWidth: 200, borderRadius: '24px' }}
         >
           {SORT_OPTIONS.map(option => (
@@ -308,7 +317,10 @@ export const PhoneListingSection = () => {
               fullWidth
               placeholder="Search"
               value={filters.searchQuery}
-              onChange={(e) => filters.setFilter('searchQuery', e.target.value)}
+              onChange={(e) => {
+                filters.setFilter('searchQuery', e.target.value);
+                updateFilterInteractions('searchQuery', e.target.value, data?.phones || []);
+              }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -332,7 +344,10 @@ export const PhoneListingSection = () => {
             {/* Additional Filters */}
             {!showMoreFilters && (
             <MoreFiltersButton
-              onClick={() => setShowMoreFilters(true)}
+              onClick={() => {
+                setShowMoreFilters(true);
+                updateFilterInteractions('showMoreFilters', true, data?.phones || []);
+              }}
             >
               + More Filters
             </MoreFiltersButton>
