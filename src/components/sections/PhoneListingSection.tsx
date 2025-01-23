@@ -18,7 +18,6 @@ import {
   MenuItem,
   InputAdornment,
   IconButton,
-  Collapse,
   styled
 } from '@mui/material';
 import { 
@@ -334,7 +333,6 @@ export const PhoneListingSection = () => {
             {!showMoreFilters && (
             <MoreFiltersButton
               onClick={() => setShowMoreFilters(true)}
-              endIcon={<KeyboardArrowDownIcon />}
             >
               + More Filters
             </MoreFiltersButton>
@@ -427,7 +425,7 @@ export const PhoneListingSection = () => {
               {data && data.totalCount > (page + 1) * ITEMS_PER_PAGE && (
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: 9, borderTop: '2px solid #E5E5E5', paddingTop: 4 }}>
                   <SeeAllButton onClick={handleSeeMore}>
-                    See all
+                    Load More
                   </SeeAllButton>
                 </Box>
               )}
