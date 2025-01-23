@@ -190,7 +190,7 @@ const fetchPhones = async (
 
 export const PhoneListingSection = () => {
   const [page, setPage] = useState(0);
-  const [sortOption, setSortOption] = useState('release-date');src/components/sections/PhoneListingSection.tsx
+  const [sortOption, setSortOption] = useState('release-date');
   const [showMoreFilters, setShowMoreFilters] = useState(false);
   const filters = useFilterStore();
 
