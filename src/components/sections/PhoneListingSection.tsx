@@ -36,6 +36,23 @@ import { useFilterInteractions } from '@/hooks/useFilterInteractions';
 const ITEMS_PER_PAGE = 9;
 
 // Styled Components
+const MoreFiltersButton = styled(Button)(() => ({
+  textTransform: 'none',
+  padding: '8px 24px',
+  fontSize: '1rem',
+  fontWeight: 600,
+  backgroundColor: 'white',
+  color: 'black',
+  '&:hover': {
+    backgroundColor: 'hsl(0, 3.10%, 87.50%)',
+  },
+  display: 'flex',
+  justifyContent: 'flex-start',
+  alignItems: 'left',
+  width: '100%',
+  marginTop: '16px',
+}));
+
 const StyledAccordion = styled(Accordion)(() => ({
   '&.MuiAccordion-root': {
     boxShadow: 'none',
@@ -48,7 +65,7 @@ const StyledAccordion = styled(Accordion)(() => ({
     margin: '12px 0',
   },
   '& .MuiTypography-root': {
-    fontWeight: 600,
+    fontWeight: 500,
   },
 }));
 
@@ -81,12 +98,17 @@ const SeeAllButton = styled(Button)(() => ({
 
 const SearchTextField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
-    borderRadius: '24px',
     '& fieldset': {
+      borderWidth: '0 0 1px 0',
       borderColor: '#E5E5E5',
     },
     '&:hover fieldset': {
       borderColor: '#1C1C1C',
+      borderWidth: '0 0 1px 0',
+    },
+    '&:focus fieldset': {
+      borderColor: '#1C1C1C',
+      borderWidth: '0 0 1px 0',
     },
   },
 });
@@ -260,15 +282,6 @@ export const PhoneListingSection = () => {
     );
   };
 
-  const additionalFilterKeys: (keyof Omit<FilterState, 'setFilter' | 'resetFilters' | 'priceRange' | 'searchQuery'>)[] = [
-    'storage',
-    'ram',
-    'screenResolution',
-    'dimensions',
-    'releaseYear'
-  ];
-
-
   return (
     <Container maxWidth="lg" sx={{ mt: 8 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
@@ -319,15 +332,13 @@ export const PhoneListingSection = () => {
             
             {/* Additional Filters */}
             {!showMoreFilters && (
-              <Button
-                fullWidth
-                onClick={() => setShowMoreFilters(true)}
-                endIcon={<KeyboardArrowDownIcon />}
-                sx={{ mt: 2, textTransform: 'none' }}
-              >
-                + More Filters
-              </Button>
-            )}
+            <MoreFiltersButton
+              onClick={() => setShowMoreFilters(true)}
+              endIcon={<KeyboardArrowDownIcon />}
+            >
+              + More Filters
+            </MoreFiltersButton>
+          )}
 
             {/* Additional Filters in Continuous Flow */}
             {showMoreFilters && (
