@@ -31,7 +31,6 @@ import { FILTER_OPTIONS, SORT_OPTIONS } from '../../config/constants';
 import { generateMockPhones } from '../../utils/mockData';
 import type { Phone } from '../../types/phone';
 import { initializeFilterInteractions, updateFilterInteractions } from '@/utils/filterInteractions';
-import { FilterInteractionResults } from '@/types/filterInteractions';
 
 const ITEMS_PER_PAGE = 9;
 
@@ -121,7 +120,7 @@ const fetchPhones = async (
 ): Promise<{ phones: Phone[]; totalCount: number }> => {
   await new Promise(resolve => setTimeout(resolve, 800));
 
-  let filteredPhones = generateMockPhones(50);
+  let filteredPhones = generateMockPhones();
 
   // Apply filters
   if (filters.searchQuery) {
@@ -178,7 +177,6 @@ const fetchPhones = async (
     case 'price-desc':
       filteredPhones.sort((a, b) => b.price - a.price);
       break;
-
   }
 
   const start = page * ITEMS_PER_PAGE;
@@ -192,7 +190,7 @@ const fetchPhones = async (
 
 export const PhoneListingSection = () => {
   const [page, setPage] = useState(0);
-  const [sortOption, setSortOption] = useState('price-asc');
+  const [sortOption, setSortOption] = useState('release-date');src/components/sections/PhoneListingSection.tsx
   const [showMoreFilters, setShowMoreFilters] = useState(false);
   const filters = useFilterStore();
 
