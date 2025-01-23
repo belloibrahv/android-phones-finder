@@ -5,7 +5,7 @@ import { FilterInteractionResults } from '@/types/filterInteractions';
 
 export const useFilterInteractions = (filteredResults: FilterInteractionResults[]) => {
   const filters = useFilterStore();
-  const [sortOption, setSortOption] = useState('price-asc');
+  const [sortOption, setSortOption] = useState('release-date');
 
   useEffect(() => {
     // Initialize filter interactions

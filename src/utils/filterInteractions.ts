@@ -20,7 +20,7 @@ export const initializeFilterInteractions = () => {
       dimensions: [],
       releaseYear: [],
       searchQuery: '',
-      sortBy: 'price-asc',
+      sortBy: 'release-date',
       results: []
     };
   }

@@ -169,15 +169,16 @@ const fetchPhones = async (
 
   // Apply sorting
   switch (sortOption) {
+    case 'release-date':
+      filteredPhones.sort((a, b) => b.releaseYear - a.releaseYear);
+      break;
     case 'price-asc':
       filteredPhones.sort((a, b) => a.price - b.price);
       break;
     case 'price-desc':
       filteredPhones.sort((a, b) => b.price - a.price);
       break;
-    case 'release-date':
-      filteredPhones.sort((a, b) => b.releaseYear - a.releaseYear);
-      break;
+
   }
 
   const start = page * ITEMS_PER_PAGE;
