@@ -260,6 +260,15 @@ export const PhoneListingSection = () => {
     );
   };
 
+  const additionalFilterKeys: (keyof Omit<FilterState, 'setFilter' | 'resetFilters' | 'priceRange' | 'searchQuery'>)[] = [
+    'storage',
+    'ram',
+    'screenResolution',
+    'dimensions',
+    'releaseYear'
+  ];
+
+
   return (
     <Container maxWidth="lg" sx={{ mt: 8 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
@@ -300,32 +309,36 @@ export const PhoneListingSection = () => {
               sx={{ mb: 3 }}
             />
             
-            {/* Main Filters - Updated calls */}
+            {/* Main Filters */}
             {renderPriceFilter()}
             {renderFilter('BRAND', FILTER_OPTIONS.brands, 'brand')}
             {renderFilter('PRIMARY CAMERA', FILTER_OPTIONS.primaryCamera, 'primaryCamera')}
             {renderFilter('FEATURES', FILTER_OPTIONS.features, 'features')}
             {renderFilter('BATTERY LIFE', FILTER_OPTIONS.batteryLife, 'batteryLife')}
             {renderFilter('SCREEN SIZE', FILTER_OPTIONS.screenSizes, 'screenSize')}
-              
-            {/* More Filters Button */}
-            <Button
-              fullWidth
-              onClick={() => setShowMoreFilters(!showMoreFilters)}
-              endIcon={<KeyboardArrowDownIcon />}
-              sx={{ mt: 2, textTransform: 'none' }}
-            >
-              + More Filters
-            </Button>
+            
+            {/* Additional Filters */}
+            {!showMoreFilters && (
+              <Button
+                fullWidth
+                onClick={() => setShowMoreFilters(true)}
+                endIcon={<KeyboardArrowDownIcon />}
+                sx={{ mt: 2, textTransform: 'none' }}
+              >
+                + More Filters
+              </Button>
+            )}
 
-            {/* Additional Filters - Updated calls */}
-            <Collapse in={showMoreFilters}>
-              {renderFilter('STORAGE', FILTER_OPTIONS.storage, 'storage')}
-              {renderFilter('RAM', FILTER_OPTIONS.ram, 'ram')}
-              {renderFilter('SCREEN RESOLUTION', FILTER_OPTIONS.screenResolution, 'screenResolution')}
-              {renderFilter('DIMENSIONS', FILTER_OPTIONS.dimensions, 'dimensions')}
-              {renderFilter('RELEASE YEAR', FILTER_OPTIONS.releaseYears.map(String), 'releaseYear')}
-            </Collapse>
+            {/* Additional Filters in Continuous Flow */}
+            {showMoreFilters && (
+              <>
+                {renderFilter('STORAGE', FILTER_OPTIONS.storage, 'storage')}
+                {renderFilter('RAM', FILTER_OPTIONS.ram, 'ram')}
+                {renderFilter('SCREEN RESOLUTION', FILTER_OPTIONS.screenResolution, 'screenResolution')}
+                {renderFilter('DIMENSIONS', FILTER_OPTIONS.dimensions, 'dimensions')}
+                {renderFilter('RELEASE YEAR', FILTER_OPTIONS.releaseYears.map(String), 'releaseYear')}
+              </>
+            )}
           </Box>
         </Grid>
 
