@@ -31,17 +31,23 @@ export const updateFilterInteractions = <T>(
   value: T,
   results: FilterInteractionResults[]
 ) => {
-  if (window.filterInteractions) {
-    window.filterInteractions = {
-      ...window.filterInteractions,
-      [filterName]: value,
-      results
-    };
-    
-    // Store in sessionStorage
+  if (!window.filterInteractions) {
+    initializeFilterInteractions();
+  }
+
+  window.filterInteractions = {
+    ...window.filterInteractions,
+    [filterName]: value,
+    results
+  };
+
+  // Robust sessionStorage management
+  try {
     sessionStorage.setItem(
       'filterInteractions',
       JSON.stringify(window.filterInteractions)
     );
+  } catch (error) {
+    console.error('Failed to save filter interactions', error);
   }
 };

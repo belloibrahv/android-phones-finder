@@ -10,8 +10,8 @@ export interface Phone {
   imageUrl: string;
   isNew: boolean;
   dimensions: string;
-  storage: string;
-  ram: string;
+  storage: string[];
+  ram: string[];
   screenResolution: string;
   releaseYear: number;
 }
