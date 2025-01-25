@@ -23,7 +23,8 @@ import {
 import { 
   ExpandMore as ExpandMoreIcon,
   Search as SearchIcon,
-  KeyboardArrowDown as KeyboardArrowDownIcon 
+  KeyboardArrowDown as KeyboardArrowDownIcon,
+  Close as CloseIcon
 } from '@mui/icons-material';
 import { useFilterStore } from '../../store/useFilterStore';
 import { FILTER_OPTIONS, SORT_OPTIONS } from '../../config/constants';
@@ -31,6 +32,7 @@ import { usePhoneFiltering } from '../../hooks/usePhoneFiltering';
 import { useFilterInteractions } from '../../hooks/useFilterInteractions';
 import { initializeFilterInteractions, updateFilterInteractions } from '@/utils/filterInteractions';
 import type { Phone } from '../../types/phone';
+
 
 // Styled Components
 const MoreFiltersButton = styled(Button)(() => ({
@@ -110,6 +112,16 @@ const SearchTextField = styled(TextField)({
   },
 });
 
+const ClearFilterButton = styled(IconButton)(() => ({
+  backgroundColor: 'hsl(0, 3.10%, 87.50%)',
+  color: '#666',
+  '&:hover': {
+    backgroundColor: '#1C1C1C',
+    color: 'white',
+  },
+  marginLeft: '8px',
+}));
+
 export const PhoneListingSection = () => {
   const filters = useFilterStore();
   const [sortOption, setSortOption] = useState('release-date');
@@ -175,24 +187,34 @@ export const PhoneListingSection = () => {
       <AccordionDetails>
         <FormGroup>
           {FILTER_OPTIONS.priceRanges.map((range) => (
-            <FormControlLabel
-              key={`${range.min}-${range.max}`}
-              control={
-                <Checkbox
-                  checked={
-                    filters.priceRange?.min === range.min && 
-                    filters.priceRange?.max === range.max
-                  }
-                  onChange={() => {
-                    filters.setFilter(
-                      'priceRange',
-                      filters.priceRange?.min === range.min ? null : range
-                    );
+            <Box key={`${range.min}-${range.max}`} sx={{ display: 'flex', alignItems: 'center' }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={
+                      filters.priceRange?.min === range.min && 
+                      filters.priceRange?.max === range.max
+                    }
+                    onChange={() => {
+                      filters.setFilter(
+                        'priceRange',
+                        filters.priceRange?.min === range.min ? null : range
+                      );
+                    }}
+                  />
+                }
+                label={range.label}
+              />
+              {filters.priceRange?.min === range.min && filters.priceRange?.max === range.max && (
+                <ClearFilterButton
+                  onClick={() => {
+                    filters.setFilter('priceRange', null);
                   }}
-                />
-              }
-              label={range.label}
-            />
+                >
+                  <CloseIcon />
+                </ClearFilterButton>
+              )}
+            </Box>
           ))}
         </FormGroup>
       </AccordionDetails>
@@ -214,21 +236,32 @@ export const PhoneListingSection = () => {
         <AccordionDetails>
           <FormGroup>
             {options.map((option) => (
-              <FormControlLabel
-                key={option}
-                control={
-                  <Checkbox
-                    checked={currentValues.includes(option)}
-                    onChange={() => {
-                      const newValues = currentValues.includes(option)
-                        ? currentValues.filter(v => v !== option)
-                        : [...currentValues, option];
+              <Box key={option} sx={{ display: 'flex', alignItems: 'center' }}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={currentValues.includes(option)}
+                      onChange={() => {
+                        const newValues = currentValues.includes(option)
+                          ? currentValues.filter(v => v !== option)
+                          : [...currentValues, option];
+                        filters.setFilter(filterKey, newValues);
+                      }}
+                    />
+                  }
+                  label={option}
+                />
+                {currentValues.includes(option) && (
+                  <ClearFilterButton
+                    onClick={() => {
+                      const newValues = currentValues.filter(v => v !== option);
                       filters.setFilter(filterKey, newValues);
                     }}
-                  />
-                }
-                label={option}
-              />
+                  >
+                    <CloseIcon />
+                  </ClearFilterButton>
+                )}
+              </Box>
             ))}
           </FormGroup>
         </AccordionDetails>
