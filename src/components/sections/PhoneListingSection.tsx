@@ -124,7 +124,12 @@ const ClearFilterButton = styled(IconButton)(() => ({
 
 export const PhoneListingSection = () => {
   const filters = useFilterStore();
-  const [sortOption, setSortOption] = useState('release-date');
+  const { 
+    sortOption, 
+    setSortOption, 
+    filteredResults, 
+    updateFilteredResults 
+  } = useFilterInteractions();
   const [showMoreFilters, setShowMoreFilters] = useState(false);
   
   const {
@@ -135,11 +140,6 @@ export const PhoneListingSection = () => {
     isLoading,
     isError
   } = usePhoneFiltering(sortOption);
-
-  const { 
-    filteredResults, 
-    updateFilteredResults 
-  } = useFilterInteractions();
 
   useEffect(() => {
     // Initialize filter interactions
@@ -176,7 +176,15 @@ export const PhoneListingSection = () => {
 
   const handleSortChange = (value: string) => {
     setSortOption(value);
-    updateFilterInteractions('sortBy', value, filteredResults);
+    
+    // Update window.filterInteractions
+    if (window.filterInteractions) {
+      window.filterInteractions.sortBy = value;
+      sessionStorage.setItem(
+        'filterInteractions', 
+        JSON.stringify(window.filterInteractions)
+      );
+    }
   };
 
   const renderPriceFilter = () => (
@@ -277,7 +285,7 @@ export const PhoneListingSection = () => {
         </Typography>
         <Select
           value={sortOption}
-          onChange={(e) => handleSortChange(e.target.value)}
+          onChange={(e) => handleSortChange(e.target.value as string)}
           sx={{ minWidth: 200, borderRadius: '24px' }}
         >
           {SORT_OPTIONS.map(option => (

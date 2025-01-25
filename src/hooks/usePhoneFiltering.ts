@@ -27,8 +27,25 @@ const filterPhones = (phones: Phone[], filters: ReturnType<typeof useFilterStore
     const matchesScreenSize = filters.screenSize.length === 0 ||
       filters.screenSize.includes(phone.screenSize);
 
+      const matchesStorage = filters.storage.length === 0 ||
+      filters.storage.some(storage => phone.storage.includes(storage));
+    
+    const matchesRam = filters.ram.length === 0 ||
+      filters.ram.includes(phone.ram[0]);
+    
+    const matchesScreenResolution = filters.screenResolution.length === 0 ||
+      filters.screenResolution.includes(phone.screenResolution);
+    
+    const matchesDimensions = filters.dimensions.length === 0 ||
+      filters.dimensions.includes(phone.dimensions);
+    
+    const matchesReleaseYear = filters.releaseYear.length === 0 ||
+      filters.releaseYear.includes(phone.releaseYear.toString());
+
     return matchesSearch && matchesBrand && matchesPrice && 
-           matchesCamera && matchesFeatures && matchesBattery && matchesScreenSize;
+           matchesCamera && matchesFeatures && matchesBattery && 
+           matchesScreenSize && matchesStorage && matchesRam &&
+           matchesScreenResolution && matchesDimensions && matchesReleaseYear;
   });
 };
 

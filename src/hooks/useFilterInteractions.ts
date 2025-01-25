@@ -34,20 +34,26 @@ export const useFilterInteractions = (initialResults: FilterInteractionResults[]
 
   // Method to update filtered results
   const updateFilteredResults = (newResults: FilterInteractionResults[]) => {
-    setFilteredResults(prevResults => {
-      // Combine existing results with new results, avoiding duplicates
-      const combinedResults = [
-        ...prevResults,
-        ...newResults.filter(newResult => 
-          !prevResults.some(existingResult => existingResult.id === newResult.id)
-        )
-      ];
-
-      // Update filter interactions with combined results
-      updateFilterInteractions('results', combinedResults, combinedResults);
-
-      return combinedResults;
-    });
+    try {
+      setFilteredResults(prevResults => {
+        const combinedResults = [
+          ...prevResults,
+          ...newResults.filter(newResult => 
+            !prevResults.some(existingResult => existingResult.id === newResult.id)
+          )
+        ];
+        
+        // Additional validation
+        if (combinedResults.length > 0) {
+          updateFilterInteractions('results', combinedResults, combinedResults);
+        }
+        
+        return combinedResults;
+      });
+    } catch (error) {
+      console.error('Failed to update filtered results:', error);
+      // Optional: Add error handling mechanism
+    }
   };
 
   useEffect(() => {
