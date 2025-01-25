@@ -25,14 +25,12 @@ import {
   Search as SearchIcon,
   KeyboardArrowDown as KeyboardArrowDownIcon 
 } from '@mui/icons-material';
-import { useQuery } from '@tanstack/react-query';
-import { FilterState, useFilterStore } from '../../store/useFilterStore';
+import { useFilterStore } from '../../store/useFilterStore';
 import { FILTER_OPTIONS, SORT_OPTIONS } from '../../config/constants';
-import { generateMockPhones } from '../../utils/mockData';
-import type { Phone } from '../../types/phone';
+import { usePhoneFiltering } from '../../hooks/usePhoneFiltering';
+import { useFilterInteractions } from '../../hooks/useFilterInteractions';
 import { initializeFilterInteractions, updateFilterInteractions } from '@/utils/filterInteractions';
-
-const ITEMS_PER_PAGE = 9;
+import type { Phone } from '../../types/phone';
 
 // Styled Components
 const MoreFiltersButton = styled(Button)(() => ({
@@ -112,107 +110,63 @@ const SearchTextField = styled(TextField)({
   },
 });
 
-// Mock API call
-const fetchPhones = async (
-  page: number,
-  filters: ReturnType<typeof useFilterStore.getState>,
-  sortOption: string
-): Promise<{ phones: Phone[]; totalCount: number }> => {
-  await new Promise(resolve => setTimeout(resolve, 800));
-
-  let filteredPhones = generateMockPhones();
-
-  // Apply filters
-  if (filters.searchQuery) {
-    filteredPhones = filteredPhones.filter(phone => 
-      phone.name.toLowerCase().includes(filters.searchQuery.toLowerCase())
-    );
-  }
-
-  if (filters.brand.length > 0) {
-    filteredPhones = filteredPhones.filter(phone => 
-      filters.brand.includes(phone.brand)
-    );
-  }
-
-  if (filters.priceRange) {
-    filteredPhones = filteredPhones.filter(phone => 
-      phone.price >= filters.priceRange!.min && 
-      phone.price <= filters.priceRange!.max
-    );
-  }
-
-  if (filters.primaryCamera.length > 0) {
-    filteredPhones = filteredPhones.filter(phone => 
-      filters.primaryCamera.includes(phone.primaryCamera)
-    );
-  }
-
-  if (filters.features.length > 0) {
-    filteredPhones = filteredPhones.filter(phone => 
-      filters.features.every(feature => phone.features.includes(feature))
-    );
-  }
-
-  if (filters.batteryLife.length > 0) {
-    filteredPhones = filteredPhones.filter(phone => 
-      filters.batteryLife.includes(phone.batteryLife)
-    );
-  }
-
-  if (filters.screenSize.length > 0) {
-    filteredPhones = filteredPhones.filter(phone => 
-      filters.screenSize.includes(phone.screenSize)
-    );
-  }
-
-  // Apply sorting
-  switch (sortOption) {
-    case 'release-date':
-      filteredPhones.sort((a, b) => b.releaseYear - a.releaseYear);
-      break;
-    case 'price-asc':
-      filteredPhones.sort((a, b) => a.price - b.price);
-      break;
-    case 'price-desc':
-      filteredPhones.sort((a, b) => b.price - a.price);
-      break;
-  }
-
-  const start = page * ITEMS_PER_PAGE;
-  const paginatedPhones = filteredPhones.slice(start, start + ITEMS_PER_PAGE);
-  
-  return {
-    phones: paginatedPhones,
-    totalCount: filteredPhones.length
-  };
-};
-
 export const PhoneListingSection = () => {
-  const [page, setPage] = useState(0);
+  const filters = useFilterStore();
   const [sortOption, setSortOption] = useState('release-date');
   const [showMoreFilters, setShowMoreFilters] = useState(false);
-  const filters = useFilterStore();
+  
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError
+  } = usePhoneFiltering(sortOption);
+
+  const { 
+    filteredResults, 
+    updateFilteredResults 
+  } = useFilterInteractions();
 
   useEffect(() => {
     // Initialize filter interactions
     initializeFilterInteractions();
   }, []);
 
-  const { 
-    data,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ['phones', page, filters, sortOption],
-    queryFn: () => fetchPhones(page, filters, sortOption),
-  });
+  // Flatten the pages to get all phones
+  const allPhones = data?.pages.flatMap(page => page.phones) || [];
 
-  const handleSeeMore = () => {
-    setPage(prev => prev + 1);
+  // Update filtered results when phones change
+  useEffect(() => {
+    if (allPhones.length > 0) {
+      const phoneResults = allPhones.map(phone => ({
+        id: phone.id,
+        name: phone.name,
+        brand: phone.brand,
+        price: phone.price,
+        primaryCamera: phone.primaryCamera,
+        features: phone.features,
+        batteryLife: phone.batteryLife,
+        screenSize: phone.screenSize,
+        imageUrl: phone.imageUrl,
+        isNew: true
+      }));
+      updateFilteredResults(phoneResults);
+    }
+  }, [allPhones]);
+
+  const handleLoadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
   };
 
-  // Updated renderPriceFilter function with type safety
+  const handleSortChange = (value: string) => {
+    setSortOption(value);
+    updateFilterInteractions('sortBy', value, filteredResults);
+  };
+
   const renderPriceFilter = () => (
     <StyledAccordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -234,7 +188,6 @@ export const PhoneListingSection = () => {
                       'priceRange',
                       filters.priceRange?.min === range.min ? null : range
                     );
-                    updateFilterInteractions('priceRange', filters.priceRange, data?.phones || []);
                   }}
                 />
               }
@@ -246,13 +199,11 @@ export const PhoneListingSection = () => {
     </StyledAccordion>
   );
 
-  // Updated renderFilter function with type safety
   const renderFilter = (
     title: string,
     options: readonly string[],
-    filterKey: keyof Omit<FilterState, 'setFilter' | 'resetFilters' | 'priceRange' | 'searchQuery'>
+    filterKey: keyof Omit<ReturnType<typeof useFilterStore.getState>, 'setFilter' | 'resetFilters' | 'priceRange' | 'searchQuery'>
   ) => {
-    // Ensure we have a valid array of values for the filter
     const currentValues = filters[filterKey] || [];
     
     return (
@@ -273,7 +224,6 @@ export const PhoneListingSection = () => {
                         ? currentValues.filter(v => v !== option)
                         : [...currentValues, option];
                       filters.setFilter(filterKey, newValues);
-                      updateFilterInteractions(filterKey, newValues, data?.phones || []);
                     }}
                   />
                 }
@@ -294,10 +244,7 @@ export const PhoneListingSection = () => {
         </Typography>
         <Select
           value={sortOption}
-          onChange={(e) => {
-            setSortOption(e.target.value);
-            updateFilterInteractions('sortBy', e.target.value, data?.phones || []);
-          }}
+          onChange={(e) => handleSortChange(e.target.value)}
           sx={{ minWidth: 200, borderRadius: '24px' }}
         >
           {SORT_OPTIONS.map(option => (
@@ -318,7 +265,6 @@ export const PhoneListingSection = () => {
               value={filters.searchQuery}
               onChange={(e) => {
                 filters.setFilter('searchQuery', e.target.value);
-                updateFilterInteractions('searchQuery', e.target.value, data?.phones || []);
               }}
               InputProps={{
                 endAdornment: (
@@ -342,24 +288,21 @@ export const PhoneListingSection = () => {
             
             {/* Additional Filters */}
             {!showMoreFilters && (
-            <MoreFiltersButton
-              onClick={() => {
-                setShowMoreFilters(true);
-                updateFilterInteractions('showMoreFilters', true, data?.phones || []);
-              }}
-            >
-              + More Filters
-            </MoreFiltersButton>
-          )}
+              <MoreFiltersButton
+                onClick={() => setShowMoreFilters(true)}
+              >
+                + More Filters
+              </MoreFiltersButton>
+            )}
 
             {/* Additional Filters in Continuous Flow */}
             {showMoreFilters && (
               <>
-                {renderFilter('STORAGE', FILTER_OPTIONS.storage, 'storage')}
-                {renderFilter('RAM', FILTER_OPTIONS.ram, 'ram')}
-                {renderFilter('SCREEN RESOLUTION', FILTER_OPTIONS.screenResolution, 'screenResolution')}
-                {renderFilter('DIMENSIONS', FILTER_OPTIONS.dimensions, 'dimensions')}
-                {renderFilter('RELEASE YEAR', FILTER_OPTIONS.releaseYears.map(String), 'releaseYear')}
+                {renderFilter('STORAGE', FILTER_OPTIONS.storage || [], 'storage')}
+                {renderFilter('RAM', FILTER_OPTIONS.ram || [], 'ram')}
+                {renderFilter('SCREEN RESOLUTION', FILTER_OPTIONS.screenResolution || [], 'screenResolution')}
+                {renderFilter('DIMENSIONS', FILTER_OPTIONS.dimensions || [], 'dimensions')}
+                {renderFilter('RELEASE YEAR', FILTER_OPTIONS.releaseYears ? FILTER_OPTIONS.releaseYears.map(String) : [], 'releaseYear')}
               </>
             )}
           </Box>
@@ -378,7 +321,7 @@ export const PhoneListingSection = () => {
           ) : (
             <>
               <Grid container spacing={2}>
-                {data?.phones.map((phone) => (
+                {allPhones.map((phone: Phone) => (
                   <Grid item xs={12} sm={6} md={4} key={phone.id}>
                     <Card 
                       sx={{ 
@@ -435,11 +378,14 @@ export const PhoneListingSection = () => {
                 ))}
               </Grid>
 
-              {/* See All Button */}
-              {data && data.totalCount > (page + 1) * ITEMS_PER_PAGE && (
+              {/* Load More Button */}
+              {hasNextPage && (
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: 9, borderTop: '2px solid #E5E5E5', paddingTop: 4 }}>
-                  <SeeAllButton onClick={handleSeeMore}>
-                    Load More
+                  <SeeAllButton 
+                    onClick={handleLoadMore} 
+                    disabled={isFetchingNextPage}
+                  >
+                    {isFetchingNextPage ? 'Loading...' : 'Load More'}
                   </SeeAllButton>
                 </Box>
               )}

@@ -3,9 +3,10 @@ import { FilterState, useFilterStore } from '../store/useFilterStore';
 import { initializeFilterInteractions, updateFilterInteractions } from '@/utils/filterInteractions';
 import { FilterInteractionResults } from '@/types/filterInteractions';
 
-export const useFilterInteractions = (filteredResults: FilterInteractionResults[]) => {
+export const useFilterInteractions = (initialResults: FilterInteractionResults[] = []) => {
   const filters = useFilterStore();
   const [sortOption, setSortOption] = useState('release-date');
+  const [filteredResults, setFilteredResults] = useState<FilterInteractionResults[]>(initialResults);
 
   useEffect(() => {
     // Initialize filter interactions
@@ -24,9 +25,30 @@ export const useFilterInteractions = (filteredResults: FilterInteractionResults[
         if (key === 'sortBy') {
           setSortOption(value as string);
         }
+        if (key === 'results') {
+          setFilteredResults(value);
+        }
       });
     }
   }, []);
+
+  // Method to update filtered results
+  const updateFilteredResults = (newResults: FilterInteractionResults[]) => {
+    setFilteredResults(prevResults => {
+      // Combine existing results with new results, avoiding duplicates
+      const combinedResults = [
+        ...prevResults,
+        ...newResults.filter(newResult => 
+          !prevResults.some(existingResult => existingResult.id === newResult.id)
+        )
+      ];
+
+      // Update filter interactions with combined results
+      updateFilterInteractions('results', combinedResults, combinedResults);
+
+      return combinedResults;
+    });
+  };
 
   useEffect(() => {
     // Update all filters and results whenever any filter changes
@@ -63,5 +85,10 @@ export const useFilterInteractions = (filteredResults: FilterInteractionResults[
     filteredResults
   ]);
 
-  return { sortOption, setSortOption };
+  return { 
+    sortOption, 
+    setSortOption, 
+    filteredResults, 
+    updateFilteredResults 
+  };
 };

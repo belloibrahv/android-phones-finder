@@ -32,24 +32,42 @@ const filterPhones = (phones: Phone[], filters: ReturnType<typeof useFilterStore
   });
 };
 
-export const usePhoneFiltering = () => {
+const sortPhones = (phones: Phone[], sortOption: string) => {
+  switch (sortOption) {
+    case 'release-date':
+      return [...phones].sort((a, b) => b.releaseYear - a.releaseYear);
+    case 'price-asc':
+      return [...phones].sort((a, b) => a.price - b.price);
+    case 'price-desc':
+      return [...phones].sort((a, b) => b.price - a.price);
+    default:
+      return phones;
+  }
+};
+
+export const usePhoneFiltering = (sortOption: string = 'release-date') => {
   const filters = useFilterStore();
   
   return useInfiniteQuery({
-    queryKey: ['phones', filters],
+    queryKey: ['phones', filters, sortOption],
     queryFn: ({ pageParam = 0 }) => {
       // Simulate API call with our mock data
       const allPhones = generateMockPhones(100); // Generate a large dataset
+      
+      // Apply filters first
       const filteredPhones = filterPhones(allPhones, filters);
+      
+      // Then sort the filtered phones
+      const sortedPhones = sortPhones(filteredPhones, sortOption);
       
       const start = pageParam * ITEMS_PER_PAGE;
       const end = start + ITEMS_PER_PAGE;
-      const page = filteredPhones.slice(start, end);
+      const page = sortedPhones.slice(start, end);
       
       return {
         phones: page,
-        nextPage: end < filteredPhones.length ? pageParam + 1 : undefined,
-        totalPhones: filteredPhones.length
+        nextPage: end < sortedPhones.length ? pageParam + 1 : undefined,
+        totalPhones: sortedPhones.length
       };
     },
     getNextPageParam: (lastPage) => lastPage.nextPage,

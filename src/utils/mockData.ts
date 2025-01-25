@@ -158,8 +158,8 @@ export const MOCK_PHONES: Phone[] = [
     imageUrl: Xiaomi14,
     isNew: true,
     dimensions: 'Standard',
-    storage: '128GB',
-    ram: '8GB',
+    storage: ['128GB'],
+    ram: ['8GB'],
     screenResolution: 'FHD+',
     releaseYear: 2024
   },
