@@ -3,7 +3,9 @@ import { Phone } from '../types/phone';
 // Image Imports
 import GooglePixel6 from '../assets/images/GooglePixel6.jpg';
 import GooglePixel7Pro from '../assets/images/GooglePixel7Pro.jpg';
+import GooglePixel8Pro from '../assets/images/Google Pixel 8a.jpg';
 import GooglePixel9Pro from '../assets/images/GooglePixel9Pro.jpg';
+import GooglePixel10Pro from '../assets/images/Google-Pixel-10.webp';
 
 import SamsungUtraS24 from '../assets/images/Samsung Galaxy S24 Ultra.jpg';
 import SamsungS23Ultra from '../assets/images/Samsung Galaxy S24 Plus.jpg';
@@ -72,6 +74,41 @@ export const MOCK_PHONES: Phone[] = [
     storage: ['128GB', '256GB', '62GB'],
     ram: ['8GB', '32GB'],
     screenResolution: '4K',
+    releaseYear: 2024
+  },
+
+  {
+    id: 'pixel-10-pro-001',
+    name: 'Google Pixel 10 Pro',
+    brand: 'Google',
+    price: 1199,
+    primaryCamera: '64MP',
+    features: ['5G', 'Wireless charging', 'Water resistant', 'Face unlock', 'Fast charging'],
+    batteryLife: 'Over 48 hours',
+    screenSize: 'Over 6.5"',
+    imageUrl: GooglePixel10Pro,
+    isNew: true,
+    dimensions: 'Large',
+    storage: ['128GB', '256GB', '512GB'],
+    ram: ['8GB', '16GB', '32GB'],
+    screenResolution: '4K',
+    releaseYear: 2025
+  },
+  {
+    id: 'pixel-8-001',
+    name: 'Google Pixel 8',
+    brand: 'Google',
+    price: 699,
+    primaryCamera: '50MP',
+    features: ['5G', 'Fast charging', 'Face unlock'],
+    batteryLife: 'Up to 24 hours',
+    screenSize: '6" - 6.5"',
+    imageUrl: GooglePixel8Pro,
+    isNew: true,
+    dimensions: 'Standard',
+    storage: ['128GB', '256GB'],
+    ram: ['8GB', '16GB'],
+    screenResolution: 'QHD+',
     releaseYear: 2024
   },
 
