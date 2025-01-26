@@ -1,9 +1,9 @@
 export const ITEMS_PER_PAGE = 9;
 
 export const SORT_OPTIONS = [
+  { value: 'release-date', label: 'Latest release' },
   { value: 'price-asc', label: 'Price (low - high)' },
   { value: 'price-desc', label: 'Price (high - low)' },
-  { value: 'release-date', label: 'Latest release' }
 ] as const;
 
 export const FILTER_OPTIONS = {

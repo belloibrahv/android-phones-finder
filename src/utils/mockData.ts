@@ -105,21 +105,6 @@ import SamsungGalaxyZFold5 from '../assets/images/SamsungGalaxyZFold5.jpg';
 import SamsungGalaxyZFlip6 from '../assets/images/SamsungGalaxyZFlip6.jpg';
 import SamsungGalaxyZFold6 from '../assets/images/SamsungGalaxyZFold6.jpg';
 
-// import GooglePixel6 from '../assets/images/GooglePixel6.webp';
-// import GooglePixel7Pro from '../assets/images/GooglePixel7Pro.webp';
-// import GooglePixel9Pro from '../assets/images/GooglePixel9Pro.webp';
-
-// import SamsungUtraS24 from '../assets/images/Samsung Galaxy S24 Ultra.jpg';
-// import SamsungS23Ultra from '../assets/images/Samsung Galaxy S24 Plus.jpg';
-// import SamsungA54 from '../assets/images/Samsung Galaxy S24 Plus.jpg';
-
-// import Xiaomi14Ultra from '../assets/images/Xiaomi 14 Ultra.jpg';
-// import Xiaomi14 from '../assets/images/Xiaomi Redmi Note 14 Pro Plus 5G.jpg';
-// import XiaomiRedmiNote13Pro from '../assets/images/Xiaomi Redmi Note 14 Pro Plus 5G.jpg';
-
-// import OnePlus12 from '../assets/images/OnePlus 12.jpg';
-// import OnePlus12R from '../assets/images/OnePlus 12R.jpg';
-// import OnePlus11 from '../assets/images/OnePlus 12.jpg';
 
 import MotorolaEdge40Pro from '../assets/images/Motorola Edge 40 Pro.jpg';
 import MotorolaEdge40 from '../assets/images/Motorola Edge 40 Pro.jpg';
@@ -827,6 +812,7 @@ export const MOCK_PHONES: Phone[] = [
     screenResolution: 'QHD+',
     releaseYear: 2022
   },
+  // Xiaomi Phones
   {
     id: 'Redmi-01',
     name: 'Xiaomi 11T',
@@ -1218,6 +1204,7 @@ export const MOCK_PHONES: Phone[] = [
     screenResolution: 'FHD+',
     releaseYear: 2022
   },
+  // Samsung Phones
   {
     id: 'samsung-01',
     name: 'Samsung Galaxy A04',
@@ -1253,7 +1240,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2021
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-03',
     name: 'Samsung Galaxy A13',
     brand: 'Samsung',
     price: 83,
@@ -1270,7 +1257,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2022
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-04',
     name: 'Samsung Galaxy A14',
     brand: 'Samsung',
     price: 93,
@@ -1287,7 +1274,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2023
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-05',
     name: 'Samsung Galaxy A23',
     brand: 'Samsung',
     price: 199,
@@ -1304,7 +1291,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2022
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-06',
     name: 'Samsung Galaxy A34',
     brand: 'Samsung',
     price: 286,
@@ -1321,7 +1308,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2023
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-07',
     name: 'Samsung Galaxy A54',
     brand: 'Samsung',
     price: 179,
@@ -1338,7 +1325,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2023
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-08',
     name: 'Samsung Galaxy C55',
     brand: 'Samsung',
     price: 286,
@@ -1355,7 +1342,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2024
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-09',
     name: 'Samsung Galaxy F13',
     brand: 'Samsung',
     price: 174,
@@ -1372,7 +1359,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2024
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-10',
     name: 'Samsung Galaxy F55',
     brand: 'Samsung',
     price: 311,
@@ -1389,7 +1376,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2024
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-11',
     name: 'Samsung Galaxy M05',
     brand: 'Samsung',
     price: 73,
@@ -1406,7 +1393,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2024
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-12',
     name: 'Samsung Galaxy M13',
     brand: 'Samsung',
     price: 153,
@@ -1423,7 +1410,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2022
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-13',
     name: 'Samsung Galaxy M14',
     brand: 'Samsung',
     price: 87,
@@ -1440,7 +1427,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2023
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-14',
     name: 'Samsung Galaxy M15',
     brand: 'Samsung',
     price: 144,
@@ -1457,7 +1444,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2024
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-15',
     name: 'Samsung Galaxy M23',
     brand: 'Samsung',
     price: 299,
@@ -1474,7 +1461,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2022
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-16',
     name: 'Samsung Galaxy M55',
     brand: 'Samsung',
     price: 279,
@@ -1491,7 +1478,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2024
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-17',
     name: 'Samsung Galaxy M35',
     brand: 'Samsung',
     price: 201,
@@ -1508,7 +1495,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2024
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-18',
     name: 'Samsung Galaxy S20 FE',
     brand: 'Samsung',
     price: 285,
@@ -1525,7 +1512,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2020
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-19',
     name: 'Samsung Galaxy S23 FE',
     brand: 'Samsung',
     price: 272,
@@ -1542,7 +1529,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2023
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-20',
     name: 'Samsung Galaxy S23 Ultra',
     brand: 'Samsung',
     price: 597,
@@ -1559,7 +1546,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2023
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-21',
     name: 'Samsung Galaxy S24',
     brand: 'Samsung',
     price: 400,
@@ -1576,7 +1563,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2024
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-22',
     name: 'Samsung Galaxy S24 FE',
     brand: 'Samsung',
     price: 425,
@@ -1593,7 +1580,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2024
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-23',
     name: 'Samsung Galaxy S24 Ultra',
     brand: 'Samsung',
     price: 719,
@@ -1610,7 +1597,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2024
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-24',
     name: 'Samsung Galaxy S24 Plus',
     brand: 'Samsung',
     price: 574,
@@ -1627,7 +1614,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2024
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-25',
     name: 'Samsung Galaxy Z Flip 4',
     brand: 'Samsung',
     price: 449,
@@ -1644,7 +1631,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2022
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-26',
     name: 'Samsung Galaxy Z Flip 5',
     brand: 'Samsung',
     price: 399,
@@ -1661,7 +1648,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2023
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-27',
     name: 'Samsung Galaxy Z Flip 6',
     brand: 'Samsung',
     price: 681,
@@ -1678,7 +1665,7 @@ export const MOCK_PHONES: Phone[] = [
     releaseYear: 2024
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-28',
     name: 'Samsung Galaxy Z Fold 4',
     brand: 'Samsung',
     price: 698,
@@ -1689,13 +1676,13 @@ export const MOCK_PHONES: Phone[] = [
     imageUrl: SamsungGalaxyZFold4,
     isNew: false,
     dimensions: 'Compact',
-    storage: ['256GB'],
+    storage: ['256GB', '512GB'],
     ram: ['12GB'],
     screenResolution: 'QHD+',
     releaseYear: 2022
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-29',
     name: 'Samsung Galaxy Z Fold 5',
     brand: 'Samsung',
     price: 1346,
@@ -1706,13 +1693,13 @@ export const MOCK_PHONES: Phone[] = [
     imageUrl: SamsungGalaxyZFold5,
     isNew: false,
     dimensions: 'Large',
-    storage: ['256GB'],
+    storage: ['256GB', '512GB'],
     ram: ['12GB'],
     screenResolution: '4K',
     releaseYear: 2023
   },
   {
-    id: 'samsung-01',
+    id: 'samsung-30',
     name: 'Samsung Galaxy Z Fold 6',
     brand: 'Samsung',
     price: 1244,
@@ -1723,12 +1710,63 @@ export const MOCK_PHONES: Phone[] = [
     imageUrl: SamsungGalaxyZFold6,
     isNew: true,
     dimensions: 'Large',
-    storage: ['256GB'],
+    storage: ['256GB', '512GB'],
     ram: ['12GB'],
     screenResolution: '4K',
     releaseYear: 2024
+  },
+  // Motorola Phones
+  {
+    id: 'motorola-edge-40-pro-001',
+    name: 'Motorola Edge 40 Pro',
+    brand: 'Motorola',
+    price: 699,
+    primaryCamera: '50MP',
+    features: ['5G', 'Water resistant'],
+    batteryLife: 'Up to 24 hours',
+    screenSize: '6" - 6.5"',
+    imageUrl: MotorolaEdge40Pro,
+    isNew: false,
+    dimensions: 'Standard',
+    storage: ['128GB', '256GB', '62GB'],
+    ram: ['8GB', '16GB', '32GB'],
+    screenResolution: 'FHD+',
+    releaseYear: 2023
+  },
+  {
+    id: 'motorola-edge-40-001',
+    name: 'Motorola Edge 40',
+    brand: 'Motorola',
+    price: 549,
+    primaryCamera: '50MP',
+    features: ['5G'],
+    batteryLife: 'Up to 24 hours',
+    screenSize: '6" - 6.5"',
+    imageUrl: MotorolaEdge40,
+    isNew: false,
+    dimensions: 'Standard',
+    storage: ['128GB', '256GB', '62GB'],
+    ram: ['8GB'],
+    screenResolution: 'FHD+',
+    releaseYear: 2023
+  },
+  {
+    id: 'motorola-razr-40-001',
+    name: 'Motorola Razr 40',
+    brand: 'Motorola',
+    price: 599,
+    primaryCamera: '64MP',
+    features: ['5G'],
+    batteryLife: 'Up to 24 hours',
+    screenSize: '6" - 6.5"',
+    imageUrl: MotorolaRazr40,
+    isNew: true,
+    dimensions: 'Compact',
+    storage: ['128GB', '256GB'],
+    ram: ['8GB', '16GB'],
+    screenResolution: 'FHD+',
+    releaseYear: 2024
   }
-  
 ];
 
 export const generateMockPhones = (): Phone[] => {
