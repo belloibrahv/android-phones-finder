@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { FilterState, useFilterStore } from '../store/useFilterStore';
+import {  useFilterStore } from '../store/useFilterStore';
 import { initializeFilterInteractions, updateFilterInteractions } from '@/utils/filterInteractions';
-import { FilterInteractionResults } from '@/types/filterInteractions';
+import { FilterInteractionResults, FilterInteractions } from '@/types/filterInteractions';
 import { generateMockPhones } from '../utils/mockData';
 
 export const useFilterInteractions = (initialResults: FilterInteractionResults[] = []) => {
@@ -16,8 +16,11 @@ export const useFilterInteractions = (initialResults: FilterInteractionResults[]
     if (storedInteractions) {
       const parsed = JSON.parse(storedInteractions);
       Object.entries(parsed).forEach(([key, value]) => {
-        if (key !== 'results' && key !== 'sortBy' && key in filters) {
-          filters.setFilter(key as keyof FilterState, value);
+        if (key !== 'results' && key !== 'sortBy') {
+          filters.setFilter(
+            key as keyof Omit<FilterInteractions, 'results' | 'sortBy'>,
+            value as string | string[] | { min: number; max: number; } | null
+          );
         }
         if (key === 'sortBy') {
           setSortOption(value as string);

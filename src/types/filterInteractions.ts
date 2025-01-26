@@ -9,11 +9,11 @@ export interface FilterInteractionResults {
   screenSize: string;
   imageUrl: string;
   isNew: boolean;
-  dimensions?: string;
-  storage?: string[];
-  ram?: string[];
-  screenResolution?: string;
-  releaseYear?: number;
+  dimensions: string; 
+  storage: string[];   
+  ram: string[];      
+  screenResolution: string;  
+  releaseYear: number;       
 }
 
 export interface FilterInteractions {

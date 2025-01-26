@@ -27,11 +27,11 @@ export const initializeFilterInteractions = () => {
   }
 };
 
-export const updateFilterInteractions = <T>(
+export const updateFilterInteractions = <T extends FilterInteractions[keyof FilterInteractions]>(
   filterName: keyof FilterInteractions,
   value: T,
   allPhones: Phone[]
-) => {
+): FilterInteractionResults[] => {
   if (!window.filterInteractions) {
     initializeFilterInteractions();
   }
@@ -116,7 +116,12 @@ const filterPhones = (phones: Phone[], filters: FilterInteractions): FilterInter
     batteryLife: phone.batteryLife,
     screenSize: phone.screenSize,
     imageUrl: phone.imageUrl,
-    isNew: phone.isNew
+    isNew: phone.isNew,
+    dimensions: phone.dimensions,   
+    storage: phone.storage,
+    ram: phone.ram,
+    screenResolution: phone.screenResolution,
+    releaseYear: phone.releaseYear
   }));
 };
 

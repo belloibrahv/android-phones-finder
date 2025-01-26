@@ -32,8 +32,8 @@ import { usePhoneFiltering } from '../../hooks/usePhoneFiltering';
 import { useFilterInteractions } from '../../hooks/useFilterInteractions';
 import { initializeFilterInteractions, updateFilterInteractions } from '@/utils/filterInteractions';
 import type { Phone } from '../../types/phone';
-import { FilterInteractions } from '@/types/filterInteractions';
 import { generateMockPhones } from '@/utils/mockData';
+import { FilterInteractions } from '@/types/filterInteractions';
 
 
 // Styled Components
@@ -129,7 +129,7 @@ export const PhoneListingSection = () => {
   const {
     sortOption,
     setSortOption,
-    filteredResults,
+    // filteredResults,
     updateFilteredResults
   } = useFilterInteractions();
   const [showMoreFilters, setShowMoreFilters] = useState(false);
@@ -160,10 +160,15 @@ export const PhoneListingSection = () => {
         batteryLife: phone.batteryLife,
         screenSize: phone.screenSize,
         imageUrl: phone.imageUrl,
-        isNew: phone.isNew
+        isNew: phone.isNew,
+        dimensions: phone.dimensions,
+        storage: phone.storage,
+        ram: phone.ram,
+        screenResolution: phone.screenResolution,
+        releaseYear: phone.releaseYear
       }))
-    );
-  }, []);
+      );
+    }, []);
 
   // Flatten the pages to get all phones
   const allPhones = data?.pages.flatMap(page => page.phones) || [];
@@ -178,9 +183,9 @@ export const PhoneListingSection = () => {
     setSortOption(value);
   };
 
-  const handleFilterChange = <T extends keyof FilterInteractions>(
-    filterKey: T, 
-    value: FilterInteractions[T]
+  const handleFilterChange = (
+    filterKey: keyof Omit<FilterInteractions, 'results' | 'sortBy'>,
+    value: any
   ) => {
     filters.setFilter(filterKey, value);
     updateFilterInteractions(filterKey, value, allPhones);
