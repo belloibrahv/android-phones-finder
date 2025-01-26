@@ -25,6 +25,9 @@ import Xiaomi14Pro from '../assets/images/Xiaomi14Pro.jpg';
 import XiaomiRedmiK60Ultra from '../assets/images/XiaomiRedmiK60Ultra.jpg';
 import XiaomiRedmiNote13ProPlus from '../assets/images/XiaomiRedmiNote13ProPlus.jpg';
 import XiaomiCivi4Pro from '../assets/images/XiaomiCivi4Pro.jpg';
+import XiaomiRedmiK70Ultra from '../assets/images/XiaomiRedmiK70Ultra.jpg';
+import Xiaomi14TPro from '../assets/images/Xiaomi14Pro.jpg';
+import XiaomiPad6Max from '../assets/images/XiaomiPad6Max.jpg';
 
 import OnePlus12 from '../assets/images/OnePlus 12.jpg';
 import OnePlus12R from '../assets/images/OnePlus 12R.jpg';
@@ -420,6 +423,59 @@ export const MOCK_PHONES: Phone[] = [
     screenResolution: 'QHD+',
     releaseYear: 2024
   },
+
+  {
+    id: 'xiaomi-14t-pro-001',
+    name: 'Xiaomi 14T Pro',
+    brand: 'Xiaomi',
+    price: 1099,
+    primaryCamera: '200MP',
+    features: ['5G', 'Fast charging', 'Wireless charging', '120Hz display'],
+    batteryLife: 'Over 48 hours',
+    screenSize: '6.67"',
+    imageUrl: Xiaomi14TPro,
+    isNew: true,
+    dimensions: 'Large',
+    storage: ['256GB', '512GB', '1TB'],
+    ram: ['12GB', '16GB'],
+    screenResolution: '2K AMOLED',
+    releaseYear: 2025
+  },
+  {
+    id: 'redmi-k70-ultra-001',
+    name: 'Xiaomi Redmi K70 Ultra',
+    brand: 'Xiaomi',
+    price: 649,
+    primaryCamera: '64MP + 8MP + 2MP',
+    features: ['5G', 'Fast charging', '120Hz AMOLED display', 'Gaming optimization'],
+    batteryLife: '24-48 hours',
+    screenSize: '6.7"',
+    imageUrl: XiaomiRedmiK70Ultra,
+    isNew: true,
+    dimensions: 'Standard',
+    storage: ['256GB', '512GB'],
+    ram: ['12GB', '16GB'],
+    screenResolution: 'QHD+',
+    releaseYear: 2025
+  },
+  {
+    id: 'xiaomi-pad-6-max-001',
+    name: 'Xiaomi Pad 6 Max (5G)',
+    brand: 'Xiaomi',
+    price: 599,
+    primaryCamera: '13MP',
+    features: ['5G', 'Tablet', 'Fast charging', '120Hz display'],
+    batteryLife: 'Over 72 hours',
+    screenSize: '10.95"',
+    imageUrl: XiaomiPad6Max, 
+    isNew: true,
+    dimensions: 'Large',
+    storage: ['256GB', '512GB'],
+    ram: ['8GB', '16GB'],
+    screenResolution: '2.8K AMOLED',
+    releaseYear: 2025
+  },
+  
 
   // OnePlus Phones
   {
