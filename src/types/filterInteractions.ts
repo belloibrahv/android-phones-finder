@@ -9,13 +9,15 @@ export interface FilterInteractionResults {
   screenSize: string;
   imageUrl: string;
   isNew: boolean;
+  dimensions?: string;
+  storage?: string[];
+  ram?: string[];
+  screenResolution?: string;
+  releaseYear?: number;
 }
 
 export interface FilterInteractions {
-  priceRange: {
-    min_price: number | null;
-    max_price: number | null;
-  };
+  priceRange: { min_price: number | null; max_price: number | null };
   brand: string[];
   primaryCamera: string[];
   features: string[];

@@ -11,24 +11,19 @@ export const useFilterInteractions = (initialResults: FilterInteractionResults[]
   const allPhones = generateMockPhones();
 
   useEffect(() => {
-    // Initialize filter interactions
     initializeFilterInteractions();
-    
-    // Restore filters from session storage
     const storedInteractions = sessionStorage.getItem('filterInteractions');
     if (storedInteractions) {
       const parsed = JSON.parse(storedInteractions);
-      
-      // Restore each filter value
       Object.entries(parsed).forEach(([key, value]) => {
-        if (key !== 'results' && key !== 'sortBy') {
+        if (key !== 'results' && key !== 'sortBy' && key in filters) {
           filters.setFilter(key as keyof FilterState, value);
         }
         if (key === 'sortBy') {
           setSortOption(value as string);
         }
         if (key === 'results') {
-          setFilteredResults(value);
+          setFilteredResults(value as FilterInteractionResults[]);
         }
       });
     }
@@ -38,12 +33,10 @@ export const useFilterInteractions = (initialResults: FilterInteractionResults[]
   const updateFilteredResults = (newResults: FilterInteractionResults[]) => {
     try {
       setFilteredResults(newResults);
-      
-      // Update window.filterInteractions
       if (window.filterInteractions) {
         window.filterInteractions.results = newResults;
         sessionStorage.setItem(
-          'filterInteractions', 
+          'filterInteractions',
           JSON.stringify(window.filterInteractions)
         );
       }
@@ -91,10 +84,10 @@ export const useFilterInteractions = (initialResults: FilterInteractionResults[]
     sortOption
   ]);
 
-  return { 
-    sortOption, 
-    setSortOption, 
-    filteredResults, 
-    updateFilteredResults 
+  return {
+    sortOption,
+    setSortOption,
+    filteredResults,
+    updateFilteredResults
   };
 };
