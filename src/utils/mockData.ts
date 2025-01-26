@@ -1,9 +1,9 @@
 import { Phone } from '../types/phone';
 
 // Image Imports
-import GooglePixel6 from '../assets/images/GooglePixel6.webp';
-import GooglePixel7Pro from '../assets/images/GooglePixel7Pro.webp';
-import GooglePixel9Pro from '../assets/images/GooglePixel9Pro.webp';
+import GooglePixel6 from '../assets/images/GooglePixel6.jpg';
+import GooglePixel7Pro from '../assets/images/GooglePixel7Pro.jpg';
+import GooglePixel9Pro from '../assets/images/GooglePixel9Pro.jpg';
 
 import SamsungUtraS24 from '../assets/images/Samsung Galaxy S24 Ultra.jpg';
 import SamsungS23Ultra from '../assets/images/Samsung Galaxy S24 Plus.jpg';
