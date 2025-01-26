@@ -17,14 +17,6 @@ import GooglePixel9ProXL from '../assets/images/GooglePixel9ProXL.jpg';
 import GooglePixel9ProFold from '../assets/images/GooglePixel9ProFold.jpg';
 import GooglePixelFold from '../assets/images/GooglePixelFold.jpg';
 
-// import Honor50 from '../assets/images/Honor50.webp';
-// import HonorMagic4Pro from '../assets/images/HonorMagic4Pro.webp';
-
-// import MotorolaRazr40Ultra from '../assets/images/MotorolaRazr40Ultra.webp';
-
-import NothingPhone1 from '../assets/images/NothingPhone1.jpg';
-import NothingPhone2 from '../assets/images/NothingPhone2.jpg';
-
 import OnePlus10Pro from '../assets/images/OnePlus10Pro.jpg';
 import OnePlus10T from '../assets/images/OnePlus10T.jpg';
 import OnePlus12 from '../assets/images/OnePlus12.jpg';
@@ -895,7 +887,7 @@ export const MOCK_PHONES: Phone[] = [
     features: ['5G', 'Dual SIM'],
     batteryLife: 'Over 48 hours',
     screenSize: 'over 6.5"',
-    imageUrl: Xiaomi11T,
+    imageUrl: Xiaomi12Pro,
     isNew: false,
     dimensions: 'Large',
     storage: ['128GB', '256GB'],
@@ -1311,7 +1303,6 @@ export const MOCK_PHONES: Phone[] = [
     screenResolution: 'HD+',
     releaseYear: 2022
   },
-  v
   {
     id: 'samsung-01',
     name: 'Samsung Galaxy A34',
@@ -1411,7 +1402,7 @@ export const MOCK_PHONES: Phone[] = [
     dimensions: 'Standard',
     storage: ['64GB'],
     ram: ['4GB'],
-    screenResolution: ,
+    screenResolution: '4K',
     releaseYear: 2024
   },
   {
@@ -1618,7 +1609,6 @@ export const MOCK_PHONES: Phone[] = [
     screenResolution: '4K',
     releaseYear: 2024
   },
-  v
   {
     id: 'samsung-01',
     name: 'Samsung Galaxy S24 Plus',
@@ -1738,16 +1728,6 @@ export const MOCK_PHONES: Phone[] = [
     screenResolution: '4K',
     releaseYear: 2024
   }
-  // Samsung Phones
-  
-
-  // Xiaomi Phones
-  
-
-  // OnePlus Phones
-  
-
-  // Motorola Phones
   
 ];
 
