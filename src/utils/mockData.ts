@@ -4,12 +4,19 @@ import { Phone } from '../types/phone';
 import GooglePixel6 from '../assets/images/GooglePixel6.jpg';
 import GooglePixel7Pro from '../assets/images/GooglePixel7Pro.jpg';
 import GooglePixel8Pro from '../assets/images/Google Pixel 8a.jpg';
+import GooglePixel8 from '../assets/images/GooglePixel8.jpg'
 import GooglePixel9Pro from '../assets/images/GooglePixel9Pro.jpg';
 import GooglePixel10Pro from '../assets/images/Google-Pixel-10.webp';
 
 import SamsungUtraS24 from '../assets/images/Samsung Galaxy S24 Ultra.jpg';
 import SamsungS23Ultra from '../assets/images/Samsung Galaxy S24 Plus.jpg';
 import SamsungA54 from '../assets/images/Samsung Galaxy S24 Plus.jpg';
+import SamsungUtraS25 from '../assets/images/SamsungUtraS25.jpg';
+import SamsungFlip6 from '../assets/images/SamsungFlip6.jpg';
+import SamsungFold6 from '../assets/images/SamsungFold6.jpg';
+import SamsungS24Plus from '../assets/images/SamsungS24Plus.jpg';
+import SamsungA55 from '../assets/images/SamsungA55.jpg';
+import SamsungFlip5 from '../assets/images/SamsungFlip5.jpg';
 
 import Xiaomi14Ultra from '../assets/images/Xiaomi 14 Ultra.jpg';
 import Xiaomi14 from '../assets/images/Xiaomi Redmi Note 14 Pro Plus 5G.jpg';
@@ -103,12 +110,30 @@ export const MOCK_PHONES: Phone[] = [
     features: ['5G', 'Fast charging', 'Face unlock'],
     batteryLife: 'Up to 24 hours',
     screenSize: '6" - 6.5"',
-    imageUrl: GooglePixel8Pro,
+    imageUrl: GooglePixel8,
     isNew: true,
     dimensions: 'Standard',
     storage: ['128GB', '256GB'],
     ram: ['8GB', '16GB'],
     screenResolution: 'QHD+',
+    releaseYear: 2024
+  },
+
+  {
+    id: 'pixel-8-pro-001',
+    name: 'Google Pixel 8 Pro',
+    brand: 'Google',
+    price: 1199,
+    primaryCamera: '50MP',
+    features: ['5G', 'AI-enhanced photography', 'Wireless charging', 'Water resistant'],
+    batteryLife: 'Over 48 hours',
+    screenSize: 'Over 6.5"',
+    imageUrl: GooglePixel8Pro,
+    isNew: true,
+    dimensions: 'Large',
+    storage: ['128GB', '256GB', '512GB', '1TB'],
+    ram: ['12GB', '16GB'],
+    screenResolution: '4K',
     releaseYear: 2024
   },
 
@@ -163,6 +188,110 @@ export const MOCK_PHONES: Phone[] = [
     ram: ['6GB', '8GB'],
     screenResolution: 'FHD+',
     releaseYear: 2023
+  },
+
+  {
+    id: 's25-ultra-001',
+    name: 'Samsung Galaxy S25 Ultra',
+    brand: 'Samsung',
+    price: 1399,
+    primaryCamera: '200MP',
+    features: ['5G', 'Wireless charging', 'Water resistant', 'Dual SIM', 'S Pen'],
+    batteryLife: 'Over 48 hours',
+    screenSize: 'Over 6.5"',
+    imageUrl: SamsungUtraS25,
+    isNew: true,
+    dimensions: 'Large',
+    storage: ['128GB', '256GB', '512GB', '1TB'],
+    ram: ['16GB', '32GB', '64GB'],
+    screenResolution: '4K',
+    releaseYear: 2025
+  },
+  {
+    id: 'galaxy-flip-6-001',
+    name: 'Samsung Galaxy Z Flip 6',
+    brand: 'Samsung',
+    price: 999,
+    primaryCamera: '12MP',
+    features: ['5G', 'Wireless charging', 'Water resistant', 'Foldable'],
+    batteryLife: 'Up to 24 hours',
+    screenSize: '6" - 6.5" (unfolded)',
+    imageUrl: SamsungFlip6,
+    isNew: true,
+    dimensions: 'Compact',
+    storage: ['256GB', '512GB'],
+    ram: ['8GB', '16GB'],
+    screenResolution: 'FHD+',
+    releaseYear: 2024
+  },
+  {
+    id: 'galaxy-fold-6-001',
+    name: 'Samsung Galaxy Z Fold 6',
+    brand: 'Samsung',
+    price: 1799,
+    primaryCamera: '50MP',
+    features: ['5G', 'Wireless charging', 'Water resistant', 'Foldable'],
+    batteryLife: 'Up to 48 hours',
+    screenSize: 'Over 7.5" (unfolded)',
+    imageUrl: SamsungFold6,
+    isNew: true,
+    dimensions: 'Large',
+    storage: ['256GB', '512GB', '1TB'],
+    ram: ['12GB', '16GB', '32GB'],
+    screenResolution: 'QHD+',
+    releaseYear: 2025
+  },
+
+  {
+    id: 's24-plus-001',
+    name: 'Samsung Galaxy S24 Plus',
+    brand: 'Samsung',
+    price: 1099,
+    primaryCamera: '50MP',
+    features: ['5G', 'AI features', 'Wireless charging', 'Water resistant'],
+    batteryLife: 'Over 36 hours',
+    screenSize: 'Over 6.5"',
+    imageUrl: SamsungS24Plus,
+    isNew: true,
+    dimensions: 'Large',
+    storage: ['256GB', '512GB', '1TB'],
+    ram: ['12GB', '16GB'],
+    screenResolution: 'QHD+',
+    releaseYear: 2024
+  },
+  {
+    id: 'galaxy-a55-001',
+    name: 'Samsung Galaxy A55',
+    brand: 'Samsung',
+    price: 499,
+    primaryCamera: '64MP',
+    features: ['5G', 'Water resistant', 'Long battery life'],
+    batteryLife: 'Up to 24 hours',
+    screenSize: '6" - 6.5"',
+    imageUrl: SamsungA55,
+    isNew: true,
+    dimensions: 'Standard',
+    storage: ['128GB', '256GB'],
+    ram: ['6GB', '8GB'],
+    screenResolution: 'FHD+',
+    releaseYear: 2024
+  },
+  {
+    id: 'galaxy-z-flip-5-001',
+    name: 'Samsung Galaxy Z Flip 5',
+    brand: 'Samsung',
+    price: 999,
+    primaryCamera: '12MP',
+    features: ['5G', 'Foldable design', 'Compact', 'Water resistant'],
+    batteryLife: 'Up to 24 hours',
+    screenSize: '6.7" (unfolded)',
+    imageUrl: SamsungFlip5,
+    isNew: true,
+    dimensions: 'Compact',
+    storage: ['256GB', '512GB'],
+    ram: ['8GB', '12GB'],
+    screenResolution: 'FHD+',
+    releaseYear: 2024
   },
 
   // Xiaomi Phones
