@@ -20,7 +20,11 @@ import SamsungFlip5 from '../assets/images/SamsungFlip5.jpg';
 
 import Xiaomi14Ultra from '../assets/images/Xiaomi 14 Ultra.jpg';
 import Xiaomi14 from '../assets/images/Xiaomi Redmi Note 14 Pro Plus 5G.jpg';
-import XiaomiRedmiNote13Pro from '../assets/images/Xiaomi Redmi Note 14 Pro Plus 5G.jpg';
+import XiaomiRedmiNote13Pro from '../assets/images/XiaomiRedmiNote13Pro.jpg';
+import Xiaomi14Pro from '../assets/images/Xiaomi14Pro.jpg';
+import XiaomiRedmiK60Ultra from '../assets/images/XiaomiRedmiK60Ultra.jpg';
+import XiaomiRedmiNote13ProPlus from '../assets/images/XiaomiRedmiNote13ProPlus.jpg';
+import XiaomiCivi4Pro from '../assets/images/XiaomiCivi4Pro.jpg';
 
 import OnePlus12 from '../assets/images/OnePlus 12.jpg';
 import OnePlus12R from '../assets/images/OnePlus 12R.jpg';
@@ -345,6 +349,76 @@ export const MOCK_PHONES: Phone[] = [
     ram: ['8GB', '16GB', '32GB', '64GB', '128GB'],
     screenResolution: 'FHD+',
     releaseYear: 2023
+  },
+
+  {
+    id: 'xiaomi-14-pro-001',
+    name: 'Xiaomi 14 Pro',
+    brand: 'Xiaomi',
+    price: 999,
+    primaryCamera: '50MP + 50MP + 50MP',
+    features: ['5G', 'Wireless charging', 'Fast charging', 'Water resistant'],
+    batteryLife: 'Over 48 hours',
+    screenSize: 'Over 6.5"',
+    imageUrl: Xiaomi14Pro,
+    isNew: true,
+    dimensions: 'Large',
+    storage: ['128GB', '256GB', '512GB', '1TB'],
+    ram: ['12GB', '16GB'],
+    screenResolution: '2K AMOLED',
+    releaseYear: 2024
+  },
+  {
+    id: 'redmi-k60-ultra-001',
+    name: 'Xiaomi Redmi K60 Ultra',
+    brand: 'Xiaomi',
+    price: 599,
+    primaryCamera: '64MP + 8MP + 2MP',
+    features: ['5G', 'Fast charging', '120Hz display'],
+    batteryLife: '24-48 hours',
+    screenSize: '6.67"',
+    imageUrl: XiaomiRedmiK60Ultra,
+    isNew: true,
+    dimensions: 'Standard',
+    storage: ['256GB', '512GB'],
+    ram: ['12GB', '16GB'],
+    screenResolution: '1.5K AMOLED',
+    releaseYear: 2024
+  },
+  {
+    id: 'redmi-note-13-pro-plus-001',
+    name: 'Xiaomi Redmi Note 13 Pro+',
+    brand: 'Xiaomi',
+    price: 399,
+    primaryCamera: '200MP + 8MP + 2MP',
+    features: ['5G', 'Fast charging', '120Hz display'],
+    batteryLife: '24-48 hours',
+    screenSize: '6.67"',
+    imageUrl: XiaomiRedmiNote13ProPlus,
+    isNew: true,
+    dimensions: 'Standard',
+    storage: ['256GB', '512GB'],
+    ram: ['12GB', '16GB'],
+    screenResolution: 'FHD+ AMOLED',
+    releaseYear: 2024
+  },
+
+  {
+    id: 'xiaomi-civi-4-pro-001',
+    name: 'Xiaomi Civi 4 Pro',
+    brand: 'Xiaomi',
+    price: 799,
+    primaryCamera: '50MP',
+    features: ['5G', 'AI photography', 'Slim design', 'Fast charging'],
+    batteryLife: 'Up to 24 hours',
+    screenSize: '6.55"',
+    imageUrl: XiaomiCivi4Pro,
+    isNew: true,
+    dimensions: 'Compact',
+    storage: ['128GB', '256GB', '512GB'],
+    ram: ['8GB', '12GB'],
+    screenResolution: 'QHD+',
+    releaseYear: 2024
   },
 
   // OnePlus Phones
