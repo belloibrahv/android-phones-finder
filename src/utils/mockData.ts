@@ -43,7 +43,7 @@ import SonyXperia1VI from '../assets/images/SonyXperia1VI.jpg';
 import SonyXperia5II from '../assets/images/SonyXperia5II.jpg';
 import SonyXperia5IV from '../assets/images/SonyXperia5IV.jpg';
 import SonyXperia10III from '../assets/images/SonyXperia10III.jpg';
-import SonyXperia10IV from '../assets/images/SonyXperia10W.jpg';
+import SonyXperia10W from '../assets/images/SonyXperia10W.jpg';
 import SonyXperia10V from '../assets/images/SonyXperia10V.jpg';
 import SonyXperia10VI from '../assets/images/SonyXperia10VI.jpg';
 import SonyXperiaProI from '../assets/images/SonyXperiaProI.jpg';
@@ -678,14 +678,14 @@ export const MOCK_PHONES: Phone[] = [
   },
   {
     id: 'sony-04',
-    name: 'Sony Xperia 10IV',
+    name: 'Sony Xperia 10W',
     brand: 'Sony',
     price: 282,
     primaryCamera: '12MP',
     features: ['5G', 'Dual SIM', 'Water resistant'],
     batteryLife: 'Over 48 hours',
     screenSize: '6" - 6.5"',
-    imageUrl: SonyXperia10IV,
+    imageUrl: SonyXperia10W,
     isNew: false,
     dimensions: 'Standard',
     storage: ['128GB'],
