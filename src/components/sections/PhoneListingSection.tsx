@@ -32,6 +32,8 @@ import { usePhoneFiltering } from '../../hooks/usePhoneFiltering';
 import { useFilterInteractions } from '../../hooks/useFilterInteractions';
 import { initializeFilterInteractions, updateFilterInteractions } from '@/utils/filterInteractions';
 import type { Phone } from '../../types/phone';
+import { FilterInteractions } from '@/types/filterInteractions';
+import { generateMockPhones } from '@/utils/mockData';
 
 
 // Styled Components
@@ -124,11 +126,11 @@ const ClearFilterButton = styled(IconButton)(() => ({
 
 export const PhoneListingSection = () => {
   const filters = useFilterStore();
-  const { 
-    sortOption, 
-    setSortOption, 
-    filteredResults, 
-    updateFilteredResults 
+  const {
+    sortOption,
+    setSortOption,
+    filteredResults,
+    updateFilteredResults
   } = useFilterInteractions();
   const [showMoreFilters, setShowMoreFilters] = useState(false);
   
@@ -141,18 +143,14 @@ export const PhoneListingSection = () => {
     isError
   } = usePhoneFiltering(sortOption);
 
+  // Initialize filter interactions on component mount
   useEffect(() => {
-    // Initialize filter interactions
     initializeFilterInteractions();
-  }, []);
-
-  // Flatten the pages to get all phones
-  const allPhones = data?.pages.flatMap(page => page.phones) || [];
-
-  // Update filtered results when phones change
-  useEffect(() => {
-    if (allPhones.length > 0) {
-      const phoneResults = allPhones.map(phone => ({
+    
+    // Populate results with all phones initially
+    const allPhones = generateMockPhones();
+    updateFilteredResults(
+      allPhones.map(phone => ({
         id: phone.id,
         name: phone.name,
         brand: phone.brand,
@@ -162,11 +160,13 @@ export const PhoneListingSection = () => {
         batteryLife: phone.batteryLife,
         screenSize: phone.screenSize,
         imageUrl: phone.imageUrl,
-        isNew: true
-      }));
-      updateFilteredResults(phoneResults);
-    }
-  }, [allPhones]);
+        isNew: phone.isNew
+      }))
+    );
+  }, []);
+
+  // Flatten the pages to get all phones
+  const allPhones = data?.pages.flatMap(page => page.phones) || [];
 
   const handleLoadMore = () => {
     if (hasNextPage) {
@@ -176,16 +176,16 @@ export const PhoneListingSection = () => {
 
   const handleSortChange = (value: string) => {
     setSortOption(value);
-    
-    // Update window.filterInteractions
-    if (window.filterInteractions) {
-      window.filterInteractions.sortBy = value;
-      sessionStorage.setItem(
-        'filterInteractions', 
-        JSON.stringify(window.filterInteractions)
-      );
-    }
   };
+
+  const handleFilterChange = <T extends keyof FilterInteractions>(
+    filterKey: T, 
+    value: FilterInteractions[T]
+  ) => {
+    filters.setFilter(filterKey, value);
+    updateFilterInteractions(filterKey, value, allPhones);
+  };
+
 
   const renderPriceFilter = () => (
     <StyledAccordion>
@@ -284,16 +284,15 @@ export const PhoneListingSection = () => {
           Mobile Phones
         </Typography>
         <Select
-          value={sortOption}
-          onChange={(e) => handleSortChange(e.target.value as string)}
-          sx={{ minWidth: 200, borderRadius: '24px' }}
-        >
-          {SORT_OPTIONS.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </Select>
+        value={sortOption}
+        onChange={(e) => handleSortChange(e.target.value as string)}
+      >
+        {SORT_OPTIONS.map(option => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </Select>
       </Box>
       
       <Grid container spacing={4}>
@@ -304,9 +303,7 @@ export const PhoneListingSection = () => {
               fullWidth
               placeholder="Search"
               value={filters.searchQuery}
-              onChange={(e) => {
-                filters.setFilter('searchQuery', e.target.value);
-              }}
+              onChange={(e) => handleFilterChange('searchQuery', e.target.value)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
