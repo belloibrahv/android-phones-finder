@@ -20,7 +20,37 @@ export interface FilterState {
   resetFilters: () => void;
 }
 
-const initialState = {
+const getInitialState = () => {
+  const storedInteractions = localStorage.getItem('filterInteractions');
+  if (storedInteractions) {
+    try {
+      const parsed = JSON.parse(storedInteractions);
+      return {
+        brand: parsed.brand || [],
+        priceRange: parsed.priceRange?.min_price !== null ? {
+          min: parsed.priceRange.min_price,
+          max: parsed.priceRange.max_price
+        } : null,
+        primaryCamera: parsed.primaryCamera || [],
+        features: parsed.features || [],
+        batteryLife: parsed.batteryLife || [],
+        screenSize: parsed.screenSize || [],
+        storage: parsed.storage || [],
+        ram: parsed.ram || [],
+        screenResolution: parsed.screenResolution || [],
+        dimensions: parsed.dimensions || [],
+        releaseYear: parsed.releaseYear || [],
+        searchQuery: parsed.searchQuery || '',
+      };
+    } catch (error) {
+      console.error('Error parsing stored filter state:', error);
+      return getDefaultState();
+    }
+  }
+  return getDefaultState();
+};
+
+const getDefaultState = () => ({
   brand: [],
   priceRange: null,
   primaryCamera: [],
@@ -33,10 +63,13 @@ const initialState = {
   dimensions: [],
   releaseYear: [],
   searchQuery: '',
-};
+});
 
 export const useFilterStore = create<FilterState>((set) => ({
-  ...initialState,
+  ...getInitialState(),
   setFilter: (key, value) => set((state) => ({ ...state, [key]: value })),
-  resetFilters: () => set(initialState),
+  resetFilters: () => {
+    localStorage.removeItem('filterInteractions');
+    set(getDefaultState());
+  },
 }));

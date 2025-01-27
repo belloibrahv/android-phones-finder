@@ -145,9 +145,24 @@ export const PhoneListingSection = () => {
 
   // Initialize filter interactions on component mount
   useEffect(() => {
-    initializeFilterInteractions();
+    const interactions = initializeFilterInteractions();
     
-    // Populate results with all phones initially
+    // Update store with persisted values if they exist
+    if (interactions) {
+      Object.entries(interactions).forEach(([key, value]) => {
+        if (key !== 'results' && key !== 'sortBy') {
+          filters.setFilter(
+            key as keyof Omit<FilterInteractions, 'results' | 'sortBy'>,
+            value
+          );
+        }
+        if (key === 'sortBy') {
+          setSortOption(value as string);
+        }
+      });
+    }
+    
+    // Initialize results
     const allPhones = generateMockPhones();
     updateFilteredResults(
       allPhones.map(phone => ({
@@ -167,8 +182,8 @@ export const PhoneListingSection = () => {
         screenResolution: phone.screenResolution,
         releaseYear: phone.releaseYear
       }))
-      );
-    }, []);
+    );
+  }, []);
 
   // Flatten the pages to get all phones
   const allPhones = data?.pages.flatMap(page => page.phones) || [];

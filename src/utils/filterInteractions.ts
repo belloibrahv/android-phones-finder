@@ -2,29 +2,41 @@ import { FilterInteractionResults, FilterInteractions } from "@/types/filterInte
 import { Phone } from "@/types/phone";
 
 export const initializeFilterInteractions = () => {
-  // Try to get stored interactions from sessionStorage
-  const storedInteractions = sessionStorage.getItem('filterInteractions');
-  
-  if (storedInteractions) {
-    window.filterInteractions = JSON.parse(storedInteractions);
-  } else {
-    window.filterInteractions = {
-      priceRange: { min_price: null, max_price: null },
-      brand: [],
-      primaryCamera: [],
-      features: [],
-      batteryLife: [],
-      screenSize: [],
-      storage: [],
-      ram: [],
-      screenResolution: [],
-      dimensions: [],
-      releaseYear: [],
-      searchQuery: '',
-      sortBy: 'release-date',
-      results: []
-    };
+  if (!window.filterInteractions) {
+    const storedInteractions = localStorage.getItem('filterInteractions');
+    
+    if (storedInteractions) {
+      try {
+        window.filterInteractions = JSON.parse(storedInteractions);
+      } catch (error) {
+        console.error('Error parsing stored filter interactions:', error);
+        setDefaultInteractions();
+      }
+    } else {
+      setDefaultInteractions();
+    }
   }
+  
+  return window.filterInteractions;
+};
+
+const setDefaultInteractions = () => {
+  window.filterInteractions = {
+    priceRange: { min_price: null, max_price: null },
+    brand: [],
+    primaryCamera: [],
+    features: [],
+    batteryLife: [],
+    screenSize: [],
+    storage: [],
+    ram: [],
+    screenResolution: [],
+    dimensions: [],
+    releaseYear: [],
+    searchQuery: '',
+    sortBy: 'release-date',
+    results: []
+  };
 };
 
 export const updateFilterInteractions = <T extends FilterInteractions[keyof FilterInteractions]>(
@@ -48,14 +60,11 @@ export const updateFilterInteractions = <T extends FilterInteractions[keyof Filt
   // Update results
   window.filterInteractions.results = filteredResults;
 
-  // Robust sessionStorage management
+  // Store in localStorage for persistence
   try {
-    sessionStorage.setItem(
-      'filterInteractions',
-      JSON.stringify(window.filterInteractions)
-    );
+    localStorage.setItem('filterInteractions', JSON.stringify(window.filterInteractions));
   } catch (error) {
-    console.error('Failed to save filter interactions', error);
+    console.error('Failed to save filter interactions:', error);
   }
 
   return filteredResults;
