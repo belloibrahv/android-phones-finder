@@ -21,7 +21,7 @@ export interface FilterState {
 }
 
 const getInitialState = () => {
-  const storedInteractions = localStorage.getItem('filterInteractions');
+  const storedInteractions = sessionStorage.getItem('filterInteractions');
   if (storedInteractions) {
     try {
       const parsed = JSON.parse(storedInteractions);
@@ -66,7 +66,7 @@ export const useFilterStore = create<FilterState>((set) => ({
   ...getInitialState(),
   setFilter: (key, value) => set((state) => ({ ...state, [key]: value })),
   resetFilters: () => {
-    localStorage.removeItem('filterInteractions');
+    sessionStorage.removeItem('filterInteractions');
     set(getDefaultState());
   },
 }));

@@ -3,7 +3,7 @@ import { Phone } from "@/types/phone";
 
 export const initializeFilterInteractions = () => {
   if (!window.filterInteractions) {
-    const storedInteractions = localStorage.getItem('filterInteractions');
+    const storedInteractions = sessionStorage.getItem('filterInteractions');
     
     if (storedInteractions) {
       try {
@@ -60,9 +60,9 @@ export const updateFilterInteractions = <T extends FilterInteractions[keyof Filt
   // Update results
   window.filterInteractions.results = filteredResults;
 
-  // Store in localStorage for persistence
+  // Store in sessionStorage for persistence
   try {
-    localStorage.setItem('filterInteractions', JSON.stringify(window.filterInteractions));
+    sessionStorage.setItem('filterInteractions', JSON.stringify(window.filterInteractions));
   } catch (error) {
     console.error('Failed to save filter interactions:', error);
   }
