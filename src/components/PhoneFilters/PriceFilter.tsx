@@ -5,7 +5,7 @@ import { useFilterStore } from '../../store/useFilterStore';
 
 export const PriceFilter = () => {
   const { priceRange, setFilter } = useFilterStore();
-
+  
   return (
     <Accordion defaultExpanded>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -16,12 +16,17 @@ export const PriceFilter = () => {
           {FILTER_OPTIONS.priceRanges.map((range) => (
             <Box
               key={range.label}
-              onClick={() => setFilter('priceRange', { min: range.min, max: range.max })}
+              onClick={() => {
+                const newPriceRange = priceRange.includes(range.label)
+                  ? priceRange.filter(label => label !== range.label)
+                  : [...priceRange, range.label];
+                setFilter('priceRange', newPriceRange);
+              }}
               sx={{
                 py: 1,
                 px: 2,
                 cursor: 'pointer',
-                bgcolor: priceRange?.min === range.min ? 'action.selected' : 'transparent',
+                bgcolor: priceRange.includes(range.label) ? 'action.selected' : 'transparent',
                 '&:hover': { bgcolor: 'action.hover' },
                 borderRadius: 1,
                 mb: 1

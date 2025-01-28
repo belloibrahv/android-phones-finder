@@ -79,12 +79,19 @@ const filterPhones = (phones: Phone[], filters: FilterInteractions): FilterInter
       filters.brand.includes(phone.brand);
     
       const matchesPrice = filters.priceRange.length === 0 || 
-      filters.priceRange.some(range => {
-        const [minStr, maxStr] = range.split(' - ').map(str => 
-          str.replace('$', '').replace(',', '')
+      filters.priceRange.some((range: string) => {  
+        if (!range.includes('-') && !range.includes('+')) return false;
+        
+        if (range.includes('+')) {
+          const minValue = parseFloat(range.split('+')[0].replace('$', '').replace(',', '').trim());
+          return phone.price >= minValue;
+        }
+
+        const [minStr, maxStr] = range.split('-').map(str => 
+          str.replace('$', '').replace(',', '').trim()
         );
         const min = parseFloat(minStr);
-        const max = maxStr === "+" ? Infinity : parseFloat(maxStr);
+        const max = parseFloat(maxStr);
         return phone.price >= min && phone.price <= max;
       });
     

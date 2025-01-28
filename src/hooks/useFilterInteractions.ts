@@ -19,7 +19,7 @@ export const useFilterInteractions = (initialResults: FilterInteractionResults[]
         if (key !== 'results' && key !== 'sortBy') {
           filters.setFilter(
             key as keyof Omit<FilterInteractions, 'results' | 'sortBy'>,
-            value as string | string[] | { min: number; max: number; } | null
+            value as string[] | string 
           );
         }
         if (key === 'sortBy') {
