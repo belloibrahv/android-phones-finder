@@ -246,7 +246,7 @@ export const PhoneListingSection = () => {
       </AccordionDetails>
     </StyledAccordion>
   );
-  
+
   const renderFilter = (
     title: string,
     options: readonly string[],
@@ -335,8 +335,8 @@ export const PhoneListingSection = () => {
             />
             
             {/* Main Filters */}
-            {renderPriceFilter()}
             {renderFilter('BRAND', FILTER_OPTIONS.brands, 'brand')}
+            {renderPriceFilter()}
             {renderFilter('PRIMARY CAMERA', FILTER_OPTIONS.primaryCamera, 'primaryCamera')}
             {renderFilter('FEATURES', FILTER_OPTIONS.features, 'features')}
             {renderFilter('BATTERY LIFE', FILTER_OPTIONS.batteryLife, 'batteryLife')}
@@ -354,10 +354,10 @@ export const PhoneListingSection = () => {
             {/* Additional Filters in Continuous Flow */}
             {showMoreFilters && (
               <>
+                {renderFilter('DIMENSIONS', FILTER_OPTIONS.dimensions || [], 'dimensions')}
                 {renderFilter('STORAGE', FILTER_OPTIONS.storage || [], 'storage')}
                 {renderFilter('RAM', FILTER_OPTIONS.ram || [], 'ram')}
                 {renderFilter('SCREEN RESOLUTION', FILTER_OPTIONS.screenResolution || [], 'screenResolution')}
-                {renderFilter('DIMENSIONS', FILTER_OPTIONS.dimensions || [], 'dimensions')}
                 {renderFilter('RELEASE YEAR', FILTER_OPTIONS.releaseYears ? FILTER_OPTIONS.releaseYears.map(String) : [], 'releaseYear')}
               </>
             )}
