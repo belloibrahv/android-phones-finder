@@ -49,3 +49,19 @@ export default tseslint.config({
 })
 ```
 # android-phones-finder
+
+
+Method Two (Docker)
+
+1. Build the Docker image:
+   ```bash
+   docker buildx build --platform=linux/amd64 -f ./Dockerfile -t android-phones-shop . --load
+   ```
+2. Run the Docker container:
+   ```bash
+   docker run -p 8080:80 android-phones-shop
+   ```
+3. Access the application at:
+   ```
+   http://localhost:8080
+   ```
