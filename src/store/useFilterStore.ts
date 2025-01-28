@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 export interface FilterState {
   brand: string[];
-  priceRange: { min: number; max: number } | null;
+  priceRange: string[];
   primaryCamera: string[];
   features: string[];
   batteryLife: string[];
@@ -27,10 +27,7 @@ const getInitialState = () => {
       const parsed = JSON.parse(storedInteractions);
       return {
         brand: parsed.brand || [],
-        priceRange: parsed.priceRange?.min_price !== null ? {
-          min: parsed.priceRange.min_price,
-          max: parsed.priceRange.max_price
-        } : null,
+        priceRange: parsed.priceRange || [], // Ensure this is an array
         primaryCamera: parsed.primaryCamera || [],
         features: parsed.features || [],
         batteryLife: parsed.batteryLife || [],
@@ -52,7 +49,7 @@ const getInitialState = () => {
 
 const getDefaultState = () => ({
   brand: [],
-  priceRange: null,
+  priceRange: [],
   primaryCamera: [],
   features: [],
   batteryLife: [],

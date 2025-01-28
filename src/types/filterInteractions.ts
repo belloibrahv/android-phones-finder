@@ -17,7 +17,7 @@ export interface FilterInteractionResults {
 }
 
 export interface FilterInteractions {
-  priceRange: { min_price: number | null; max_price: number | null };
+  priceRange: [];
   brand: string[];
   primaryCamera: string[];
   features: string[];
@@ -50,26 +50,6 @@ export interface FilterInteractionResults {
   screenSize: string;
   imageUrl: string;
   isNew: boolean;
-}
-
-export interface FilterInteractions {
-  priceRange: {
-    min_price: number | null;
-    max_price: number | null;
-  };
-  brand: string[];
-  primaryCamera: string[];
-  features: string[];
-  batteryLife: string[];
-  screenSize: string[];
-  storage: string[];
-  ram: string[];
-  screenResolution: string[];
-  dimensions: string[];
-  releaseYear: string[];
-  searchQuery: string;
-  sortBy: string;
-  results: FilterInteractionResults[];
 }
 
 // Initialize the global variable with proper type checking

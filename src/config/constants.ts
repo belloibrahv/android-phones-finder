@@ -9,10 +9,10 @@ export const SORT_OPTIONS = [
 export const FILTER_OPTIONS = {
   brands: ['Google', 'Samsung', 'Xiaomi', 'OnePlus', 'Motorola'],
   priceRanges: [
-    { label: 'Under $500', min: 0, max: 500 },
-    { label: '$500 - $750', min: 500, max: 750 },
-    { label: '$750 - $1000', min: 750, max: 1000 },
-    { label: 'Over $1000', min: 1000, max: Infinity },
+    { label: '$0 - $500' },
+    { label: '$501 - $1,000' },
+    { label: '$1,001 - $1,500' },
+    { label: '$1,501 +' }
   ],
   primaryCamera: [
     '12MP and under',

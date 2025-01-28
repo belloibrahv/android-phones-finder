@@ -50,10 +50,10 @@ export const useFilterInteractions = (initialResults: FilterInteractionResults[]
 
   useEffect(() => {
     // Convert price range to match FilterInteractions structure
-    const priceRangeForInteractions = filters.priceRange 
-      ? { min_price: filters.priceRange.min, max_price: filters.priceRange.max }
-      : { min_price: null, max_price: null };
-
+    const priceRangeForInteractions = filters.priceRange.length > 0 
+      ? filters.priceRange 
+      : [];
+  
     // Update filter interactions for each filter
     const updatedResults = updateFilterInteractions('priceRange', priceRangeForInteractions, allPhones);
     updateFilterInteractions('brand', filters.brand, allPhones);
@@ -68,7 +68,7 @@ export const useFilterInteractions = (initialResults: FilterInteractionResults[]
     updateFilterInteractions('releaseYear', filters.releaseYear, allPhones);
     updateFilterInteractions('searchQuery', filters.searchQuery, allPhones);
     updateFilterInteractions('sortBy', sortOption, allPhones);
-
+  
     // Update filtered results
     setFilteredResults(updatedResults);
   }, [

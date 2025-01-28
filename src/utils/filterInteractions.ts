@@ -22,7 +22,7 @@ export const initializeFilterInteractions = () => {
 
 const setDefaultInteractions = () => {
   window.filterInteractions = {
-    priceRange: { min_price: null, max_price: null },
+    priceRange: [],
     brand: [],
     primaryCamera: [],
     features: [],
@@ -70,7 +70,6 @@ export const updateFilterInteractions = <T extends FilterInteractions[keyof Filt
   return filteredResults;
 };
 
-// New function to apply all filters
 const filterPhones = (phones: Phone[], filters: FilterInteractions): FilterInteractionResults[] => {
   return phones.filter(phone => {
     const matchesSearch = !filters.searchQuery || 
@@ -79,8 +78,15 @@ const filterPhones = (phones: Phone[], filters: FilterInteractions): FilterInter
     const matchesBrand = filters.brand.length === 0 || 
       filters.brand.includes(phone.brand);
     
-    const matchesPrice = !filters.priceRange.min_price || !filters.priceRange.max_price ||
-      (phone.price >= filters.priceRange.min_price && phone.price <= filters.priceRange.max_price);
+      const matchesPrice = filters.priceRange.length === 0 || 
+      filters.priceRange.some(range => {
+        const [minStr, maxStr] = range.split(' - ').map(str => 
+          str.replace('$', '').replace(',', '')
+        );
+        const min = parseFloat(minStr);
+        const max = maxStr === "+" ? Infinity : parseFloat(maxStr);
+        return phone.price >= min && phone.price <= max;
+      });
     
     const matchesCamera = filters.primaryCamera.length === 0 ||
       filters.primaryCamera.some(camera => 

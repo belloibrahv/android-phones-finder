@@ -215,28 +215,26 @@ export const PhoneListingSection = () => {
       <AccordionDetails>
         <FormGroup>
           {FILTER_OPTIONS.priceRanges.map((range) => (
-            <Box key={`${range.min}-${range.max}`} sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box key={range.label} sx={{ display: 'flex', alignItems: 'center' }}>
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={
-                      filters.priceRange?.min === range.min && 
-                      filters.priceRange?.max === range.max
-                    }
+                    checked={filters.priceRange.includes(range.label)}
                     onChange={() => {
-                      filters.setFilter(
-                        'priceRange',
-                        filters.priceRange?.min === range.min ? null : range
-                      );
+                      const newPriceRange = filters.priceRange.includes(range.label)
+                        ? filters.priceRange.filter(label => label !== range.label)
+                        : [...filters.priceRange, range.label];
+                      handleFilterChange('priceRange', newPriceRange);
                     }}
                   />
                 }
                 label={range.label}
               />
-              {filters.priceRange?.min === range.min && filters.priceRange?.max === range.max && (
+              {filters.priceRange.includes(range.label) && (
                 <ClearFilterButton
                   onClick={() => {
-                    filters.setFilter('priceRange', null);
+                    const newPriceRange = filters.priceRange.filter(label => label !== range.label);
+                    handleFilterChange('priceRange', newPriceRange);
                   }}
                 >
                   <CloseIcon />
@@ -248,7 +246,7 @@ export const PhoneListingSection = () => {
       </AccordionDetails>
     </StyledAccordion>
   );
-
+  
   const renderFilter = (
     title: string,
     options: readonly string[],
