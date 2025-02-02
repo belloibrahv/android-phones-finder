@@ -378,10 +378,10 @@ export const PhoneListingSection = () => {
             <>
               <Grid container spacing={2}>
                 {allPhones.map((phone: Phone) => (
-                  <Grid item xs={12} sm={6} md={4} key={phone.id}>
+                  <Grid item xs={12} sm={6} md={4} key={phone.id} sx={{ mb: 5 }}>
                     <Card 
                       sx={{ 
-                        p: 2, 
+                        p: 2,
                         height: '100%',
                         boxShadow: 'none',
                         border: '1px solid #E5E5E5',
