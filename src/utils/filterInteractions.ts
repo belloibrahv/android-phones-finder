@@ -155,3 +155,12 @@ const compareCamera = (phoneCameraSpec: string, filterCameraSpec: string): boole
   if (filterCameraSpec === 'Over 108MP') return parseInt(phoneCameraSpec) > 108;
   return false;
 };
+
+export const saveAccordionState = (openAccordions: string[]) => {
+  sessionStorage.setItem('openAccordions', JSON.stringify(openAccordions));
+};
+
+export const getAccordionState = (): string[] => {
+  const stored = sessionStorage.getItem('openAccordions');
+  return stored ? JSON.parse(stored) : [];
+};

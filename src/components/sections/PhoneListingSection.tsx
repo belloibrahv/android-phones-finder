@@ -34,7 +34,8 @@ import { initializeFilterInteractions, updateFilterInteractions } from '@/utils/
 import type { Phone } from '../../types/phone';
 import { generateMockPhones } from '@/utils/mockData';
 import { FilterInteractions } from '@/types/filterInteractions';
-
+import { FilterChips } from '../PhoneFilters/FilterChips';
+import { ClearFiltersButton } from '../PhoneFilters/ClearFiltersButton';
 
 // Styled Components
 const MoreFiltersButton = styled(Button)(() => ({
@@ -333,6 +334,11 @@ export const PhoneListingSection = () => {
               }}
               sx={{ mb: 3 }}
             />
+
+            <Box sx={{ width: '100%', mb: 3 }}>
+              <FilterChips />
+              <ClearFiltersButton />
+            </Box>
             
             {/* Main Filters */}
             {renderFilter('BRAND', FILTER_OPTIONS.brands, 'brand')}

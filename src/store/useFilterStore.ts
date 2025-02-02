@@ -64,8 +64,16 @@ const getDefaultState = () => ({
 
 export const useFilterStore = create<FilterState>((set) => ({
   ...getInitialState(),
-  setFilter: (key, value) => set((state) => ({ ...state, [key]: value })),
+  setFilter: (key, value) => {
+    set((state) => {
+      const newState = { ...state, [key]: value };
+      // Persist to sessionStorage
+      sessionStorage.setItem('filterState', JSON.stringify(newState));
+      return newState;
+    });
+  },
   resetFilters: () => {
+    sessionStorage.removeItem('filterState');
     sessionStorage.removeItem('filterInteractions');
     set(getDefaultState());
   },
