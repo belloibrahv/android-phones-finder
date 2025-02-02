@@ -27,7 +27,7 @@ const getInitialState = () => {
       const parsed = JSON.parse(storedInteractions);
       return {
         brand: parsed.brand || [],
-        priceRange: parsed.priceRange || [], // Ensure this is an array
+        priceRange: parsed.priceRange || [],
         primaryCamera: parsed.primaryCamera || [],
         features: parsed.features || [],
         batteryLife: parsed.batteryLife || [],
@@ -67,14 +67,34 @@ export const useFilterStore = create<FilterState>((set) => ({
   setFilter: (key, value) => {
     set((state) => {
       const newState = { ...state, [key]: value };
-      // Persist to sessionStorage
       sessionStorage.setItem('filterState', JSON.stringify(newState));
       return newState;
     });
   },
   resetFilters: () => {
+    // Clear filter state
     sessionStorage.removeItem('filterState');
-    sessionStorage.removeItem('filterInteractions');
+
+    // Reset filter interactions but preserve structure
+    const defaultInteractions = {
+      priceRange: [],
+      brand: [],
+      primaryCamera: [],
+      features: [],
+      batteryLife: [],
+      screenSize: [],
+      storage: [],
+      ram: [],
+      screenResolution: [],
+      dimensions: [],
+      releaseYear: [],
+      searchQuery: '',
+      sortBy: 'release-date', // Reset sort option to default
+      results: [],
+    };
+    sessionStorage.setItem('filterInteractions', JSON.stringify(defaultInteractions));
+
+    // Reset state to default
     set(getDefaultState());
   },
 }));

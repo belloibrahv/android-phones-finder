@@ -144,6 +144,16 @@ export const PhoneListingSection = () => {
     isError
   } = usePhoneFiltering(sortOption);
 
+  useEffect(() => {
+    const interactions = sessionStorage.getItem('filterInteractions');
+    if (interactions) {
+      const parsed = JSON.parse(interactions);
+      if (parsed.sortBy) {
+        setSortOption(parsed.sortBy); // Set sort option from session storage
+      }
+    }
+  }, [setSortOption]);
+
   // Initialize filter interactions on component mount
   useEffect(() => {
     const interactions = initializeFilterInteractions();
@@ -197,6 +207,13 @@ export const PhoneListingSection = () => {
 
   const handleSortChange = (value: string) => {
     setSortOption(value);
+    // Update session storage
+    const interactions = sessionStorage.getItem('filterInteractions');
+    if (interactions) {
+      const parsed = JSON.parse(interactions);
+      parsed.sortBy = value;
+      sessionStorage.setItem('filterInteractions', JSON.stringify(parsed));
+    }
   };
 
   const handleFilterChange = (
@@ -303,16 +320,24 @@ export const PhoneListingSection = () => {
           Mobile Phones
         </Typography>
         <Select
-        value={sortOption}
-        onChange={(e) => handleSortChange(e.target.value as string)}
-      >
-        {SORT_OPTIONS.map(option => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </Select>
+          value={sortOption}
+          onChange={(e) => handleSortChange(e.target.value as string)}
+        >
+          {SORT_OPTIONS.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
       </Box>
+
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={3}>
+          <Box sx={{ position: 'sticky', top: 80 }}>
+            <ClearFiltersButton />
+          </Box>
+        </Grid>
+      </Grid>
       
       <Grid container spacing={4}>
         {/* Filters Column */}
@@ -337,7 +362,6 @@ export const PhoneListingSection = () => {
 
             <Box sx={{ width: '100%', mb: 3 }}>
               <FilterChips />
-              <ClearFiltersButton />
             </Box>
             
             {/* Main Filters */}

@@ -4,7 +4,6 @@ import { Phone } from "@/types/phone";
 export const initializeFilterInteractions = () => {
   if (!window.filterInteractions) {
     const storedInteractions = sessionStorage.getItem('filterInteractions');
-    
     if (storedInteractions) {
       try {
         window.filterInteractions = JSON.parse(storedInteractions);
@@ -16,7 +15,6 @@ export const initializeFilterInteractions = () => {
       setDefaultInteractions();
     }
   }
-  
   return window.filterInteractions;
 };
 
