@@ -6,9 +6,30 @@ import { generateMockPhones } from '../utils/mockData';
 
 export const useFilterInteractions = (initialResults: FilterInteractionResults[] = []) => {
   const filters = useFilterStore();
-  const [sortOption, setSortOption] = useState('release-date');
+  const [sortOption, setSortOption] = useState(() => {
+    // Initialize sort option from session storage if available
+    const storedInteractions = sessionStorage.getItem('filterInteractions');
+    if (storedInteractions) {
+      const parsed = JSON.parse(storedInteractions);
+      return parsed.sortBy || 'release-date';
+    }
+    return 'release-date';
+  });
   const [filteredResults, setFilteredResults] = useState<FilterInteractionResults[]>(initialResults);
   const allPhones = generateMockPhones();
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedInteractions = sessionStorage.getItem('filterInteractions');
+      if (storedInteractions) {
+        const parsed = JSON.parse(storedInteractions);
+        setSortOption(parsed.sortBy || 'release-date');
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   useEffect(() => {
     initializeFilterInteractions();
@@ -31,6 +52,18 @@ export const useFilterInteractions = (initialResults: FilterInteractionResults[]
       });
     }
   }, []);
+
+  const updateSortOption = (newSortOption: string) => {
+    setSortOption(newSortOption);
+    const storedInteractions = sessionStorage.getItem('filterInteractions');
+    if (storedInteractions) {
+      const parsed = JSON.parse(storedInteractions);
+      parsed.sortBy = newSortOption;
+      sessionStorage.setItem('filterInteractions', JSON.stringify(parsed));
+      // Trigger storage event for cross-component communication
+      window.dispatchEvent(new Event('storage'));
+    }
+  };
 
   // Method to update filtered results
   const updateFilteredResults = (newResults: FilterInteractionResults[]) => {
@@ -89,7 +122,7 @@ export const useFilterInteractions = (initialResults: FilterInteractionResults[]
 
   return {
     sortOption,
-    setSortOption,
+    setSortOption: updateSortOption,
     filteredResults,
     updateFilteredResults
   };

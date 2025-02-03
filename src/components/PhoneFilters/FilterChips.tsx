@@ -1,7 +1,5 @@
-import React from 'react';
 import { Box, Chip } from '@mui/material';
 import { useFilterStore } from '../../store/useFilterStore';
-import { FILTER_OPTIONS } from '../../config/constants';
 
 export const FilterChips = () => {
   const filters = useFilterStore();

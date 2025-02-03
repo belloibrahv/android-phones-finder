@@ -196,6 +196,20 @@ export const PhoneListingSection = () => {
     );
   }, []);
 
+  useEffect(() => {
+    const handleResetSort = (event: CustomEvent<{ sortOption: string }>) => {
+      handleSortChange(event.detail.sortOption);
+    };
+  
+    // Add event listener
+    window.addEventListener('resetSort', handleResetSort as EventListener);
+  
+    // Cleanup
+    return () => {
+      window.removeEventListener('resetSort', handleResetSort as EventListener);
+    };
+  }, []);
+
   // Flatten the pages to get all phones
   const allPhones = data?.pages.flatMap(page => page.phones) || [];
 
