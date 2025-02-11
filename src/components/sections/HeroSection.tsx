@@ -1,5 +1,6 @@
 import { Box, Typography, Button, Container } from '@mui/material';
 import PeopleImg from '../../assets/images/ui/people.webp';
+import ShopArrow from '../../assets/images/ui/shoparrow.svg';
 
 export const HeroSection = () => {
   return (
@@ -49,11 +50,10 @@ export const HeroSection = () => {
                 <Box 
                   component="span" 
                   sx={{ 
-                    transform: 'rotate(-45deg)',
                     display: 'inline-flex'
                   }}
                 >
-                  →
+                  <img src={ShopArrow} alt="Shop Arrow" style={{ height: '20px', width: '20px' }} />
                 </Box>
               }
               sx={{ 

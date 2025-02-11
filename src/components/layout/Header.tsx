@@ -188,11 +188,11 @@ export const Header = () => {
                   py: 1,
                   ml: 1,
                   height: '40px',
-                  '&:hover': { 
-                    backgroundColor: '#ffffff',
-                    color: '#000000',
-                    border: '1px double #000000',
-                  }
+                  // '&:hover': { 
+                  //   backgroundColor: '#ffffff',
+                  //   color: '#000000',
+                  //   // border: '1px double #000000',
+                  // }
                 }}
               >
                 Shop phones
