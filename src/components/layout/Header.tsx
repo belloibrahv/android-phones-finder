@@ -15,6 +15,7 @@ import {
   Close as CloseIcon 
 } from '@mui/icons-material';
 import AndroidLogo from '../../assets/images/ui/andriod.svg';
+import ShopArrow from '../../assets/images/ui/shoparrow.svg';
 
 export const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -34,135 +35,169 @@ export const Header = () => {
     }
   };
 
+  const commonButtonStyles = {
+    textTransform: 'none',
+    fontWeight: 500,
+    fontSize: '1rem',
+    color: '#00000',
+    padding: '8px 16px',
+    minWidth: 'auto',
+    '&:hover': { 
+      backgroundColor: 'rgba(60, 64, 67, 0.08)'
+    }
+  };
+
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <AppBar 
-        position="sticky" 
+        position="fixed" 
         color="default" 
         elevation={0}
         sx={{ 
           backgroundColor: 'white',
-          borderBottom: '1px solid #eaeaea'
+          boxShadow: '0 5px 6px 0 rgba(232, 229, 229, 0.3), 0 2px 6px 2px rgba(232, 232, 232, 0.15)',
+          height: '84px'
         }}
       >
-        <Toolbar sx={{ justifyContent: 'space-between', height: '72px' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            <Box 
-              component="a" 
-              href="/"
-              sx={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                textDecoration: 'none',
-                color: 'inherit'
-              }}
-            >
-              <img src={AndroidLogo} alt="Android" height="35" />
-            </Box>
-            
+        <Toolbar 
+          sx={{ 
+            justifyContent: 'space-between', 
+            height: '100%',
+            lineHeight: '64px !important',
+            minHeight: '64px !important',
+            px: { xs: 2, md: 3 }
+          }}
+        >
+          {/* Left section */}
+          <Box 
+            component="a" 
+            href="/"
+            sx={{ 
+              display: 'flex', 
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: 'inherit',
+              justifyContent: 'space-around',
+              marginLeft: '55px',
+            }}
+          >
+            <img src={AndroidLogo} alt="Android" style={{ height: '24px', width: '110px' }} />
+          </Box>
+
+          {/* Center/Right section */}
+          <Box sx={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '8px',
+            ml: 'auto',
+          }}>
             {!isSearchOpen && (
               <>
                 <Button 
                   color="inherit"
-                  endIcon={<ArrowDownIcon />}
-                  sx={{ 
-                    textTransform: 'none', 
-                    fontWeight: 500,
-                    fontSize: '0.9375rem',
-                    '&:hover': { backgroundColor: 'rgba(0,0,0,0.04)' }
-                  }}
+                  endIcon={<ArrowDownIcon sx={{ fontSize: '1.25rem', color: '#000' }} />}
+                  sx={commonButtonStyles}
                 >
                   Discover Android
                 </Button>
                 <Button 
                   color="inherit"
-                  endIcon={<ArrowDownIcon />}
-                  sx={{ 
-                    textTransform: 'none', 
-                    fontWeight: 500,
-                    fontSize: '0.9375rem',
-                    '&:hover': { backgroundColor: 'rgba(0,0,0,0.04)' }
-                  }}
+                  endIcon={<ArrowDownIcon sx={{ fontSize: '1.25rem', color: '#000' }} />}
+                  sx={commonButtonStyles}
                 >
                   Switch to Android
                 </Button>
                 <Button 
                   color="inherit"
-                  endIcon={<ArrowDownIcon />}
-                  sx={{ 
-                    textTransform: 'none', 
-                    fontWeight: 500,
-                    fontSize: '0.9375rem',
-                    '&:hover': { backgroundColor: 'rgba(0,0,0,0.04)' }
-                  }}
+                  endIcon={<ArrowDownIcon sx={{ fontSize: '1.25rem' }} />}
+                  sx={commonButtonStyles}
                 >
                   Explore devices
                 </Button>
               </>
             )}
-          </Box>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-              <Collapse 
-                in={isSearchOpen} 
-                orientation="horizontal"
-                sx={{ position: 'absolute', right: '100%', pr: 2 }}
-              >
-                <InputBase
-                  placeholder="Search"
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value)}
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: 'center',
+              ml: 1
+            }}>
+              <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                <Collapse 
+                  in={isSearchOpen} 
+                  orientation="horizontal"
                   sx={{ 
-                    width: '300px',
-                    '& input': { 
-                      fontSize: '1rem',
-                      padding: '4px 0'
-                    }
-                  }}
-                />
-              </Collapse>
-              
-              <IconButton
-                onClick={handleSearchToggle}
-                sx={{ 
-                  color: isSearchOpen ? '#1a73e8' : 'inherit',
-                  '&:hover': { backgroundColor: 'rgba(0,0,0,0.04)' }
-                }}
-              >
-                {isSearchOpen ? <CloseIcon /> : <SearchIcon />}
-              </IconButton>
-            </Box>
-
-            <Button 
-              variant="contained"
-              endIcon={
-                <Box 
-                  component="span" 
-                  sx={{ 
-                    transform: 'rotate(-45deg)',
-                    display: 'inline-flex'
+                    position: 'absolute', 
+                    right: '100%', 
+                    pr: 2,
+                    width: '300px'
                   }}
                 >
-                  →
-                </Box>
-              }
-              sx={{ 
-                backgroundColor: '#202124',
-                color: 'white',
-                textTransform: 'none',
-                fontWeight: 500,
-                fontSize: '0.9375rem',
-                borderRadius: '100px',
-                px: 3,
-                py: 1,
-                '&:hover': { 
-                  backgroundColor: '#000000'
+                  <InputBase
+                    placeholder="Search"
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    sx={{ 
+                      width: '100%',
+                      '& input': { 
+                        fontSize: '1rem',
+                        padding: '8px 0'
+                      }
+                    }}
+                  />
+                </Collapse>
+                
+                <IconButton
+                  onClick={handleSearchToggle}
+                  size="large"
+                  sx={{ 
+                    color: isSearchOpen ? '#1a73e8' : '#5f6368',
+                    padding: '8px',
+                    '&:hover': { 
+                      backgroundColor: 'rgba(60, 64, 67, 0.08)'
+                    }
+                  }}
+                >
+                  {isSearchOpen ? <CloseIcon /> : <SearchIcon />}
+                </IconButton>
+              </Box>
+
+              <Button 
+                variant="contained"
+                endIcon={
+                  <Box 
+                    component="span" 
+                    sx={{
+                      display: 'inline-flex',
+                      fontSize: '2.25rem',
+                      ml: 0.5,
+                    }}
+                  >
+                  <img src={ShopArrow} alt="Shop Arrow" style={{ height: '20px', width: '20px' }} />
+                  </Box>
                 }
-              }}
-            >
-              Shop phones
-            </Button>
+                sx={{ 
+                  backgroundColor: '#000000',
+                  color: 'white',
+                  textTransform: 'none',
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  borderRadius: '100px',
+                  marginRight: '55px',
+                  px: 3,
+                  py: 1,
+                  ml: 1,
+                  height: '40px',
+                  '&:hover': { 
+                    backgroundColor: '#ffffff',
+                    color: '#000000',
+                    border: '1px double #000000',
+                  }
+                }}
+              >
+                Shop phones
+              </Button>
+            </Box>
           </Box>
         </Toolbar>
       </AppBar>
