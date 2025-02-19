@@ -214,7 +214,8 @@ export const Footer = () => {
             alignItems: 'center', 
             justifyContent: 'space-between', 
             pt: 4, 
-            borderTop: '1px solid #dadce0' 
+            borderTop: '1px solid #dadce0',
+            fontFamily: '"Google Sans", Roboto, Helvetical, sans-serif' 
           }}
         >
           <Typography variant="body2" color="textSecondary">
@@ -233,19 +234,6 @@ export const Footer = () => {
               }}
             >
               Privacy Policy
-            </Link>
-            <Link 
-              href="#" 
-              sx={{ 
-                color: '#5f6368', 
-                textDecoration: 'none', 
-                '&:hover': { 
-                  color: '#1a73e8', 
-                  textDecoration: 'underline' 
-                } 
-              }}
-            >
-              Manage Cookies
             </Link>
             
             <Select
@@ -279,7 +267,7 @@ export const Footer = () => {
         </Box>
         
         {/* Android Logo */}
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 4, position: 'relative'  }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 8, position: 'relative'  }}>
           <Box
             component="img"
             src={AndroidLogo}
