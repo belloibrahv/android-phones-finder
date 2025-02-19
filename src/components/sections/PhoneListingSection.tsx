@@ -24,7 +24,6 @@ import {
 import { 
   ExpandMore as ExpandMoreIcon,
   Search as SearchIcon,
-  KeyboardArrowDown as KeyboardArrowDownIcon,
   Close as CloseIcon
 } from '@mui/icons-material';
 import { useFilterStore } from '../../store/useFilterStore';
@@ -68,19 +67,6 @@ const StyledAccordion = styled(Accordion)(() => ({
   },
 }));
 
-const StyledButton = styled(Button)(() => ({
-  borderRadius: '24px',
-  textTransform: 'none',
-  padding: '8px 24px',
-  fontSize: '1rem',
-  backgroundColor: '#1C1C1C',
-  '&:hover': {
-    backgroundColor: '#000000',
-  },
-  '& .MuiButton-endIcon': {
-    marginLeft: 8,
-  },
-}));
 
 const SeeAllButton = styled(Button)(() => ({
   borderRadius: '24px',
@@ -122,8 +108,8 @@ const ClearFilterButton = styled(IconButton)(() => ({
 const StyledSelect = styled(Select)(() => ({
   '& .MuiSelect-select': {
     padding: '8px 32px 8px 16px',
-    fontSize: '18px',
-    fontWeight: 500,
+    fontSize: '14px',
+    fontWeight: 600,
     color: '#202124',
     borderRadius: '0',
     border: 'none',
@@ -147,20 +133,24 @@ const StyledSelect = styled(Select)(() => ({
   }
 }));
 
+// Update the StyledCard for phone grid items
 const StyledCard = styled(Card)(() => ({
   padding: '24px',
   height: '100%',
   boxShadow: 'none',
   border: 'none',
-  borderRadius: '12px',
+  borderRadius: '20px',
   backgroundColor: '#f8f9fa',
   transition: 'all 0.3s ease',
+  display: 'flex',
+  flexDirection: 'column',
   '&:hover': {
     backgroundColor: '#fff',
     boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
   }
 }));
 
+// Update the StyledNewLabel for NEW tag
 const StyledNewLabel = styled(Box)(() => ({
   backgroundColor: 'rgb(232, 234, 237)',
   color: 'rgb(32, 33, 36)',
@@ -168,10 +158,12 @@ const StyledNewLabel = styled(Box)(() => ({
   borderRadius: '4px',
   fontSize: '14px',
   fontWeight: 500,
-  display: 'inline-block',
-  marginBottom: '8px'
+  display: 'inline-flex',
+  alignItems: 'center',
+  marginRight: '8px'
 }));
 
+// Update the BuyNowButton
 const BuyNowButton = styled(Button)(() => ({
   backgroundColor: '#202124',
   color: 'white',
@@ -180,16 +172,17 @@ const BuyNowButton = styled(Button)(() => ({
   textTransform: 'none',
   fontSize: '16px',
   fontWeight: 500,
+  marginTop: 'auto',
+  width: 'fit-content',
   '&:hover': {
     backgroundColor: '#000000',
   },
   '& .MuiButton-endIcon': {
-    color: '#c2ff00',
     marginLeft: '8px',
-    transition: 'transform 0.2s ease-in-out'
-  },
-  '&:hover .MuiButton-endIcon': {
-    transform: 'translateX(4px)'
+    color: '#c2ff00',
+    '& svg': {
+      fontSize: '20px'
+    }
   }
 }));
 
@@ -396,54 +389,55 @@ export const PhoneListingSection = () => {
   };
 
   const renderPhoneGrid = (phones: Phone[]) => (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} sx={{ pb: 8 }}>
       {phones.map((phone: Phone) => (
-        <Grid item xs={12} sm={6} md={4} key={phone.id}>
+        <Grid item xs={12} sm={6} md={4} key={phone.id} sx={{ mb: 10 }}>
           <StyledCard>
-            {phone.isNew && (
-              <StyledNewLabel>NEW</StyledNewLabel>
-            )}
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+              <Checkbox sx={{ p: 0, mr: 1 }} />
+            </Box>
+            
             <Box sx={{ 
-              display: 'flex', 
-              justifyContent: 'center', 
-              mb: 3,
-              height: '300px',
-              position: 'relative'
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              flex: 1,
+              mb: 3
             }}>
-              <img
-                src={phone.imageUrl}
+              <img 
+                src={phone.imageUrl} 
                 alt={phone.name}
-                style={{
-                  width: '100%',
-                  height: '100%',
+                style={{ 
+                  maxWidth: '80%',
+                  height: 'auto',
                   objectFit: 'contain'
                 }}
               />
             </Box>
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 500,
-                fontSize: '24px',
-                mb: 2,
-                color: '#202124'
-              }}
-            >
-              {phone.name}
-            </Typography>
-            <Typography
-              sx={{
+            
+            <Box sx={{ mb: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                {phone.isNew && (
+                  <StyledNewLabel>NEW</StyledNewLabel>
+                )}
+                <Typography variant="h6" component="h3" sx={{ 
+                  fontWeight: 500,
+                  fontSize: '18px'
+                }}>
+                  {phone.name}
+                </Typography>
+              </Box>
+              
+              <Typography variant="body1" sx={{ 
                 color: '#5f6368',
-                mb: 3,
                 fontSize: '16px'
-              }}
-            >
-              From ${phone.price.toLocaleString()}
-            </Typography>
+              }}>
+                From ${phone.price.toLocaleString()}
+              </Typography>
+            </Box>
+            
             <BuyNowButton
-              fullWidth
-              variant="contained"
-              endIcon={<span>+</span>}
+              endIcon={<Box component="span" sx={{ color: '#c2ff00' }}>+</Box>}
             >
               Buy now
             </BuyNowButton>
@@ -484,6 +478,7 @@ export const PhoneListingSection = () => {
         <StyledSelect
           value={sortOption}
           onChange={(e) => handleSortChange(e.target.value as string)}
+          IconComponent={ExpandMoreIcon}
         >
           {SORT_OPTIONS.map((option) => (
             <MenuItem 
