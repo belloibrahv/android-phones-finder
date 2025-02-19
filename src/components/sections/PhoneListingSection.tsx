@@ -18,7 +18,8 @@ import {
   MenuItem,
   InputAdornment,
   IconButton,
-  styled
+  styled,
+  Divider
 } from '@mui/material';
 import { 
   ExpandMore as ExpandMoreIcon,
@@ -101,16 +102,13 @@ const SeeAllButton = styled(Button)(() => ({
 const SearchTextField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
-      borderWidth: '0 0 1px 0',
-      borderColor: '#E5E5E5',
+      borderWidth: '0 0 0 0',
     },
     '&:hover fieldset': {
-      borderColor: '#1C1C1C',
-      borderWidth: '0 0 1px 0',
+      borderWidth: '0 0 0 0',
     },
     '&:focus fieldset': {
-      borderColor: '#1C1C1C',
-      borderWidth: '0 0 1px 0',
+      borderWidth: '0 0 0 0',
     },
   },
 });
@@ -241,7 +239,7 @@ export const PhoneListingSection = () => {
 
   const renderPriceFilter = () => (
     <StyledAccordion>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ padding: '13px 0', color: '#000', font: "400 18px/24px 'Google Sans', Roboto, Helvetical, sans-serif", textTransform: 'uppercase' }}>
         <Typography>PRICE</Typography>
       </AccordionSummary>
       <AccordionDetails>
@@ -288,7 +286,7 @@ export const PhoneListingSection = () => {
     
     return (
       <StyledAccordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ padding: '13px 0', color: '#000', font: "400 18px/24px 'Google Sans', Roboto, Helvetical, sans-serif", textTransform: 'uppercase' }}>
           <Typography>{title}</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -329,10 +327,32 @@ export const PhoneListingSection = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 8 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
-        <Typography variant="h4" sx={{ fontWeight: 600 }}>
-          Mobile Phones
+      <Box sx={{ mb: 10, mt: 6, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <Typography component='p'>
+          I want to explore and compare phones.
         </Typography>
+        <Typography variant='h2' sx={{ fontWeight: 600 }}>
+          Every device. Every detail.
+        </Typography>
+      </Box>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+        <SearchTextField
+          fullWidth
+          placeholder="Search"
+          value={filters.searchQuery}
+          onChange={(e) => handleFilterChange('searchQuery', e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton>
+                  <SearchIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          sx={{ maxWidth: '250px',  }}
+        />
+
         <Select
           value={sortOption}
           onChange={(e) => handleSortChange(e.target.value as string)}
@@ -357,27 +377,12 @@ export const PhoneListingSection = () => {
         {/* Filters Column */}
         <Grid item xs={12} md={3}>
           <Box sx={{ position: 'sticky', top: 80 }}>
-            <SearchTextField
-              fullWidth
-              placeholder="Search"
-              value={filters.searchQuery}
-              onChange={(e) => handleFilterChange('searchQuery', e.target.value)}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <SearchIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              sx={{ mb: 3 }}
-            />
 
             <Box sx={{ width: '100%', mb: 3 }}>
               <FilterChips />
             </Box>
             
+            <Divider />
             {/* Main Filters */}
             {renderFilter('BRAND', FILTER_OPTIONS.brands, 'brand')}
             {renderPriceFilter()}

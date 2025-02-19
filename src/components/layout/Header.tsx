@@ -11,9 +11,6 @@ import {
   Menu,
   MenuItem,
   Grow,
-  Paper,
-  Popper,
-  MenuList
 } from '@mui/material';
 import {
   Search as SearchIcon,
