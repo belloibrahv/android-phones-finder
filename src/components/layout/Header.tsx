@@ -15,6 +15,7 @@ import {
 import {
   Search as SearchIcon,
   KeyboardArrowDown as ArrowDownIcon,
+  KeyboardArrowUp as ArrowUpIcon,
   Close as CloseIcon
 } from '@mui/icons-material';
 import AndroidLogo from '../../assets/images/ui/andriod.svg';
@@ -24,12 +25,11 @@ import ShopArrow from '../../assets/images/ui/shoparrow.svg';
 export const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
-  
   // Dropdown menu states
   const [anchorElDiscover, setAnchorElDiscover] = useState<null | HTMLElement>(null);
   const [anchorElSwitch, setAnchorElSwitch] = useState<null | HTMLElement>(null);
   const [anchorElExplore, setAnchorElExplore] = useState<null | HTMLElement>(null);
-  
+
   // Menu open states
   const isDiscoverOpen = Boolean(anchorElDiscover);
   const isSwitchOpen = Boolean(anchorElSwitch);
@@ -47,37 +47,6 @@ export const Header = () => {
     if (isSearchOpen) {
       setIsSearchOpen(false);
       setSearchValue('');
-    }
-  };
-
-  // Handlers for dropdown menus
-  const handleDiscoverClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElDiscover(event.currentTarget);
-  };
-
-  const handleSwitchClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElSwitch(event.currentTarget);
-  };
-
-  const handleExploreClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElExplore(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorElDiscover(null);
-    setAnchorElSwitch(null);
-    setAnchorElExplore(null);
-  };
-
-  const commonButtonStyles = {
-    textTransform: 'none',
-    fontWeight: 500,
-    fontSize: '1rem',
-    color: '#000000',
-    padding: '8px 16px',
-    minWidth: 'auto',
-    '&:hover': {
-      backgroundColor: 'rgba(60, 64, 67, 0.08)'
     }
   };
 
@@ -107,6 +76,40 @@ export const Header = () => {
     'Find my device'
   ];
 
+  const commonButtonStyles = {
+    textTransform: 'none',
+    fontWeight: 500,
+    fontSize: '1rem',
+    color: '#000000',
+    padding: '8px 16px',
+    minWidth: 'auto',
+    '&:hover': {
+      backgroundColor: 'transparent',
+      '& .MuiButton-endIcon': {
+        transform: 'rotate(180deg)'
+      },
+      '& .underline': {
+        width: '100%'
+      }
+    }
+  };
+
+  const menuStyles = {
+    '& .MuiPaper-root': {
+      marginTop: '12px',
+      boxShadow: '0 2px 6px rgba(60,64,67,.15)',
+      borderRadius: '8px',
+      minWidth: '200px'
+    },
+    '& .MuiMenuItem-root': {
+      padding: '12px 24px',
+      '&:hover': {
+        backgroundColor: 'transparent',
+        textDecoration: 'underline'
+      }
+    }
+  };
+
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <AppBar
@@ -129,7 +132,7 @@ export const Header = () => {
             px: { xs: 2, md: 3 }
           }}
         >
-          {/* Left section with animated logo */}
+          {/* Left section with logo */}
           <Box
             component="a"
             href="/"
@@ -143,29 +146,27 @@ export const Header = () => {
               position: 'relative'
             }}
           >
-            <Box sx={{ position: 'relative', }}>
-              <img 
-                src={AndroidLogo} 
-                alt="Android" 
-                style={{ 
+            <Box sx={{ position: 'relative' }}>
+              <img
+                src={AndroidLogo}
+                alt="Android"
+                style={{
                   height: '24px',
                   width: '110px',
                   transition: 'transform 0.5s ease-in-out',
-                  
-                }} 
+                }}
               />
-              
-              <img 
-                src={AndroidLogoImg} 
-                alt="Android" 
-                style={{ 
+              <img
+                src={AndroidLogoImg}
+                alt="Android"
+                style={{
                   height: '24px',
                   marginLeft: '-30px',
                   position: 'relative',
                   top: '-4px',
                   transition: 'transform 0.5s ease-in-out'
-                }} 
-              /> 
+                }}
+              />
             </Box>
           </Box>
 
@@ -178,87 +179,111 @@ export const Header = () => {
           }}>
             {!isSearchOpen && (
               <>
-                {/* Discover Android Dropdown */}
+                {/* Discover Android Button */}
                 <Button
-                  color="inherit"
-                  endIcon={<ArrowDownIcon sx={{ fontSize: '1.25rem', color: '#000' }} />}
-                  sx={commonButtonStyles}
-                  onClick={handleDiscoverClick}
-                  aria-controls={isDiscoverOpen ? 'discover-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={isDiscoverOpen ? 'true' : undefined}
+                  onClick={(event) => setAnchorElDiscover(event.currentTarget)}
+                  endIcon={isDiscoverOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                  sx={{
+                    ...commonButtonStyles,
+                    position: 'relative',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: '6px',
+                      left: '16px',
+                      width: '0%',
+                      height: '2px',
+                      backgroundColor: '#000',
+                      transition: 'width 0.3s ease-in-out',
+                      className: 'underline'
+                    }
+                  }}
                 >
                   Discover Android
                 </Button>
                 <Menu
-                  id="discover-menu"
                   anchorEl={anchorElDiscover}
                   open={isDiscoverOpen}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    'aria-labelledby': 'discover-button',
-                  }}
+                  onClose={() => setAnchorElDiscover(null)}
                   TransitionComponent={Grow}
-                  sx={{ mt: 1 }}
+                  sx={menuStyles}
                 >
                   {discoverMenuItems.map((item) => (
-                    <MenuItem key={item} onClick={handleClose}>{item}</MenuItem>
+                    <MenuItem key={item} onClick={() => setAnchorElDiscover(null)}>
+                      {item}
+                    </MenuItem>
                   ))}
                 </Menu>
 
-                {/* Switch to Android Dropdown */}
+                {/* Switch to Android Button */}
                 <Button
-                  color="inherit"
-                  endIcon={<ArrowDownIcon sx={{ fontSize: '1.25rem', color: '#000' }} />}
-                  sx={commonButtonStyles}
-                  onClick={handleSwitchClick}
-                  aria-controls={isSwitchOpen ? 'switch-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={isSwitchOpen ? 'true' : undefined}
+                  onClick={(event) => setAnchorElSwitch(event.currentTarget)}
+                  endIcon={isSwitchOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                  sx={{
+                    ...commonButtonStyles,
+                    position: 'relative',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: '6px',
+                      left: '16px',
+                      width: '0%',
+                      height: '2px',
+                      backgroundColor: '#000',
+                      transition: 'width 0.3s ease-in-out',
+                      className: 'underline'
+                    }
+                  }}
                 >
                   Switch to Android
                 </Button>
                 <Menu
-                  id="switch-menu"
                   anchorEl={anchorElSwitch}
                   open={isSwitchOpen}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    'aria-labelledby': 'switch-button',
-                  }}
+                  onClose={() => setAnchorElSwitch(null)}
                   TransitionComponent={Grow}
-                  sx={{ mt: 1 }}
+                  sx={menuStyles}
                 >
                   {switchMenuItems.map((item) => (
-                    <MenuItem key={item} onClick={handleClose}>{item}</MenuItem>
+                    <MenuItem key={item} onClick={() => setAnchorElSwitch(null)}>
+                      {item}
+                    </MenuItem>
                   ))}
                 </Menu>
 
-                {/* Explore Devices Dropdown */}
+                {/* Explore devices Button */}
                 <Button
-                  color="inherit"
-                  endIcon={<ArrowDownIcon sx={{ fontSize: '1.25rem' }} />}
-                  sx={commonButtonStyles}
-                  onClick={handleExploreClick}
-                  aria-controls={isExploreOpen ? 'explore-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={isExploreOpen ? 'true' : undefined}
+                  onClick={(event) => setAnchorElExplore(event.currentTarget)}
+                  endIcon={isExploreOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                  sx={{
+                    ...commonButtonStyles,
+                    position: 'relative',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: '6px',
+                      left: '16px',
+                      width: '0%',
+                      height: '2px',
+                      backgroundColor: '#000',
+                      transition: 'width 0.3s ease-in-out',
+                      className: 'underline'
+                    }
+                  }}
                 >
                   Explore devices
                 </Button>
                 <Menu
-                  id="explore-menu"
                   anchorEl={anchorElExplore}
                   open={isExploreOpen}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    'aria-labelledby': 'explore-button',
-                  }}
+                  onClose={() => setAnchorElExplore(null)}
                   TransitionComponent={Grow}
-                  sx={{ mt: 1 }}
+                  sx={menuStyles}
                 >
                   {exploreMenuItems.map((item) => (
-                    <MenuItem key={item} onClick={handleClose}>{item}</MenuItem>
+                    <MenuItem key={item} onClick={() => setAnchorElExplore(null)}>
+                      {item}
+                    </MenuItem>
                   ))}
                 </Menu>
               </>
@@ -268,7 +293,7 @@ export const Header = () => {
             <Box sx={{
               display: 'flex',
               alignItems: 'center',
-              ml: 1,
+              ml: 1
             }}>
               <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
                 <Collapse
@@ -309,7 +334,7 @@ export const Header = () => {
                 </IconButton>
               </Box>
 
-              {/* Shop Phones Button with hover effect */}
+              {/* Shop phones Button */}
               <Button
                 variant="contained"
                 endIcon={
@@ -325,7 +350,6 @@ export const Header = () => {
                   </Box>
                 }
                 sx={{
-
                   backgroundColor: '#000000',
                   color: 'white',
                   textTransform: 'none',
@@ -345,23 +369,9 @@ export const Header = () => {
                   position: 'relative',
                   userSelect: 'none',
                   height: '40px',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    background: 'rgba(255, 255, 255, 0.2)',
-                    transform: 'translateX(-100%)',
-                    transition: 'transform 0.3s ease-in-out'
-                  },
                   '&:hover': {
                     backgroundColor: 'rgb(241, 243, 244)',
                     color: '#000000',
-                    '&::after': {
-                      transform: 'translateX(0)'
-                    },
                     '& .MuiBox-root': {
                       transform: 'translateX(5px)'
                     }
