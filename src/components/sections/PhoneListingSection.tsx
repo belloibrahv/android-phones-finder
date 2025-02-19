@@ -73,6 +73,7 @@ const SeeAllButton = styled(Button)(() => ({
   textTransform: 'none',
   padding: '12px 32px',
   fontSize: '1rem',
+  fontFamily: "'ProductSans', Roboto, Helvetical, sans-serif",
   backgroundColor: 'white',
   color: 'black',
   border: '1px solid #1C1C1C',
@@ -110,6 +111,7 @@ const StyledSelect = styled(Select)(() => ({
     padding: '8px 32px 8px 16px',
     fontSize: '14px',
     fontWeight: 600,
+    fontFamily: "'ProductSans', Roboto, Helvetical, sans-serif",
     color: '#202124',
     borderRadius: '0',
     border: 'none',
@@ -133,7 +135,6 @@ const StyledSelect = styled(Select)(() => ({
   }
 }));
 
-// Update the StyledCard for phone grid items
 const StyledCard = styled(Card)(() => ({
   padding: '24px',
   height: '100%',
@@ -141,6 +142,7 @@ const StyledCard = styled(Card)(() => ({
   border: 'none',
   borderRadius: '20px',
   backgroundColor: '#f8f9fa',
+  fontFamily: "'ProductSans', Roboto, Helvetical, sans-serif",
   transition: 'all 0.3s ease',
   display: 'flex',
   flexDirection: 'column',
@@ -150,20 +152,19 @@ const StyledCard = styled(Card)(() => ({
   }
 }));
 
-// Update the StyledNewLabel for NEW tag
 const StyledNewLabel = styled(Box)(() => ({
   backgroundColor: 'rgb(232, 234, 237)',
   color: 'rgb(32, 33, 36)',
   padding: '4px 8px',
   borderRadius: '4px',
   fontSize: '14px',
-  fontWeight: 500,
+  fontWeight: 600,
+  fontFamily: "'ProductSans', Roboto, Helvetical, sans-serif",
   display: 'inline-flex',
   alignItems: 'center',
   marginRight: '8px'
 }));
 
-// Update the BuyNowButton
 const BuyNowButton = styled(Button)(() => ({
   backgroundColor: '#202124',
   color: 'white',
@@ -389,7 +390,7 @@ export const PhoneListingSection = () => {
   };
 
   const renderPhoneGrid = (phones: Phone[]) => (
-    <Grid container spacing={3} sx={{ pb: 8 }}>
+    <Grid container spacing={3}>
       {phones.map((phone: Phone) => (
         <Grid item xs={12} sm={6} md={4} key={phone.id} sx={{ mb: 10 }}>
           <StyledCard>
@@ -421,8 +422,8 @@ export const PhoneListingSection = () => {
                   <StyledNewLabel>NEW</StyledNewLabel>
                 )}
                 <Typography variant="h6" component="h3" sx={{ 
-                  fontWeight: 500,
-                  fontSize: '18px'
+                  fontWeight: 700,
+                  fontSize: '16px'
                 }}>
                   {phone.name}
                 </Typography>
@@ -430,9 +431,10 @@ export const PhoneListingSection = () => {
               
               <Typography variant="body1" sx={{ 
                 color: '#5f6368',
-                fontSize: '16px'
+                fontSize: '14px',
+                fontWeight: 400,
               }}>
-                From ${phone.price.toLocaleString()}
+                From ${phone.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </Typography>
             </Box>
             
