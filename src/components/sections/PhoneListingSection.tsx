@@ -119,6 +119,80 @@ const ClearFilterButton = styled(IconButton)(() => ({
   marginLeft: '8px',
 }));
 
+const StyledSelect = styled(Select)(() => ({
+  '& .MuiSelect-select': {
+    padding: '8px 32px 8px 16px',
+    fontSize: '18px',
+    fontWeight: 500,
+    color: '#202124',
+    borderRadius: '0',
+    border: 'none',
+    '&:focus': {
+      background: 'transparent',
+    }
+  },
+  '& .MuiOutlinedInput-notchedOutline': {
+    border: 'none'
+  },
+  '&:hover .MuiOutlinedInput-notchedOutline': {
+    border: 'none'
+  },
+  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+    border: 'none'
+  },
+  '& .MuiSelect-icon': {
+    right: '8px',
+    top: 'calc(50% - 12px)',
+    color: '#202124'
+  }
+}));
+
+const StyledCard = styled(Card)(() => ({
+  padding: '24px',
+  height: '100%',
+  boxShadow: 'none',
+  border: 'none',
+  borderRadius: '12px',
+  backgroundColor: '#f8f9fa',
+  transition: 'all 0.3s ease',
+  '&:hover': {
+    backgroundColor: '#fff',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+  }
+}));
+
+const StyledNewLabel = styled(Box)(() => ({
+  backgroundColor: 'rgb(232, 234, 237)',
+  color: 'rgb(32, 33, 36)',
+  padding: '4px 8px',
+  borderRadius: '4px',
+  fontSize: '14px',
+  fontWeight: 500,
+  display: 'inline-block',
+  marginBottom: '8px'
+}));
+
+const BuyNowButton = styled(Button)(() => ({
+  backgroundColor: '#202124',
+  color: 'white',
+  borderRadius: '24px',
+  padding: '12px 24px',
+  textTransform: 'none',
+  fontSize: '16px',
+  fontWeight: 500,
+  '&:hover': {
+    backgroundColor: '#000000',
+  },
+  '& .MuiButton-endIcon': {
+    color: '#c2ff00',
+    marginLeft: '8px',
+    transition: 'transform 0.2s ease-in-out'
+  },
+  '&:hover .MuiButton-endIcon': {
+    transform: 'translateX(4px)'
+  }
+}));
+
 export const PhoneListingSection = () => {
   const filters = useFilterStore();
   const {
@@ -321,6 +395,64 @@ export const PhoneListingSection = () => {
     );
   };
 
+  const renderPhoneGrid = (phones: Phone[]) => (
+    <Grid container spacing={3}>
+      {phones.map((phone: Phone) => (
+        <Grid item xs={12} sm={6} md={4} key={phone.id}>
+          <StyledCard>
+            {phone.isNew && (
+              <StyledNewLabel>NEW</StyledNewLabel>
+            )}
+            <Box sx={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              mb: 3,
+              height: '300px',
+              position: 'relative'
+            }}>
+              <img
+                src={phone.imageUrl}
+                alt={phone.name}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain'
+                }}
+              />
+            </Box>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 500,
+                fontSize: '24px',
+                mb: 2,
+                color: '#202124'
+              }}
+            >
+              {phone.name}
+            </Typography>
+            <Typography
+              sx={{
+                color: '#5f6368',
+                mb: 3,
+                fontSize: '16px'
+              }}
+            >
+              From ${phone.price.toLocaleString()}
+            </Typography>
+            <BuyNowButton
+              fullWidth
+              variant="contained"
+              endIcon={<span>+</span>}
+            >
+              Buy now
+            </BuyNowButton>
+          </StyledCard>
+        </Grid>
+      ))}
+    </Grid>
+  );
+
   return (
     <Container maxWidth="lg" sx={{ mt: 8 }}>
       <Box sx={{ mb: 10, mt: 6, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -349,16 +481,25 @@ export const PhoneListingSection = () => {
           sx={{ maxWidth: '250px',  }}
         />
 
-        <Select
+        <StyledSelect
           value={sortOption}
           onChange={(e) => handleSortChange(e.target.value as string)}
         >
           {SORT_OPTIONS.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
+            <MenuItem 
+              key={option.value} 
+              value={option.value}
+              sx={{
+                fontWeight: sortOption === option.value ? 700 : 400,
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.04)'
+                }
+              }}
+            >
               {option.label}
             </MenuItem>
           ))}
-        </Select>
+        </StyledSelect>
       </Box>
 
       <Grid container spacing={4}>
@@ -421,63 +562,7 @@ export const PhoneListingSection = () => {
             </Typography>
           ) : (
             <>
-              <Grid container spacing={2}>
-                {allPhones.map((phone: Phone) => (
-                  <Grid item xs={12} sm={6} md={4} key={phone.id} sx={{ mb: 5 }}>
-                    <Card 
-                      sx={{ 
-                        p: 2,
-                        height: '100%',
-                        boxShadow: 'none',
-                        border: '1px solid #E5E5E5',
-                        borderRadius: '12px'
-                      }}
-                    >
-                      <Box 
-                        sx={{ 
-                          display: 'flex',
-                          justifyContent: 'center',
-                          mb: 2
-                        }}
-                      >
-                        <img
-                          src={phone.imageUrl}
-                          alt={phone.name}
-                          style={{ 
-                            width: '80%', 
-                            height: 'auto',
-                            objectFit: 'contain'
-                          }}
-                        />
-                      </Box>
-                      <Typography 
-                        variant="h6" 
-                        sx={{ 
-                          fontWeight: 600,
-                          mb: 1
-                        }}
-                      >
-                        {phone.name}
-                      </Typography>
-                      <Typography 
-                        sx={{ 
-                          color: '#666',
-                          mb: 2
-                        }}
-                      >
-                        From ${phone.price.toLocaleString()}
-                      </Typography>
-                      <StyledButton
-                        fullWidth
-                        variant="contained"
-                        endIcon={<KeyboardArrowDownIcon />}
-                      >
-                        Buy now
-                      </StyledButton>
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid>
+              {renderPhoneGrid(allPhones)}
 
               {/* Load More Button */}
               {hasNextPage && (
