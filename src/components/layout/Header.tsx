@@ -85,6 +85,10 @@ export const Header = () => {
     minWidth: 'auto',
     '&:hover': {
       backgroundColor: 'transparent',
+      textDecoration: 'underline',
+    },
+    '&:active': {
+      backgroundColor: 'transparent',
       '& .MuiButton-endIcon': {
         transform: 'rotate(180deg)'
       },
