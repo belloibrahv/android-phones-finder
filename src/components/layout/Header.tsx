@@ -268,7 +268,7 @@ export const Header = () => {
             <Box sx={{
               display: 'flex',
               alignItems: 'center',
-              ml: 1
+              ml: 1,
             }}>
               <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
                 <Collapse

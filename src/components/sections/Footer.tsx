@@ -92,7 +92,7 @@ export const Footer = () => {
   ];
 
   return (
-    <Box component="footer" sx={{ bgcolor: '#f8f9fa', mt: 8, pt: 6, pb: 4, fontFamily: '"Google Sans", Roboto, Helvetical, sans-serif' }}>
+    <Box component="footer" sx={{ bgcolor: '#f8f9fa', mt: 8, pt: 6, pb: 4, fontFamily: '"ProductSans", Roboto, Helvetical, sans-serif' }}>
       <Container maxWidth="lg">
         {/* Social Media Links */}
         <Box sx={{ mb: 6, display: 'flex', alignItems: 'center' }}>
@@ -215,7 +215,7 @@ export const Footer = () => {
             justifyContent: 'space-between', 
             pt: 4, 
             borderTop: '1px solid #dadce0',
-            fontFamily: '"Google Sans", Roboto, Helvetical, sans-serif' 
+            fontFamily: '"ProductSans", Roboto, Helvetical, sans-serif' 
           }}
         >
           <Typography variant="body2" color="textSecondary">

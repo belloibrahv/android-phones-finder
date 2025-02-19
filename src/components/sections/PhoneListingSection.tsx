@@ -42,7 +42,7 @@ import { ClearFiltersButton } from '../PhoneFilters/ClearFiltersButton';
 const MoreFiltersButton = styled(Button)(() => ({
   textTransform: 'none',
   padding: '8px 0',
-  font: '700 18px/24px "Google Sans", Roboto, Helvetical, sans-serif',
+  font: '700 18px/24px "ProductSans", Roboto, Helvetical, sans-serif',
   backgroundColor: 'white',
   color: 'black',
   display: 'flex',
@@ -235,7 +235,7 @@ export const PhoneListingSection = () => {
 
   const renderPriceFilter = () => (
     <StyledAccordion>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ padding: '13px 0', color: '#000', font: "400 18px/24px 'Google Sans', Roboto, Helvetical, sans-serif", textTransform: 'uppercase' }}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ padding: '13px 0', color: '#000', font: "400 18px/24px 'ProductSans', Roboto, Helvetical, sans-serif", textTransform: 'uppercase' }}>
         <Typography>PRICE</Typography>
       </AccordionSummary>
       <AccordionDetails>
@@ -282,7 +282,7 @@ export const PhoneListingSection = () => {
     
     return (
       <StyledAccordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ padding: '13px 0', color: '#000', font: "400 18px/24px 'Google Sans', Roboto, Helvetical, sans-serif", textTransform: 'uppercase' }}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ padding: '13px 0', color: '#000', font: "400 18px/24px 'ProductSans', Roboto, Helvetical, sans-serif", textTransform: 'uppercase' }}>
           <Typography>{title}</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -324,10 +324,10 @@ export const PhoneListingSection = () => {
   return (
     <Container maxWidth="lg" sx={{ mt: 8 }}>
       <Box sx={{ mb: 10, mt: 6, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-        <Typography component='p'>
+        <Typography component='p' sx={{ fontSize: '16px', lineHeight: '24px', letterSpacing: '0px' }}>
           I want to explore and compare phones.
         </Typography>
-        <Typography variant='h2' sx={{ fontWeight: 600 }}>
+        <Typography variant='h2' sx={{ fontWeight: 700, fontSize: '56px', lineHeight: '64px', letterSpacing: '-1px' }}>
           Every device. Every detail.
         </Typography>
       </Box>
