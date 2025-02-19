@@ -41,14 +41,10 @@ import { ClearFiltersButton } from '../PhoneFilters/ClearFiltersButton';
 // Styled Components
 const MoreFiltersButton = styled(Button)(() => ({
   textTransform: 'none',
-  padding: '8px 24px',
-  fontSize: '1rem',
-  fontWeight: 600,
+  padding: '8px 0',
+  font: '700 18px/24px "Google Sans", Roboto, Helvetical, sans-serif',
   backgroundColor: 'white',
   color: 'black',
-  '&:hover': {
-    backgroundColor: 'hsl(0, 3.10%, 87.50%)',
-  },
   display: 'flex',
   justifyContent: 'flex-start',
   alignItems: 'left',
