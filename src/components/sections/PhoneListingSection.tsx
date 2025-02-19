@@ -510,7 +510,7 @@ export const PhoneListingSection = () => {
       <Grid container spacing={4}>
         {/* Filters Column */}
         <Grid item xs={12} md={3}>
-          <Box sx={{ position: 'sticky', top: 80 }}>
+          <Box sx={{ }}>
 
             <Box sx={{ width: '100%', mb: 3 }}>
               <FilterChips />
