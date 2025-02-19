@@ -117,9 +117,10 @@ export const Header = () => {
         color="default"
         elevation={0}
         sx={{
-          backgroundColor: 'white',
-          boxShadow: '0 5px 6px 0 rgba(232, 229, 229, 0.3), 0 2px 6px 2px rgba(232, 232, 232, 0.15)',
-          height: '84px'
+          backgroundColor: 'hsla(0,0%,100%,.8)',
+          boxShadow: '0px 2px 6px 0px hsla(0,0%,76%,.25)',
+          height: '88px',
+          lineHeight: '88px',
         }}
       >
         <Toolbar
@@ -323,23 +324,30 @@ export const Header = () => {
                       ml: 0.5,
                     }}
                   >
-                    <img src={ShopArrow} alt="Shop Arrow" style={{ height: '20px', width: '20px' }} />
+                    <img src={ShopArrow} alt="Shop Arrow" style={{ height: '24px', width: '24px', color: '#c6ff00' }} />
                   </Box>
                 }
                 sx={{
+
                   backgroundColor: '#000000',
                   color: 'white',
                   textTransform: 'none',
-                  fontWeight: 600,
-                  fontSize: '1rem',
-                  borderRadius: '100px',
+                  fontWeight: 'bold',
+                  fontSize: '16px',
+                  letterSpacing: '0.3px',
+                  lineHeight: '24px',
+                  borderRadius: '30px',
                   marginRight: '55px',
-                  px: 3,
-                  py: 1,
-                  ml: 1,
-                  height: '40px',
-                  position: 'relative',
+                  padding: '24px 12px',
+                  borderWidth: '1px',
+                  border: '1px solid #202124',
+                  cursor: 'pointer',
+                  isolation: 'isolate',
                   overflow: 'hidden',
+                  minWidth: 'max-content',
+                  position: 'relative',
+                  userSelect: 'none',
+                  height: '40px',
                   '&::after': {
                     content: '""',
                     position: 'absolute',
@@ -352,7 +360,8 @@ export const Header = () => {
                     transition: 'transform 0.3s ease-in-out'
                   },
                   '&:hover': {
-                    backgroundColor: '#111111',
+                    backgroundColor: 'rgb(241, 243, 244)',
+                    color: '#000000',
                     '&::after': {
                       transform: 'translateX(0)'
                     },
