@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Link, Typography, Stack, MenuItem, Select } from '@mui/material';
+import { Box, Container, Grid, Link, Typography, Stack, MenuItem, Select, Divider } from '@mui/material';
 import { KeyboardArrowRight as ArrowRightIcon } from '@mui/icons-material';
 import AndroidLogo from '../../assets/images/ui/droid.gif';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -92,11 +92,11 @@ export const Footer = () => {
   ];
 
   return (
-    <Box component="footer" sx={{ bgcolor: '#f8f9fa', mt: 8, pt: 6, pb: 4 }}>
+    <Box component="footer" sx={{ bgcolor: '#f8f9fa', mt: 8, pt: 6, pb: 4, fontFamily: '"Google Sans", Roboto, Helvetical, sans-serif' }}>
       <Container maxWidth="lg">
         {/* Social Media Links */}
         <Box sx={{ mb: 6, display: 'flex', alignItems: 'center' }}>
-          <Typography variant="body1" fontWeight={500} sx={{ mr: 3 }}>
+          <Typography variant="body1" fontWeight={600} sx={{ mr: 3, color: '#000', fontSize: '14px' }}>
             Follow us
           </Typography>
           <Stack direction="row" spacing={3}>
@@ -105,8 +105,8 @@ export const Footer = () => {
                 key={social.platform} 
                 href={social.url} 
                 sx={{ 
-                  color: '#5f6368',
-                  '&:hover': { color: '#000' },
+                  color: '#000',
+                  '&:hover': { color: '#5f6368' },
                   display: 'flex',
                   alignItems: 'center'
                 }}
@@ -117,16 +117,17 @@ export const Footer = () => {
             ))}
           </Stack>
         </Box>
+        <Divider sx={{ mb: 5 }} />
 
         {/* Main Footer Links */}
         <Grid container spacing={6} sx={{ mb: 6 }}>
           {footerSections.map((section) => (
             <Grid item xs={12} sm={6} md={3} key={section.title}>
-              <Typography variant="body1" fontWeight={500} sx={{ mb: 2 }}>
+              <Typography variant="body1" fontWeight={600} sx={{ mb: 2, fontSize: '14px', cursor: 'auto', height: '25px', }}>
                 {section.title}
               </Typography>
               {section.links.map((link) => (
-                <Box key={link.text} sx={{ mb: 1.5 }}>
+                <Box key={link.text} sx={{ mb: 1.5, padding: '20px 0 0', fontSize: '14px' }}>
                   <Link
                     href="#"
                     sx={{
@@ -165,11 +166,11 @@ export const Footer = () => {
         <Grid container spacing={6} sx={{ mb: 6 }}>
           {additionalSections.map((section) => (
             <Grid item xs={12} sm={6} md={3} key={section.title}>
-              <Typography variant="body1" fontWeight={500} sx={{ mb: 2 }}>
+              <Typography variant="body1" fontWeight={600} sx={{ mb: 2, fontSize: '14px', cursor: 'auto', height: '25px', }}>
                 {section.title}
               </Typography>
               {section.links.map((link) => (
-                <Box key={link.text} sx={{ mb: 1.5 }}>
+                <Box key={link.text} sx={{ mb: 1.5, padding: '20px 0 0', fontSize: '14px' }}>
                   <Link
                     href="#"
                     sx={{
@@ -278,15 +279,18 @@ export const Footer = () => {
         </Box>
         
         {/* Android Logo */}
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 4 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 4, position: 'relative'  }}>
           <Box
             component="img"
             src={AndroidLogo}
             alt="Android Logo"
             sx={{
-              height: '64px',
+              height: '122px',
               width: 'auto',
               opacity: 0.8,
+              position: 'absolute',
+              bottom: 0,
+              mb: -5
             }}
           />
         </Box>
