@@ -1,5 +1,5 @@
 import { Box, Container, Grid, Link, Typography, Stack, MenuItem, Select, Divider } from '@mui/material';
-import { KeyboardArrowRight as ArrowRightIcon } from '@mui/icons-material';
+import {  ExpandMore as ExpandMoreIcon, } from '@mui/icons-material';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import AndroidLogo from '../../assets/images/ui/droid.gif';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -248,11 +248,12 @@ export const Footer = () => {
             <Select
               value={languages[0]}
               variant="standard"
+              IconComponent={ExpandMoreIcon}
               sx={{
                 color: '#5f6368',
                 fontSize: '14px',
                 '& .MuiSelect-select': {
-                  minWidth: '200px',
+                  minWidth: '185px',
                   py: 0.5,
                   pr: 4,
                   pl: 0
@@ -261,19 +262,16 @@ export const Footer = () => {
                   borderBottom: 'none'
                 },
                 '& .MuiInput-underline:after': {
-                  borderBottom: '2px solid #1a73e8'
+                  borderBottom: '1px solid #dadce0'
                 },
                 '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
-                  borderBottom: '1px solid rgba(0, 0, 0, 0.42)'
+                  borderBottom: '1px solid #dadce0'
                 },
                 '& .MuiSelect-icon': {
                   color: '#5f6368',
                   right: 0,
                   transition: 'transform 0.2s ease'
                 },
-                '&:hover .MuiSelect-icon': {
-                  transform: 'rotate(180deg)'
-                }
               }}
             >
               {languages.map((language) => (

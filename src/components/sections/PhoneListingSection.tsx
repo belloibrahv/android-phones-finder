@@ -69,17 +69,35 @@ const StyledAccordion = styled(Accordion)(() => ({
 
 
 const SeeAllButton = styled(Button)(() => ({
-  borderRadius: '24px',
-  textTransform: 'none',
-  padding: '12px 32px',
-  fontSize: '1rem',
-  fontFamily: "'', Roboto, Helvetical, sans-serif",
-  backgroundColor: 'white',
-  color: 'black',
-  border: '1px solid #1C1C1C',
-  '&:hover': {
-    backgroundColor: 'hsl(0, 3.10%, 87.50%)',
-  },
+    backgroundColor: '#ffffff',
+    color: '#000000',
+    textTransform: 'none',
+    fontFamily: "Roboto, sans-serif, Arial, Helvetica",
+    fontWeight: '600',
+    fontSize: '14px',
+    letterSpacing: '0.3px',
+    lineHeight: '24px',
+    borderRadius: '30px',
+    marginRight: '30px',
+    padding: '23px 20px 20px',
+    borderWidth: '1px',
+    border: '1px solid #202124',
+    cursor: 'pointer',
+    isolation: 'isolate',
+    overflow: 'hidden',
+    minWidth: 'max-content',
+    position: 'relative',
+    userSelect: 'none',
+    height: '40px',
+    '&:hover': {
+      backgroundColor: 'rgb(218, 220, 224)',
+      '& .MuiBox-root': {
+        transform: 'translateX(5px)'
+      }
+    },
+    '& .MuiBox-root': {
+      transition: 'transform 0.1s ease-in-out'
+    }
 }));
 
 const SearchTextField = styled(TextField)({
@@ -166,17 +184,35 @@ const StyledNewLabel = styled(Box)(() => ({
 }));
 
 const BuyNowButton = styled(Button)(() => ({
-  backgroundColor: '#202124',
+  backgroundColor: '#000000',
   color: 'white',
-  borderRadius: '24px',
-  padding: '12px 24px',
   textTransform: 'none',
-  fontSize: '16px',
-  fontWeight: 500,
-  marginTop: 'auto',
-  width: 'fit-content',
+  fontFamily: ", Roboto, sans-serif, Arial, Helvetica",
+  fontWeight: '600',
+  fontSize: '14px',
+  letterSpacing: '0.3px',
+  lineHeight: '24px',
+  borderRadius: '30px',
+  marginRight: '55px',
+  padding: '20px 19px 20px 12px',
+  borderWidth: '1px',
+  border: '1px solid #202124',
+  cursor: 'pointer',
+  isolation: 'isolate',
+  overflow: 'hidden',
+  minWidth: 'max-content',
+  position: 'relative',
+  userSelect: 'none',
+  height: '40px',
   '&:hover': {
-    backgroundColor: '#000000',
+    backgroundColor: 'rgb(241, 243, 244)',
+    color: '#000000',
+    '& .MuiBox-root': {
+      transform: 'translateX(5px)'
+    }
+  },
+  '& .MuiBox-root': {
+    transition: 'transform 0.2s ease-in-out'
   },
   '& .MuiButton-endIcon': {
     marginLeft: '8px',
@@ -439,7 +475,7 @@ export const PhoneListingSection = () => {
             </Box>
             
             <BuyNowButton
-              endIcon={<Box component="span" sx={{ color: '#c2ff00' }}>+</Box>}
+              endIcon={<Box component="span" sx={{ color: '#c2ff00', fontSize: '100px', fontWeight: 700 }}>+</Box>}
             >
               Buy now
             </BuyNowButton>
@@ -474,7 +510,7 @@ export const PhoneListingSection = () => {
               </InputAdornment>
             ),
           }}
-          sx={{ maxWidth: '250px',  }}
+          sx={{ maxWidth: '250px' }}
         />
 
         <StyledSelect
@@ -568,7 +604,7 @@ export const PhoneListingSection = () => {
                     onClick={handleLoadMore} 
                     disabled={isFetchingNextPage}
                   >
-                    {isFetchingNextPage ? 'Loading...' : 'Load More'}
+                    {isFetchingNextPage ? 'Loading...' : 'See more'}
                   </SeeAllButton>
                 </Box>
               )}
