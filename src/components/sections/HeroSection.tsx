@@ -1,10 +1,10 @@
-import { Box, Typography, Button, Container } from '@mui/material';
+import { Box, Typography, Button, Container, Divider } from '@mui/material';
 import PeopleImg from '../../assets/images/ui/people.webp';
 import ShopArrow from '../../assets/images/ui/shoparrow.svg';
 
 export const HeroSection = () => {
   return (
-    <Box sx={{ backgroundColor: '#ffffff', overflow: 'hidden' }}>
+    <Box sx={{ backgroundColor: '#ffffff', overflow: 'hidden', fontFamily: "Product Sans, Helvetica, Arial, sans-serif", maxWidth: '80rem', margin: '-70px auto 0' }}>
       <Container maxWidth="lg">
         <Box
           sx={{
@@ -17,17 +17,18 @@ export const HeroSection = () => {
           }}
         >
           {/* Left Content */}
-          <Box sx={{ maxWidth: '480px' }}>
+          <Box sx={{ maxWidth: '380px', paddingLeft: '6rem' }}>
             <Typography
               variant="h1"
               component="h1"
               sx={{
+                fontFamily: "Product Sans, Helvetica, Arial, sans-serif",
                 fontSize: { xs: '2.5rem', md: '3.5rem' },
-                lineHeight: { xs: 1.2, md: 1.1 },
-                fontWeight: 500,
-                letterSpacing: '-0.02em',
+                lineHeight: { xs: '3rem', md: '4rem' },
+                fontWeight: 700,
+                letterSpacing: '-0.063rem',
                 color: '#202124',
-                mb: 2
+                mb: '1rem'
               }}
             >
               Want to find the perfect phone?
@@ -35,10 +36,13 @@ export const HeroSection = () => {
             <Typography
               variant="body1"
               sx={{
+                fontFamily: "Product Sans, Helvetica, Arial, sans-serif",
                 fontSize: '1.125rem',
-                lineHeight: 1.5,
+                fontWeight: 400,
+                lineHeight: '1.625rem',
                 color: '#202124',
-                mb: 4,
+                mb: '2rem',
+                letterSpacing: '0',
                 opacity: 0.7
               }}
             >
@@ -59,17 +63,17 @@ export const HeroSection = () => {
                   </Box>
                 }
                 sx={{
-
                   backgroundColor: '#000000',
                   color: 'white',
                   textTransform: 'none',
-                  fontWeight: 'bold',
-                  fontSize: '16px',
+                  fontFamily: "Product Sans, Roboto, sans-serif, Arial, Helvetica",
+                  fontWeight: '600',
+                  fontSize: '14px',
                   letterSpacing: '0.3px',
                   lineHeight: '24px',
                   borderRadius: '30px',
                   marginRight: '55px',
-                  padding: '24px 12px',
+                  padding: '20px 19px 20px 12px',
                   borderWidth: '1px',
                   border: '1px solid #202124',
                   cursor: 'pointer',
@@ -79,23 +83,9 @@ export const HeroSection = () => {
                   position: 'relative',
                   userSelect: 'none',
                   height: '40px',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    background: 'rgba(255, 255, 255, 0.2)',
-                    transform: 'translateX(-100%)',
-                    transition: 'transform 0.3s ease-in-out'
-                  },
                   '&:hover': {
                     backgroundColor: 'rgb(241, 243, 244)',
                     color: '#000000',
-                    '&::after': {
-                      transform: 'translateX(0)'
-                    },
                     '& .MuiBox-root': {
                       transform: 'translateX(5px)'
                     }
@@ -133,6 +123,7 @@ export const HeroSection = () => {
             />
           </Box>
         </Box>
+        <Divider />
       </Container>
     </Box>
   );

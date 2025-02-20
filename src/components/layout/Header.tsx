@@ -117,14 +117,15 @@ export const Header = () => {
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <AppBar
-        position="fixed"
+        position="static"
         color="default"
         elevation={0}
         sx={{
-          backgroundColor: 'hsla(0,0%,100%,.8)',
+          backgroundColor: 'hsl(0, 0.00%, 100.00%)',
           boxShadow: '0px 2px 6px 0px hsla(0,0%,76%,.25)',
           height: '88px',
           lineHeight: '88px',
+          zIndex: '9999',
         }}
       >
         <Toolbar
@@ -357,13 +358,14 @@ export const Header = () => {
                   backgroundColor: '#000000',
                   color: 'white',
                   textTransform: 'none',
-                  fontWeight: 'bold',
-                  fontSize: '16px',
+                  fontFamily: "Product Sans, Roboto, sans-serif, Arial, Helvetica",
+                  fontWeight: '600',
+                  fontSize: '14px',
                   letterSpacing: '0.3px',
                   lineHeight: '24px',
                   borderRadius: '30px',
                   marginRight: '55px',
-                  padding: '24px 12px',
+                  padding: '20px 19px 20px 12px',
                   borderWidth: '1px',
                   border: '1px solid #202124',
                   cursor: 'pointer',
