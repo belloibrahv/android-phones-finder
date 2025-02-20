@@ -4,7 +4,7 @@ import ShopArrow from '../../assets/images/ui/shoparrow.svg';
 
 export const HeroSection = () => {
   return (
-    <Box sx={{ backgroundColor: '#ffffff', overflow: 'hidden', fontFamily: "Product Sans, Helvetica, Arial, sans-serif", maxWidth: '80rem', margin: '-70px auto 0' }}>
+    <Box sx={{ backgroundColor: '#ffffff', overflow: 'hidden', fontFamily: ", Helvetica, Arial, sans-serif", maxWidth: '80rem', margin: '-70px auto 0' }}>
       <Container maxWidth="lg">
         <Box
           sx={{
@@ -22,7 +22,7 @@ export const HeroSection = () => {
               variant="h1"
               component="h1"
               sx={{
-                fontFamily: "Product Sans, Helvetica, Arial, sans-serif",
+                fontFamily: ", Helvetica, Arial, sans-serif",
                 fontSize: { xs: '2.5rem', md: '3.5rem' },
                 lineHeight: { xs: '3rem', md: '4rem' },
                 fontWeight: 700,
@@ -36,11 +36,11 @@ export const HeroSection = () => {
             <Typography
               variant="body1"
               sx={{
-                fontFamily: "Product Sans, Helvetica, Arial, sans-serif",
-                fontSize: '1.125rem',
-                fontWeight: 400,
+                fontFamily: ", Helvetica, Arial, sans-serif",
+                fontSize: '1rem',
+                fontWeight: '400',
                 lineHeight: '1.625rem',
-                color: '#202124',
+                color: '#000000',
                 mb: '2rem',
                 letterSpacing: '0',
                 opacity: 0.7
@@ -66,7 +66,7 @@ export const HeroSection = () => {
                   backgroundColor: '#000000',
                   color: 'white',
                   textTransform: 'none',
-                  fontFamily: "Product Sans, Roboto, sans-serif, Arial, Helvetica",
+                  fontFamily: ", Roboto, sans-serif, Arial, Helvetica",
                   fontWeight: '600',
                   fontSize: '14px',
                   letterSpacing: '0.3px',

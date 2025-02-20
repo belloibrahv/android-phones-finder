@@ -41,7 +41,7 @@ import { ClearFiltersButton } from '../PhoneFilters/ClearFiltersButton';
 const MoreFiltersButton = styled(Button)(() => ({
   textTransform: 'none',
   padding: '8px 0',
-  font: '700 18px/24px "ProductSans", Roboto, Helvetical, sans-serif',
+  font: '700 18px/24px "", Roboto, Helvetical, sans-serif',
   backgroundColor: 'white',
   color: 'black',
   display: 'flex',
@@ -73,7 +73,7 @@ const SeeAllButton = styled(Button)(() => ({
   textTransform: 'none',
   padding: '12px 32px',
   fontSize: '1rem',
-  fontFamily: "'ProductSans', Roboto, Helvetical, sans-serif",
+  fontFamily: "'', Roboto, Helvetical, sans-serif",
   backgroundColor: 'white',
   color: 'black',
   border: '1px solid #1C1C1C',
@@ -111,7 +111,7 @@ const StyledSelect = styled(Select)(() => ({
     padding: '8px 32px 8px 16px',
     fontSize: '14px',
     fontWeight: 600,
-    fontFamily: "'ProductSans', Roboto, Helvetical, sans-serif",
+    fontFamily: "'', Roboto, Helvetical, sans-serif",
     color: '#202124',
     borderRadius: '0',
     border: 'none',
@@ -142,7 +142,7 @@ const StyledCard = styled(Card)(() => ({
   border: 'none',
   borderRadius: '20px',
   backgroundColor: '#f8f9fa',
-  fontFamily: "'ProductSans', Roboto, Helvetical, sans-serif",
+  fontFamily: "'', Roboto, Helvetical, sans-serif",
   transition: 'all 0.3s ease',
   display: 'flex',
   flexDirection: 'column',
@@ -159,7 +159,7 @@ const StyledNewLabel = styled(Box)(() => ({
   borderRadius: '4px',
   fontSize: '14px',
   fontWeight: 600,
-  fontFamily: "'ProductSans', Roboto, Helvetical, sans-serif",
+  fontFamily: "'', Roboto, Helvetical, sans-serif",
   display: 'inline-flex',
   alignItems: 'center',
   marginRight: '8px'
@@ -303,7 +303,7 @@ export const PhoneListingSection = () => {
 
   const renderPriceFilter = () => (
     <StyledAccordion>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ padding: '13px 0', color: '#000', font: "400 18px/24px 'ProductSans', Roboto, Helvetical, sans-serif", textTransform: 'uppercase' }}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ padding: '13px 0', color: '#000', font: "400 18px/24px '', Roboto, Helvetical, sans-serif", textTransform: 'uppercase' }}>
         <Typography>PRICE</Typography>
       </AccordionSummary>
       <AccordionDetails>
@@ -350,7 +350,7 @@ export const PhoneListingSection = () => {
     
     return (
       <StyledAccordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ padding: '13px 0', color: '#000', font: "400 18px/24px 'ProductSans', Roboto, Helvetical, sans-serif", textTransform: 'uppercase' }}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ padding: '13px 0', color: '#000', font: "400 18px/24px '', Roboto, Helvetical, sans-serif", textTransform: 'uppercase' }}>
           <Typography>{title}</Typography>
         </AccordionSummary>
         <AccordionDetails>

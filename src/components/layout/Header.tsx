@@ -358,7 +358,7 @@ export const Header = () => {
                   backgroundColor: '#000000',
                   color: 'white',
                   textTransform: 'none',
-                  fontFamily: "Product Sans, Roboto, sans-serif, Arial, Helvetica",
+                  fontFamily: ", Roboto, sans-serif, Arial, Helvetica",
                   fontWeight: '600',
                   fontSize: '14px',
                   letterSpacing: '0.3px',
