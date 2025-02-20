@@ -452,7 +452,7 @@ export const PhoneListingSection = () => {
   return (
     <Container maxWidth="lg" sx={{ mt: 8 }}>
       <Box sx={{ mb: 10, mt: 6, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-        <Typography component='p' sx={{ fontSize: '16px', lineHeight: '24px', letterSpacing: '0px' }}>
+        <Typography component='p' sx={{ fontSize: '16px', lineHeight: '24px', letterSpacing: '0px', mb: 2 }}>
           I want to explore and compare phones.
         </Typography>
         <Typography variant='h2' sx={{ fontWeight: 700, fontSize: '56px', lineHeight: '64px', letterSpacing: '-1px' }}>
