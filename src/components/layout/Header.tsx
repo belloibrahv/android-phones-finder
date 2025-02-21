@@ -11,6 +11,8 @@ import {
   Menu,
   MenuItem,
   Grow,
+  Popper,
+  Paper,
 } from '@mui/material';
 import {
   Search as SearchIcon,
@@ -25,32 +27,13 @@ import ShopArrow from '../../assets/images/ui/shoparrow.svg';
 export const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
-  // Dropdown menu states
+  
+  // Hover states for menus
   const [anchorElDiscover, setAnchorElDiscover] = useState<null | HTMLElement>(null);
   const [anchorElSwitch, setAnchorElSwitch] = useState<null | HTMLElement>(null);
   const [anchorElExplore, setAnchorElExplore] = useState<null | HTMLElement>(null);
 
-  // Menu open states
-  const isDiscoverOpen = Boolean(anchorElDiscover);
-  const isSwitchOpen = Boolean(anchorElSwitch);
-  const isExploreOpen = Boolean(anchorElExplore);
-
-  // Handlers for search
-  const handleSearchToggle = () => {
-    setIsSearchOpen(!isSearchOpen);
-    if (!isSearchOpen) {
-      setSearchValue('');
-    }
-  };
-
-  const handleClickAway = () => {
-    if (isSearchOpen) {
-      setIsSearchOpen(false);
-      setSearchValue('');
-    }
-  };
-
-  // Menu items for each dropdown
+  // Menu items
   const discoverMenuItems = [
     'Latest Features',
     'Android 15',
@@ -76,6 +59,30 @@ export const Header = () => {
     'Find my device'
   ];
 
+  // Handlers for search
+  const handleSearchToggle = () => {
+    setIsSearchOpen(!isSearchOpen);
+    if (!isSearchOpen) {
+      setSearchValue('');
+    }
+  };
+
+  const handleClickAway = () => {
+    if (isSearchOpen) {
+      setIsSearchOpen(false);
+      setSearchValue('');
+    }
+  };
+
+  // Hover handlers
+  const handleMenuEnter = (event: React.MouseEvent<HTMLElement>, setAnchor: (el: HTMLElement | null) => void) => {
+    setAnchor(event.currentTarget);
+  };
+
+  const handleMenuLeave = (setAnchor: (el: HTMLElement | null) => void) => {
+    setAnchor(null);
+  };
+
   const commonButtonStyles = {
     textTransform: 'none',
     fontWeight: 500,
@@ -83,36 +90,66 @@ export const Header = () => {
     color: '#000000',
     padding: '8px 16px',
     minWidth: 'auto',
+    zIndex: 1,
     '&:hover': {
       backgroundColor: 'transparent',
       textDecoration: 'underline',
     },
-    '&:active': {
-      backgroundColor: 'transparent',
-      '& .MuiButton-endIcon': {
-        transform: 'rotate(180deg)'
-      },
-      '& .underline': {
-        width: '100%'
-      }
-    }
   };
 
-  const menuStyles = {
+  const popperStyles = {
+    zIndex: 9999,
     '& .MuiPaper-root': {
-      marginTop: '12px',
+      marginTop: '0',
       boxShadow: '0 2px 6px rgba(60,64,67,.15)',
       borderRadius: '8px',
-      minWidth: '200px'
+      minWidth: '200px',
+      backgroundColor: 'white',
     },
-    '& .MuiMenuItem-root': {
-      padding: '12px 24px',
-      '&:hover': {
-        backgroundColor: 'transparent',
-        textDecoration: 'underline'
-      }
-    }
   };
+
+  const menuItemStyles = {
+    padding: '12px 24px',
+    '&:hover': {
+      backgroundColor: 'transparent',
+      textDecoration: 'underline',
+    },
+  };
+
+  // Custom menu component
+  const HoverMenu = ({ 
+    anchorEl, 
+    items, 
+    onLeave 
+  }: { 
+    anchorEl: HTMLElement | null; 
+    items: string[];
+    onLeave: () => void;
+  }) => (
+    <Popper
+      open={Boolean(anchorEl)}
+      anchorEl={anchorEl}
+      placement="bottom-start"
+      transition
+      sx={popperStyles}
+      onMouseLeave={onLeave}
+    >
+      {({ TransitionProps }) => (
+        <Grow {...TransitionProps}>
+          <Paper>
+            {items.map((item) => (
+              <MenuItem 
+                key={item} 
+                sx={menuItemStyles}
+              >
+                {item}
+              </MenuItem>
+            ))}
+          </Paper>
+        </Grow>
+      )}
+    </Popper>
+  );
 
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
@@ -125,7 +162,7 @@ export const Header = () => {
           boxShadow: '0px 2px 6px 0px hsla(0,0%,76%,.25)',
           height: '88px',
           lineHeight: '88px',
-          zIndex: '9999',
+          zIndex: 1000,
         }}
       >
         <Toolbar
@@ -184,113 +221,59 @@ export const Header = () => {
           }}>
             {!isSearchOpen && (
               <>
-                {/* Discover Android Button */}
-                <Button
-                  onClick={(event) => setAnchorElDiscover(event.currentTarget)}
-                  endIcon={isDiscoverOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
-                  sx={{
-                    ...commonButtonStyles,
-                    position: 'relative',
-                    '&::after': {
-                      content: '""',
-                      position: 'absolute',
-                      bottom: '6px',
-                      left: '16px',
-                      width: '0%',
-                      height: '2px',
-                      backgroundColor: '#000',
-                      transition: 'width 0.3s ease-in-out',
-                      className: 'underline'
-                    }
-                  }}
+                {/* Discover Android Button with Hover Menu */}
+                <Box
+                  onMouseEnter={(e) => handleMenuEnter(e, setAnchorElDiscover)}
+                  onMouseLeave={() => handleMenuLeave(setAnchorElDiscover)}
                 >
-                  Discover Android
-                </Button>
-                <Menu
-                  anchorEl={anchorElDiscover}
-                  open={isDiscoverOpen}
-                  onClose={() => setAnchorElDiscover(null)}
-                  TransitionComponent={Grow}
-                  sx={menuStyles}
-                >
-                  {discoverMenuItems.map((item) => (
-                    <MenuItem key={item} onClick={() => setAnchorElDiscover(null)}>
-                      {item}
-                    </MenuItem>
-                  ))}
-                </Menu>
+                  <Button
+                    endIcon={Boolean(anchorElDiscover) ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                    sx={commonButtonStyles}
+                  >
+                    Discover Android
+                  </Button>
+                  <HoverMenu
+                    anchorEl={anchorElDiscover}
+                    items={discoverMenuItems}
+                    onLeave={() => handleMenuLeave(setAnchorElDiscover)}
+                  />
+                </Box>
 
-                {/* Switch to Android Button */}
-                <Button
-                  onClick={(event) => setAnchorElSwitch(event.currentTarget)}
-                  endIcon={isSwitchOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
-                  sx={{
-                    ...commonButtonStyles,
-                    position: 'relative',
-                    '&::after': {
-                      content: '""',
-                      position: 'absolute',
-                      bottom: '6px',
-                      left: '16px',
-                      width: '0%',
-                      height: '2px',
-                      backgroundColor: '#000',
-                      transition: 'width 0.3s ease-in-out',
-                      className: 'underline'
-                    }
-                  }}
+                {/* Switch to Android Button with Hover Menu */}
+                <Box
+                  onMouseEnter={(e) => handleMenuEnter(e, setAnchorElSwitch)}
+                  onMouseLeave={() => handleMenuLeave(setAnchorElSwitch)}
                 >
-                  Switch to Android
-                </Button>
-                <Menu
-                  anchorEl={anchorElSwitch}
-                  open={isSwitchOpen}
-                  onClose={() => setAnchorElSwitch(null)}
-                  TransitionComponent={Grow}
-                  sx={menuStyles}
-                >
-                  {switchMenuItems.map((item) => (
-                    <MenuItem key={item} onClick={() => setAnchorElSwitch(null)}>
-                      {item}
-                    </MenuItem>
-                  ))}
-                </Menu>
+                  <Button
+                    endIcon={Boolean(anchorElSwitch) ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                    sx={commonButtonStyles}
+                  >
+                    Switch to Android
+                  </Button>
+                  <HoverMenu
+                    anchorEl={anchorElSwitch}
+                    items={switchMenuItems}
+                    onLeave={() => handleMenuLeave(setAnchorElSwitch)}
+                  />
+                </Box>
 
-                {/* Explore devices Button */}
-                <Button
-                  onClick={(event) => setAnchorElExplore(event.currentTarget)}
-                  endIcon={isExploreOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
-                  sx={{
-                    ...commonButtonStyles,
-                    position: 'relative',
-                    '&::after': {
-                      content: '""',
-                      position: 'absolute',
-                      bottom: '6px',
-                      left: '16px',
-                      width: '0%',
-                      height: '2px',
-                      backgroundColor: '#000',
-                      transition: 'width 0.3s ease-in-out',
-                      className: 'underline'
-                    }
-                  }}
+                {/* Explore devices Button with Hover Menu */}
+                <Box
+                  onMouseEnter={(e) => handleMenuEnter(e, setAnchorElExplore)}
+                  onMouseLeave={() => handleMenuLeave(setAnchorElExplore)}
                 >
-                  Explore devices
-                </Button>
-                <Menu
-                  anchorEl={anchorElExplore}
-                  open={isExploreOpen}
-                  onClose={() => setAnchorElExplore(null)}
-                  TransitionComponent={Grow}
-                  sx={menuStyles}
-                >
-                  {exploreMenuItems.map((item) => (
-                    <MenuItem key={item} onClick={() => setAnchorElExplore(null)}>
-                      {item}
-                    </MenuItem>
-                  ))}
-                </Menu>
+                  <Button
+                    endIcon={Boolean(anchorElExplore) ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                    sx={commonButtonStyles}
+                  >
+                    Explore devices
+                  </Button>
+                  <HoverMenu
+                    anchorEl={anchorElExplore}
+                    items={exploreMenuItems}
+                    onLeave={() => handleMenuLeave(setAnchorElExplore)}
+                  />
+                </Box>
               </>
             )}
 
