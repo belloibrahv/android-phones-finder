@@ -8,7 +8,6 @@ import {
   Collapse,
   InputBase,
   ClickAwayListener,
-  Menu,
   MenuItem,
   Grow,
   Popper,

@@ -7,28 +7,51 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
-  IconButton,
 } from '@mui/material';
-import { ExpandMore as ExpandMoreIcon, Close as CloseIcon } from '@mui/icons-material';
+import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import { useFilterStore } from '../../store/useFilterStore';
 import { generateMockPhones } from '../../utils/mockData';
 import { useMemo } from 'react';
+import type { Phone } from '../../types/phone';
+
+// Define the specific filter keys
+type FilterKey = 
+  | 'brand' 
+  | 'priceRange' 
+  | 'primaryCamera' 
+  | 'features' 
+  | 'batteryLife' 
+  | 'screenSize' 
+  | 'storage' 
+  | 'ram' 
+  | 'screenResolution' 
+  | 'dimensions' 
+  | 'releaseYear' 
+  | 'searchQuery';
+
+// Define the types for the component props
+interface FilterWithCountsProps {
+  title: string;
+  options: readonly string[] | string[]; // Accept both readonly and mutable arrays
+  filterKey: FilterKey;
+  getOptionCount: (phones: Phone[], option: string) => number;
+}
 
 const FilterWithCounts = ({
   title,
   options,
   filterKey,
   getOptionCount,
-}) => {
+}: FilterWithCountsProps) => {
   const filters = useFilterStore();
-  const currentValues = filters[filterKey] || [];
+  const currentValues = (filters[filterKey] || []) as string[];
   
   // Get all phones once for counting
   const allPhones = useMemo(() => generateMockPhones(), []);
-
+  
   // Calculate counts for each option
   const optionCounts = useMemo(() => {
-    return options.reduce((acc, option) => {
+    return [...options].reduce<Record<string, number>>((acc, option) => {
       // Count phones that match this option
       const count = getOptionCount(allPhones, option);
       acc[option] = count;
@@ -36,9 +59,9 @@ const FilterWithCounts = ({
     }, {});
   }, [options, allPhones, getOptionCount]);
 
-  const handleOptionChange = (option) => {
+  const handleOptionChange = (option: string) => {
     const newValues = currentValues.includes(option)
-      ? currentValues.filter(v => v !== option)
+      ? currentValues.filter((v: string) => v !== option)
       : [...currentValues, option];
     filters.setFilter(filterKey, newValues);
   };
@@ -68,7 +91,7 @@ const FilterWithCounts = ({
       </AccordionSummary>
       <AccordionDetails>
         <FormGroup>
-          {options.map((option) => (
+          {[...options].map((option) => (
             <Box key={option} sx={{ display: 'flex', alignItems: 'center', }}>
               <Box sx={{ display: 'flex', alignItems: 'center', }}>
                 <FormControlLabel
@@ -80,22 +103,6 @@ const FilterWithCounts = ({
                   }
                   label={option}
                 />
-                {/* {currentValues.includes(option) && (
-                  <IconButton
-                    onClick={() => handleOptionChange(option)}
-                    sx={{
-                      backgroundColor: 'hsl(0, 3.10%, 87.50%)',
-                      color: '#666',
-                      '&:hover': {
-                        backgroundColor: '#1C1C1C',
-                        color: 'white',
-                      },
-                      ml: 1,
-                    }}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                )} */}
               </Box>
               <Typography 
                 sx={{ 

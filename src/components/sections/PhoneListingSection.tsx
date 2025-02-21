@@ -6,7 +6,6 @@ import {
   Card, 
   Typography, 
   Button,
-  Accordion,
   TextField,
   Checkbox,
   CircularProgress,
