@@ -7,13 +7,9 @@ import {
   Typography, 
   Button,
   Accordion,
-  AccordionSummary,
-  AccordionDetails,
   TextField,
   Checkbox,
-  FormControlLabel,
   CircularProgress,
-  FormGroup,
   Select,
   MenuItem,
   InputAdornment,
@@ -24,7 +20,6 @@ import {
 import { 
   ExpandMore as ExpandMoreIcon,
   Search as SearchIcon,
-  Close as CloseIcon
 } from '@mui/icons-material';
 import { useFilterStore } from '../../store/useFilterStore';
 import { FILTER_OPTIONS, SORT_OPTIONS } from '../../config/constants';
@@ -36,6 +31,8 @@ import { generateMockPhones } from '@/utils/mockData';
 import { FilterInteractions } from '@/types/filterInteractions';
 import { FilterChips } from '../PhoneFilters/FilterChips';
 import { ClearFiltersButton } from '../PhoneFilters/ClearFiltersButton';
+import FilterWithCounts from '../PhoneFilters/FilterWithCounts';
+import { getFilterCounts } from '../../utils/filterCountUtils';
 
 // Styled Components
 const MoreFiltersButton = styled(Button)(() => ({
@@ -50,23 +47,6 @@ const MoreFiltersButton = styled(Button)(() => ({
   width: '100%',
   marginTop: '16px',
 }));
-
-const StyledAccordion = styled(Accordion)(() => ({
-  '&.MuiAccordion-root': {
-    boxShadow: 'none',
-    borderBottom: '1px solid #E5E5E5',
-    '&:before': {
-      display: 'none',
-    },
-  },
-  '& .MuiAccordionSummary-content': {
-    margin: '12px 0',
-  },
-  '& .MuiTypography-root': {
-    fontWeight: 500,
-  },
-}));
-
 
 const SeeAllButton = styled(Button)(() => ({
     backgroundColor: '#ffffff',
@@ -113,16 +93,6 @@ const SearchTextField = styled(TextField)({
     },
   },
 });
-
-const ClearFilterButton = styled(IconButton)(() => ({
-  backgroundColor: 'hsl(0, 3.10%, 87.50%)',
-  color: '#666',
-  '&:hover': {
-    backgroundColor: '#1C1C1C',
-    color: 'white',
-  },
-  marginLeft: '8px',
-}));
 
 const StyledSelect = styled(Select)(() => ({
   '& .MuiSelect-select': {
@@ -337,93 +307,29 @@ export const PhoneListingSection = () => {
   };
 
 
-  const renderPriceFilter = () => (
-    <StyledAccordion>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ padding: '13px 0', color: '#000', font: "400 18px/24px '', Roboto, Helvetical, sans-serif", textTransform: 'uppercase' }}>
-        <Typography>PRICE</Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        <FormGroup>
-          {FILTER_OPTIONS.priceRanges.map((range) => (
-            <Box key={range.label} sx={{ display: 'flex', alignItems: 'center' }}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={filters.priceRange.includes(range.label)}
-                    onChange={() => {
-                      const newPriceRange = filters.priceRange.includes(range.label)
-                        ? filters.priceRange.filter(label => label !== range.label)
-                        : [...filters.priceRange, range.label];
-                      handleFilterChange('priceRange', newPriceRange);
-                    }}
-                  />
-                }
-                label={range.label}
-              />
-              {filters.priceRange.includes(range.label) && (
-                <ClearFilterButton
-                  onClick={() => {
-                    const newPriceRange = filters.priceRange.filter(label => label !== range.label);
-                    handleFilterChange('priceRange', newPriceRange);
-                  }}
-                >
-                  <CloseIcon />
-                </ClearFilterButton>
-              )}
-            </Box>
-          ))}
-        </FormGroup>
-      </AccordionDetails>
-    </StyledAccordion>
-  );
-
   const renderFilter = (
     title: string,
     options: readonly string[],
-    filterKey: keyof Omit<ReturnType<typeof useFilterStore.getState>, 'setFilter' | 'resetFilters' | 'priceRange' | 'searchQuery'>
+    filterKey: keyof typeof getFilterCounts
   ) => {
-    const currentValues = filters[filterKey] || [];
-    
     return (
-      <StyledAccordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ padding: '13px 0', color: '#000', font: "400 18px/24px '', Roboto, Helvetical, sans-serif", textTransform: 'uppercase' }}>
-          <Typography>{title}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <FormGroup>
-            {options.map((option) => (
-              <Box key={option} sx={{ display: 'flex', alignItems: 'center' }}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={currentValues.includes(option)}
-                      onChange={() => {
-                        const newValues = currentValues.includes(option)
-                          ? currentValues.filter(v => v !== option)
-                          : [...currentValues, option];
-                        filters.setFilter(filterKey, newValues);
-                      }}
-                    />
-                  }
-                  label={option}
-                />
-                {currentValues.includes(option) && (
-                  <ClearFilterButton
-                    onClick={() => {
-                      const newValues = currentValues.filter(v => v !== option);
-                      filters.setFilter(filterKey, newValues);
-                    }}
-                  >
-                    <CloseIcon />
-                  </ClearFilterButton>
-                )}
-              </Box>
-            ))}
-          </FormGroup>
-        </AccordionDetails>
-      </StyledAccordion>
+      <FilterWithCounts
+        title={title}
+        options={options}
+        filterKey={filterKey}
+        getOptionCount={(phones, option) => getFilterCounts[filterKey](phones, option)}
+      />
     );
   };
+
+  const renderPriceFilter = () => (
+    <FilterWithCounts
+      title="PRICE"
+      options={FILTER_OPTIONS.priceRanges.map(range => range.label)}
+      filterKey="priceRange"
+      getOptionCount={(phones, option) => getFilterCounts.priceRange(phones, option)}
+    />
+  );
 
   const renderPhoneGrid = (phones: Phone[]) => (
     <Grid container spacing={3}>
