@@ -7,7 +7,7 @@ export const SORT_OPTIONS = [
 ] as const;
 
 export const FILTER_OPTIONS = {
-  brands: ['Google', 'Samsung', 'Xiaomi', 'OnePlus', 'Motorola', 'Sony', 'Oppo'],
+  brands: ['Samsung','Google', 'Oppo', 'OnePlus', 'Nothing', 'Motorola', 'Xiaomi', 'Sony', 'Honor'],
   priceRanges: [
     { label: '$0 - $500' },
     { label: '$501 - $1,000' },
