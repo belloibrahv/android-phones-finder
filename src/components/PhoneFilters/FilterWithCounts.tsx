@@ -14,25 +14,23 @@ import { generateMockPhones } from '../../utils/mockData';
 import { useMemo } from 'react';
 import type { Phone } from '../../types/phone';
 
-// Define the specific filter keys
-type FilterKey = 
-  | 'brand' 
-  | 'priceRange' 
-  | 'primaryCamera' 
-  | 'features' 
-  | 'batteryLife' 
-  | 'screenSize' 
-  | 'storage' 
-  | 'ram' 
-  | 'screenResolution' 
-  | 'dimensions' 
-  | 'releaseYear' 
+type FilterKey =
+  | 'brand'
+  | 'priceRange'
+  | 'primaryCamera'
+  | 'features'
+  | 'batteryLife'
+  | 'screenSize'
+  | 'storage'
+  | 'ram'
+  | 'screenResolution'
+  | 'dimensions'
+  | 'releaseYear'
   | 'searchQuery';
 
-// Define the types for the component props
 interface FilterWithCountsProps {
   title: string;
-  options: readonly string[] | string[]; // Accept both readonly and mutable arrays
+  options: readonly string[] | string[];
   filterKey: FilterKey;
   getOptionCount: (phones: Phone[], option: string) => number;
 }
@@ -48,16 +46,30 @@ const FilterWithCounts = ({
   
   // Get all phones once for counting
   const allPhones = useMemo(() => generateMockPhones(), []);
-  
-  // Calculate counts for each option
+
+  // Calculate counts for each option with proper type handling
   const optionCounts = useMemo(() => {
     return [...options].reduce<Record<string, number>>((acc, option) => {
-      // Count phones that match this option
-      const count = getOptionCount(allPhones, option);
+      let count = 0;
+      
+      if (filterKey === 'storage' || filterKey === 'ram') {
+        // Handle storage and RAM counting specifically
+        count = allPhones.filter(phone => {
+          const phoneValue = phone[filterKey]?.toString() || '';
+          // Normalize both values for comparison (e.g., "64GB" vs "64 GB")
+          const normalizedOption = option.replace(/\s+/g, '').toLowerCase();
+          const normalizedPhoneValue = phoneValue.replace(/\s+/g, '').toLowerCase();
+          return normalizedPhoneValue === normalizedOption;
+        }).length;
+      } else {
+        // Use the provided getOptionCount for other filters
+        count = getOptionCount(allPhones, option);
+      }
+      
       acc[option] = count;
       return acc;
     }, {});
-  }, [options, allPhones, getOptionCount]);
+  }, [options, allPhones, getOptionCount, filterKey]);
 
   const handleOptionChange = (option: string) => {
     const newValues = currentValues.includes(option)
@@ -67,7 +79,7 @@ const FilterWithCounts = ({
   };
 
   return (
-    <Accordion 
+    <Accordion
       sx={{
         '&.MuiAccordion-root': {
           boxShadow: 'none',
@@ -78,9 +90,9 @@ const FilterWithCounts = ({
         }
       }}
     >
-      <AccordionSummary 
+      <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
-        sx={{ 
+        sx={{
           padding: '13px 0',
           color: '#000',
           font: "400 18px/24px '', Roboto, Helvetical, sans-serif",
@@ -92,8 +104,8 @@ const FilterWithCounts = ({
       <AccordionDetails>
         <FormGroup>
           {[...options].map((option) => (
-            <Box key={option} sx={{ display: 'flex', alignItems: 'center', }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', }}>
+            <Box key={option} sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -104,16 +116,16 @@ const FilterWithCounts = ({
                   label={option}
                 />
               </Box>
-              <Typography 
-                sx={{ 
+              <Typography
+                sx={{
                   color: '#5f6368',
                   fontSize: '14px',
                   fontWeight: 400,
                   lineHeight: '20px',
-                  ml: -1 
+                  ml: -1
                 }}
               >
-                ({optionCounts[option]})
+                ({optionCounts[option] || 0})
               </Typography>
             </Box>
           ))}
